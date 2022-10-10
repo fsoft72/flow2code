@@ -28,8 +28,19 @@ export const init = ( liwe: ILiWE ) => {
 
 	console.log( "    - %(__name_camel)s " );
 
-	liwe.cfg.app.languages.map( ( l ) => locale_load( "user", l ) );
+	liwe.cfg.app.languages.map( ( l ) => locale_load( "%(__name_lower)s", l ) );
 	user_db_init ( liwe );
+""",
 
-"""
+	"ENDPOINT": """
+	app.%(__method_lower)s ( '/api%(url)s', %(__perms)s ( req: ILRequest, res: ILResponse ) => {
+		%(__typed_dict)s
+
+		%(__endpoint_name)s ( %(__params)s ( err: ILError, user: User ) => {
+			if ( err ) return send_error( res, err );
+
+			send_ok( res, { user } );
+		} );
+	} );
+""",
 }

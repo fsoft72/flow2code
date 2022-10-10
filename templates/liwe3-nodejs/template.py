@@ -24,19 +24,24 @@ class Template( TemplateBase ):
 
 		# extract snippets
 		self.extract_snippets( mod, outfile )
-
-		self._prepare_methods( mod )
+		self._prepare_methods_names ( mod )
 
 		out = open( outfile, 'w' )
 
 		# write the header
 		out.write ( TEMPL [ 'HEADER_START' ] % self.snippets )
 
+		for ep in mod['endpoints'].values ():
+			self._generate_endpoint_code ( ep, out )
+
 		# close the output file
 		out.close()
 		print( "Generated", outfile )
 
-	def _prepare_methods ( self, mod ):
+	def _prepare_methods_names ( self, mod ):
+		"""
+		prepare the list of all methods for the import { ... } statement
+		"""
 		# prepare the methods
 		methods = []
 		for ep in mod['endpoints'].values():
@@ -53,6 +58,20 @@ class Template( TemplateBase ):
 				methods_str += ', '
 
 		self.snippets[ '_methods' ] = methods_str
+
+	def _generate_endpoint_code ( self, ep, out ):
+		print ( ep )
+		dct = {
+			"__method_lower": ep['method'].lower(),
+			"url": ep['url'],
+			"__endpoint_name": self.endpoint_mk_function ( ep ),
+			"__perms": "perms", #ep['perms'],
+			"__typed_dict": "typed_dict",
+			"__params": "params",
+		}
+
+		# write the endpoint code
+		out.write ( TEMPL [ 'ENDPOINT' ] % dct )
 
 	def code ( self, mod, output ):
 		self._generate_endpoint ( mod, output )
