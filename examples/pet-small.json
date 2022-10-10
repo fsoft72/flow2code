@@ -1,0 +1,150 @@
+{
+	"id": "mod.l76foge9.0.5kweo3gdddc",
+	"name": "Pet",
+	"endpoints": {
+		"endp.l76fpwr4.0.i4rh17i89ql": {
+			"id": "endp.l76fpwr4.0.i4rh17i89ql",
+			"method": "PUT",
+			"url": "/pet",
+			"short_descr": "Add a new pet to the store",
+			"description": "Add a new pet to the store",
+			"parameters": [
+				{
+					"id": "param.l76fuy8g.0.hi3pt86ok8d",
+					"name": "id",
+					"type": "num",
+					"description": "",
+					"required": true,
+					"private": false
+				},
+				{
+					"id": "param.l76fv4nx.0.qb27cvs7vt",
+					"name": "name",
+					"type": "str",
+					"description": "",
+					"required": true,
+					"private": false
+				},
+				{
+					"id": "param.l76fvb5b.0.tg0t2yex2mf",
+					"name": "category",
+					"type": "type.l76frs5h.0.88147t8cu6a",
+					"description": "",
+					"required": false,
+					"private": false
+				},
+				{
+					"id": "param.l76fvhnu.0.rotw8cbt2oi",
+					"name": "photoUrls",
+					"type": "str",
+					"description": "",
+					"required": true,
+					"private": false,
+					"is_array": true
+				},
+				{
+					"id": "param.l76fvuk9.0.b9igej9gmzo",
+					"name": "tags",
+					"type": "str",
+					"description": "",
+					"required": false,
+					"private": false
+				},
+				{
+					"id": "param.l76fvx2d.0.lcx9cyytqoe",
+					"name": "status",
+					"type": "enum.l76ftcog.0.6v7284ufig7",
+					"description": "",
+					"required": false,
+					"private": false
+				}
+			],
+			"permissions": {},
+			"returnType": "type.l76ipoog.0.zj0z08o9kyr",
+			"is_array": false,
+			"returnName": "pet"
+		}
+	},
+	"types": {
+		"type.l76frs5h.0.88147t8cu6a": {
+			"id": "type.l76frs5h.0.88147t8cu6a",
+			"description": "Pet Category",
+			"name": "Categoory",
+			"fields": [
+				{
+					"id": "fld.l76fs78q.0.so2l8rlohg",
+					"name": "id",
+					"type": "num",
+					"description": "",
+					"required": true,
+					"private": false
+				},
+				{
+					"id": "fld.l76fset7.0.kga2adqhm39",
+					"name": "name",
+					"type": "str",
+					"description": "",
+					"required": false,
+					"private": false
+				}
+			],
+			"db_clear": false,
+			"db_table": ""
+		},
+		"type.l76ipoog.0.zj0z08o9kyr": {
+			"id": "type.l76ipoog.0.zj0z08o9kyr",
+			"description": "Pet type",
+			"name": "Pet",
+			"fields": [
+				{
+					"id": "fld.l76ipv47.0.et3j1thb9p4",
+					"name": "id",
+					"type": "num",
+					"description": "",
+					"required": false,
+					"private": false
+				},
+				{
+					"id": "fld.l76iq2x3.0.wsa9pil91u",
+					"name": "name",
+					"type": "str",
+					"description": "",
+					"required": false,
+					"private": false
+				}
+			],
+			"db_clear": false,
+			"db_table": ""
+		}
+	},
+	"permissions": {},
+	"functions": {},
+	"enums": {
+		"enum.l76ftcog.0.6v7284ufig7": {
+			"id": "enum.l76ftcog.0.6v7284ufig7",
+			"description": "",
+			"name": "PetStatus",
+			"fields": [
+				{
+					"id": "fld.l76ftiu5.0.gfwtr8v6n8e",
+					"name": "available",
+					"description": ""
+				},
+				{
+					"id": "fld.l76ftpwk.0.ffptrvvckd",
+					"name": "pending",
+					"description": ""
+				},
+				{
+					"id": "fld.l76fttxp.0.weexgwqrr9s",
+					"name": "sold",
+					"description": ""
+				}
+			]
+		}
+	},
+	"menus": {},
+	"guis": {},
+	"doc": "",
+	"short_descr": "Everything about your Pets"
+}
