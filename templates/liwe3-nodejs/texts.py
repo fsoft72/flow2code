@@ -31,6 +31,9 @@ export const init = ( liwe: ILiWE ) => {
 	liwe.cfg.app.languages.map( ( l ) => locale_load( "%(__name_lower)s", l ) );
 	user_db_init ( liwe );
 """,
+	"HEADER_END": """
+};
+""",
 
 	"ENDPOINT": """
 	app.%(__method_lower)s ( '/api%(url)s', %(__perms)s( req: ILRequest, res: ILResponse ) => {

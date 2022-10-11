@@ -35,6 +35,8 @@ class Template( TemplateBase ):
 		for ep in mod['endpoints'].values ():
 			self._generate_endpoint_code ( ep, out, mod )
 
+		out.write ( TEMPL [ 'HEADER_END' ] % self.snippets )
+
 		# close the output file
 		out.close()
 		print( "Generated", outfile )
@@ -67,7 +69,7 @@ class Template( TemplateBase ):
 			"__endpoint_name": self.endpoint_mk_function ( ep ),
 			"__perms": self._perms_get(ep, mod),
 			"__typed_dict": '',
-			"__params": "params",
+			"__params": "",
 		}
 
 		params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
