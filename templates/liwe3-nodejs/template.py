@@ -3,6 +3,7 @@
 # import TemplateBase
 import os
 from lib.template_base import TemplateBase
+from lib.const import FieldType
 
 from texts import texts as TEMPL
 
@@ -65,12 +66,32 @@ class Template( TemplateBase ):
 			"url": ep['url'],
 			"__endpoint_name": self.endpoint_mk_function ( ep ),
 			"__perms": self._perms_get(ep, mod),
-			"__typed_dict": self._typed_dict(ep, 'NAME'),
+			"__typed_dict": '',
 			"__params": "params",
 		}
 
+		params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
+
+		if params:
+			dct [ '__params' ] = ', '.join ( params ) + ', '
+
 		if dct [ '__perms' ]:
-			dct [ '__perms' ] += ','
+			dct [ '__perms' ] += ', '
+
+		m = dct [ '__method_lower' ]
+		if m in ( 'post', 'patch', 'put', 'delete' ):
+			dct [ 'req_mode' ] = 'req.body'
+		elif m == 'get':
+			if dct [ 'url'  ].find ( ":" ) == -1:
+				dct [ 'req_mode' ] = 'req.query as any'
+			else:
+				dct [ 'req_mode' ] = 'req.params'
+
+		dct [ '__typed_dict' ] = self._typed_dict ( ep, dct [ 'req_mode' ] )
+
+		if dct [ '__typed_dict' ]:
+			dct [ '__typed_dict' ] = "const { %s___errors } = %s;\n\n\t\tif ( ___errors.length ) return send_error ( res, { message: `Parameters error: ${___errors.join ( ', ' )}` } );" %  ( dct [ '__params' ], dct [ '__typed_dict' ] )
+
 
 		# write the endpoint code
 		out.write ( TEMPL [ 'ENDPOINT' ] % dct )
@@ -100,6 +121,8 @@ class Template( TemplateBase ):
 			dct = self.prepare_field ( f, TEMPL [ 'TYPED_DICT' ], TEMPL [ 'TYPED_DICT_OBJ' ], honour_float = True, use_enums = True )
 
 			res.append ( dct )
+
+		if not res: return ''
 
 		return 'typed_dict( %s, [\n\t\t\t%s\n\t\t] )' % ( dict_name, ',\n\t\t\t'.join ( res ) )
 
