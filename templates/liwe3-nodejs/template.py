@@ -2,7 +2,7 @@
 
 # import TemplateBase
 import os
-from lib.template import TemplateBase
+from lib.template_base import TemplateBase
 
 from texts import texts as TEMPL
 
@@ -32,7 +32,7 @@ class Template( TemplateBase ):
 		out.write ( TEMPL [ 'HEADER_START' ] % self.snippets )
 
 		for ep in mod['endpoints'].values ():
-			self._generate_endpoint_code ( ep, out )
+			self._generate_endpoint_code ( ep, out, mod )
 
 		# close the output file
 		out.close()
@@ -59,19 +59,49 @@ class Template( TemplateBase ):
 
 		self.snippets[ '_methods' ] = methods_str
 
-	def _generate_endpoint_code ( self, ep, out ):
-		print ( ep )
+	def _generate_endpoint_code ( self, ep, out, mod ):
 		dct = {
 			"__method_lower": ep['method'].lower(),
 			"url": ep['url'],
 			"__endpoint_name": self.endpoint_mk_function ( ep ),
-			"__perms": "perms", #ep['perms'],
-			"__typed_dict": "typed_dict",
+			"__perms": self._perms_get(ep, mod),
+			"__typed_dict": self._typed_dict(ep, 'NAME'),
 			"__params": "params",
 		}
 
+		if dct [ '__perms' ]:
+			dct [ '__perms' ] += ','
+
 		# write the endpoint code
 		out.write ( TEMPL [ 'ENDPOINT' ] % dct )
+
+	def _perms_get ( self, ep, mod ):
+		perms = ''
+
+		if not ep [ 'permissions' ] or 'public' in ep [ 'permissions' ]: return perms
+
+		if 'logged' in ep [ 'permissions' ]:
+			perms = 'perms( [ "is-logged" ] )'
+		else:
+			perm_names = []
+			for k in ep [ 'permissions' ].keys ():
+				perm_names.append ( mod [ 'permissions' ].get ( k ) [ 'name' ] )
+
+			perms = 'perms( [ %s ] )' % ( '"' + '", "'.join ( perm_names ) + '"' )
+
+		return perms
+
+	def _typed_dict ( self, ep, dict_name ):
+		res = []
+
+		for f in ep.get ( "parameters", [] ):
+			#if f [ "type" ] == FieldType.FILE: continue
+
+			dct = self.prepare_field ( f, TEMPL [ 'TYPED_DICT' ], TEMPL [ 'TYPED_DICT_OBJ' ], honour_float = True, use_enums = True )
+
+			res.append ( dct )
+
+		return 'typed_dict( %s, [\n\t\t\t%s\n\t\t] )' % ( dict_name, ',\n\t\t\t'.join ( res ) )
 
 	def code ( self, mod, output ):
 		self._generate_endpoint ( mod, output )

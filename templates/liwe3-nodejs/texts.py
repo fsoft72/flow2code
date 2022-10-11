@@ -43,4 +43,6 @@ export const init = ( liwe: ILiWE ) => {
 		} );
 	} );
 """,
+		"TYPED_DICT": '{ name: "%(name)s", type: "%(type)s"%(_req_param)s }',
+		"TYPED_DICT_OBJ": '{ name: "%(name)s", type: %(type)sObj%(_req_param)s }',
 }
