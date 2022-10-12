@@ -4,8 +4,10 @@
 import os
 from lib.template_base import TemplateBase
 from lib.const import FieldType
+from lib.types import Module, Endpoint
 
 from texts import texts as TEMPL
+
 
 class Template( TemplateBase ):
 
@@ -13,7 +15,7 @@ class Template( TemplateBase ):
 		super().__init__()
 		self.name = "liwe3-nodejs"
 
-	def _generate_endpoint ( self, mod, output ):
+	def _generate_endpoint ( self, mod: Module, output: str ):
 		mod_name = self.mod_name( mod )
 
 		# create the output directory
@@ -32,7 +34,7 @@ class Template( TemplateBase ):
 		# write the header
 		out.write ( TEMPL [ 'HEADER_START' ] % self.snippets )
 
-		for ep in mod['endpoints'].values ():
+		for ep in mod.endpoints.values ():
 			self._generate_endpoint_code ( ep, out, mod )
 
 		out.write ( TEMPL [ 'HEADER_END' ] % self.snippets )
@@ -47,7 +49,7 @@ class Template( TemplateBase ):
 		"""
 		# prepare the methods
 		methods = []
-		for ep in mod['endpoints'].values():
+		for ep in mod.endpoints.values():
 			name = self.endpoint_mk_function ( ep )
 			methods.append( name )
 
@@ -62,17 +64,18 @@ class Template( TemplateBase ):
 
 		self.snippets[ '_methods' ] = methods_str
 
-	def _generate_endpoint_code ( self, ep, out, mod ):
+	def _generate_endpoint_code ( self, ep: Endpoint, out, mod: Module ):
 		dct = {
-			"__method_lower": ep['method'].lower(),
-			"url": ep['url'],
+			"__method_lower": ep.method.lower(),
+			"url": ep.path,
 			"__endpoint_name": self.endpoint_mk_function ( ep ),
 			"__perms": self._perms_get(ep, mod),
 			"__typed_dict": '',
 			"__params": "",
 		}
 
-		params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
+		#params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
+		params = ep.fields( skip_file_fields= True )
 
 		if params:
 			dct [ '__params' ] = ', '.join ( params ) + ', '
@@ -101,23 +104,25 @@ class Template( TemplateBase ):
 	def _perms_get ( self, ep, mod ):
 		perms = ''
 
-		if not ep [ 'permissions' ] or 'public' in ep [ 'permissions' ]: return perms
+		if not ep.permissions or 'public' in ep.permissions: return perms
 
-		if 'logged' in ep [ 'permissions' ]:
+		if 'logged' in ep.permissions:
 			perms = 'perms( [ "is-logged" ] )'
 		else:
-			perm_names = []
-			for k in ep [ 'permissions' ].keys ():
+			"""
+			print ( "=== PERMS: ", ep.permissions )
+			for k in ep.permissions:
 				perm_names.append ( mod [ 'permissions' ].get ( k ) [ 'name' ] )
+			"""
 
-			perms = 'perms( [ %s ] )' % ( '"' + '", "'.join ( perm_names ) + '"' )
+			perms = 'perms( [ %s ] )' % ( '"' + '", "'.join ( ep.permissions ) + '"' )
 
 		return perms
 
 	def _typed_dict ( self, ep, dict_name ):
 		res = []
 
-		for f in ep.get ( "parameters", [] ):
+		for f in ep.parameters:
 			#if f [ "type" ] == FieldType.FILE: continue
 
 			dct = self.prepare_field ( f, TEMPL [ 'TYPED_DICT' ], TEMPL [ 'TYPED_DICT_OBJ' ], honour_float = True, use_enums = True )

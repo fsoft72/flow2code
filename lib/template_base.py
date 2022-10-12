@@ -5,6 +5,7 @@ import os
 from collections import defaultdict
 
 from .const import FieldType
+from .types import Module, Endpoint, Type
 
 # RegExp that extracts the name from d2r_start block_name and d2r_end block_name
 re_block_name = re.compile( r'.*(d2r|f2c)_(start|end)\s+(?P<name>[a-zA-Z0-9_]+)\s*')
@@ -23,6 +24,8 @@ class TemplateBase:
 		# and extracts all code contained in /* dr_start (block_name) */ and /* dr_end (block_name) */
 		# using the block_name as key in the snippets dictionary
 		# the code is stored in the snippets dictionary as a list of lines
+
+		self.mod = mod
 
 		self.snippets = {}
 
@@ -66,9 +69,9 @@ class TemplateBase:
 				block_lines.append( line )
 
 		self.snippets.update( {
-			'__name_camel': mod [ 'name' ].strip (),
-			'__name_lower': mod [ 'name' ].lower().strip().replace( ' ', '_' ),
-			'__name_upper': mod [ 'name' ].upper().strip().replace( ' ', '_' ),
+			'__name_camel': mod.name.strip (),
+			'__name_lower': mod.name.lower().strip().replace( ' ', '_' ),
+			'__name_upper': mod.name.upper().strip().replace( ' ', '_' ),
 		} )
 
 		# convert snippets to a defaultdict
@@ -77,11 +80,11 @@ class TemplateBase:
 	def code ( self, mod, output ):
 		print( "=== code() method not refined for", self.name )
 
-	def mod_name ( self, mod ):
-		return mod [ 'name' ].lower().strip().replace( ' ', '_' )
+	def mod_name ( self, mod: Module ):
+		return mod.name.lower().strip().replace( ' ', '_' )
 
 	def endpoint_mk_function ( self, ep ):
-		name = f"""{ep['method']}_{ep['url']}""".lower().replace ( "/", "_" )
+		name = f"""{ep.method}_{ep.path}""".lower().replace ( "/", "_" )
 
 		# remove all characters that are not a-z, 0-9 or _
 		name = re.sub( r'[^a-z0-9_-]', '', name )
@@ -95,16 +98,16 @@ class TemplateBase:
 		print ( "=== F: ", field )
 
 		dct = {
-			"name": field.get ( "name", "" ),
+			"name": field.name,
 			"type": "any",
 			"type_obj": False,
-			"required": field.get ( "required", False ),
-			"private": field.get ( "private", False ),
-			"description": field.get ( "description", "" ),
+			"required": field.required,
+			"private": field.private,
+			"description": field.description,
 			"opt": '',
-			"param_default": field.get ( "default" ),
-			"is_array": field.get ( "is_array", False ),
-			"default": field.get ( "default", None ),
+			"param_default": field.default,
+			"is_array": field.is_array,
+			"default": field.default,
 		}
 
 		# The template param holds the default template string to be used
@@ -133,36 +136,36 @@ class TemplateBase:
 			dct [ 'param_default' ] = ''
 		"""
 
-		_typ = field.get ( "type", "" )
+		_typ = field.type [ 0 ]
 
 		print ( "=== _typ: ", _typ )
 
-		if _typ == FieldType.STR.value:
+		if _typ == FieldType.STR:
 			dct [ 'type' ] = 'string'
 			if dct [ 'param_default' ] and dct [ 'param_default' ] != 'undefined':
 				dct [ 'param_default' ] = '"%s"' % dct [ 'param_default' ]
-		elif _typ == FieldType.NUMBER.value:
+		elif _typ == FieldType.NUMBER:
 			dct [ 'type' ] = 'number'
-		elif _typ == FieldType.FLOAT.value:
+		elif _typ == FieldType.FLOAT:
 			if honour_float:
 				dct [ 'type' ] = 'float'
 			else:
 				dct [ 'type' ] = 'number'
-		elif _typ == FieldType.BOOL.value:
+		elif _typ == FieldType.BOOL:
 			dct [ 'type' ] = 'boolean'
-		elif _typ == FieldType.DATE.value:
+		elif _typ == FieldType.DATE:
 			dct [ 'type' ] = 'Date'
-		elif _typ == FieldType.FILE.value:
+		elif _typ == FieldType.FILE:
 			dct [ 'type' ] = 'File'
-		elif _typ == FieldType.CUSTOM.value:
+		elif _typ == FieldType.CUSTOM:
 			typ = field.type [ 1 ]
 			dct [ 'type' ] = typ
-			if typ in self.parser.enums:
+			if typ in self.mod.flow.enums:
 				dct [ 'type' ] = self.parser.enums [ typ ].name
 				dct [ 'type_obj' ] = True
 				print ( dct )
 				if use_enums: templ = template_obj
-			elif typ in self.parser.structures:
+			elif typ in self.mod.flow.types:
 				dct [ 'type' ] = self.parser.structures [ typ ].name
 				dct [ 'type_obj' ] = True
 
@@ -194,6 +197,8 @@ class TemplateBase:
 			dct [ '_req_param' ] = ', required: %(_req)s%(_default)s' % dct
 		else:
 			dct [ '_req_param' ] = ''
+
+		print ( dct )
 
 
 		return templ % dct

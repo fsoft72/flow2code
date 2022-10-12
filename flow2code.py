@@ -14,11 +14,20 @@ import os
 import sys
 import importlib
 
+from lib.types import Module, Permission, Endpoint, Type, Enum, Function
+
 VERSION='0.1.0'
 
 class Flow2Code:
 	# List of modules to be converted
-	modules = []
+	modules: list[Module] = []
+
+	# Global variables
+	permissions: dict[str,Permission] = {}
+	endpoints: dict[str,Endpoint] = {}
+	types: dict[str,Type ] = {}
+	enums: dict[str,Enum] = {}
+	functions: dict[str,Function] = {}
 
 	# The template module instance
 	template = None
@@ -38,9 +47,9 @@ class Flow2Code:
 
 		if m:
 			for mod in data[ m ].values():
-				self.modules.append( mod )
+				self.modules.append( Module ( mod, self ) )
 		else:
-			self.modules.append( data )
+			self.modules.append( Module ( data, self ) )
 
 	def _open_template ( self, template_fname ):
 		# instance the template file from template_fname
