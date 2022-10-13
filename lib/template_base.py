@@ -19,7 +19,7 @@ class TemplateBase:
 	def __str__( self ):
 		return self.name
 
-	def extract_snippets ( self, mod, fname ):
+	def extract_snippets ( self, mod: Module, fname: str ):
 		# load the whole fname in memory
 		# and extracts all code contained in /* dr_start (block_name) */ and /* dr_end (block_name) */
 		# using the block_name as key in the snippets dictionary
@@ -74,17 +74,15 @@ class TemplateBase:
 			'__name_upper': mod.name.upper().strip().replace( ' ', '_' ),
 		} )
 
-		# convert snippets to a defaultdict
-		self.snippets = defaultdict( lambda: '', self.snippets )
 
 	def code ( self, mod, output ):
 		print( "=== code() method not refined for", self.name )
 
 	def mod_name ( self, mod: Module ):
-		return mod.name.lower().strip().replace( ' ', '_' )
+		return mod.name.lower().strip().replace( ' ', '_' ).replace ( '-', '_' )
 
 	def endpoint_mk_function ( self, ep ):
-		name = f"""{ep.method}_{ep.path}""".lower().replace ( "/", "_" )
+		name = f"""{ep.method}_{ep.path}""".lower().replace ( "/", "_" ).replace ( "-", "_" )
 
 		# remove all characters that are not a-z, 0-9 or _
 		name = re.sub( r'[^a-z0-9_-]', '', name )
@@ -93,6 +91,45 @@ class TemplateBase:
 		name = re.sub( r'__+', '_', name )
 		name = name.strip( '_' )
 		return name
+
+	def create_file ( self, full_path: str, mod: Module, keep_all_snippets: bool = False ):
+		"""
+		This method creates a new output file
+		It also creates all the missing directories and extract snippets from the file if it exists.
+
+		@param full_path: the full path of the file to create
+		@param keep_all_snippets: if True, all the snippets are kept in the snippets dictionary
+
+		@return: the file object
+		"""
+		# get the full path of the file
+		full_path = os.path.abspath( full_path )
+
+		# get the directory of the file
+		dirname = os.path.dirname( full_path )
+
+		# get the file name
+		filename = os.path.basename( full_path )
+
+		# create the directory if it does not exist
+		if not os.path.isdir( dirname ): os.makedirs( dirname, exist_ok = True )
+
+		# if we don't keep all the snippets, we clear the snippets dictionary
+		if not keep_all_snippets: self.snippets = {}
+
+		# check if the file exists
+		if os.path.isfile( full_path ):
+			# extract snippets from the file
+			self.extract_snippets( mod, full_path )
+
+		# convert snippets to a defaultdict
+		self.snippets = defaultdict( lambda: '', self.snippets )
+
+		# open the file
+		f = open( full_path, 'w' )
+
+		# return the file object
+		return f
 
 	def prepare_field ( self, field, template, template_obj, honour_float = False, file_is_null = False, use_enums = False ):
 		print ( "=== F: ", field )
@@ -202,3 +239,16 @@ class TemplateBase:
 
 
 		return templ % dct
+
+
+	def join_newlines ( self, lst: list[str], num_elems: int = 5 ) -> str:
+		# convert methods to a string, adding a new line every 5 elements
+		res = ''
+		for i, m in enumerate( lst ):
+			res += m
+			if i % num_elems == ( num_elems -1 ):
+				res += ',\n\t'
+			else:
+				res += ', '
+
+		return res
