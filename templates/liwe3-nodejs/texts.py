@@ -12,7 +12,7 @@ import { locale_load } from '../../liwe/locale';
 import { perms } from '../../liwe/auth';
 
 import {
-	%(_methods)s
+	%(__methods)s
 } from './methods';
 
 import {
@@ -48,4 +48,31 @@ export const init = ( liwe: ILiWE ) => {
 """,
 		"TYPED_DICT": '{ name: "%(name)s", type: "%(type)s"%(_req_param)s }',
 		"TYPED_DICT_OBJ": '{ name: "%(name)s", type: %(type)sObj%(_req_param)s }',
+		"METHODS_FILE_START": """
+import { ILRequest, ILResponse, LCback, ILiweConfig, ILError, ILiWE } from '../../liwe/types';
+import { mkid } from '../../liwe/utils';
+import { collection_add, collection_count, collection_count_dict, collection_find_all, collection_find_one, collection_find_one_dict, collection_find_all_dict, collection_del_one_dict, collection_del_all_dict, collection_init, prepare_filters } from '../../liwe/arangodb';
+import { DocumentCollection } from 'arangojs/collection';
+import { $l } from '../../liwe/locale';
+
+import {
+	%(__interfaces)s
+} from './types';
+
+let _liwe: ILiWE = null;
+
+const _ = ( txt: string, vals: any = null, plural = false ) => {
+	return $l( txt, vals, plural, "%(__name_lower)s" );
+};
+
+%(_collections)s
+
+/*=== d2r_start __file_header === */
+%(_snippet)s
+/*=== d2r_end __file_header ===*/
+""",
+	"METHODS_FILE_END": """
+};
+"""
+
 }

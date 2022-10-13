@@ -19,17 +19,11 @@ class Template( TemplateBase ):
 		mod_name = self.mod_name( mod )
 
 		# create the output directory
-		outdir = os.path.join( output, "server", "modules", mod_name )
-		os.makedirs( outdir, exist_ok=True,  )
+		outfile = os.path.join( output, "server", "modules", mod_name, "endpoints.ts" )
+		out = self.create_file( outfile, mod )
 
-		# create the output file
-		outfile = os.path.join( outdir, 'endpoints.ts' )
-
-		# extract snippets
-		self.extract_snippets( mod, outfile )
+		# prepare the methods names
 		self._prepare_methods_names ( mod )
-
-		out = open( outfile, 'w' )
 
 		# write the header
 		out.write ( TEMPL [ 'HEADER_START' ] % self.snippets )
@@ -53,16 +47,10 @@ class Template( TemplateBase ):
 			name = self.endpoint_mk_function ( ep )
 			methods.append( name )
 
-		# convert methods to a string, adding a new line every 5 elements
-		methods_str = ''
-		for i, m in enumerate( methods ):
-			methods_str += m
-			if i % 5 == 0:
-				methods_str += ',\n\t'
-			else:
-				methods_str += ', '
+		# sort the methods
+		methods.sort()
 
-		self.snippets[ '_methods' ] = methods_str
+		self.snippets[ '__methods' ] = self.join_newlines( methods )
 
 	def _generate_endpoint_code ( self, ep: Endpoint, out, mod: Module ):
 		dct = {
@@ -133,5 +121,35 @@ class Template( TemplateBase ):
 
 		return 'typed_dict( %s, [\n\t\t\t%s\n\t\t] )' % ( dict_name, ',\n\t\t\t'.join ( res ) )
 
+	def _generate_methods ( self, mod: Module, output: str ):
+		"""
+		generate the methods.ts file
+		"""
+		mod_name = self.mod_name( mod )
+
+		# create the output directory
+		outfile = os.path.join( output, "server", "modules", mod_name, "methods.ts" )
+		out = self.create_file( outfile, mod )
+
+		k = list ( [ x.name for x in mod.types.values () ] ) + list ( [ x.name + "Keys" for x in mod.types.values () ] ) +  list ( [ x.name for x in mod.enums.values () ] )
+		k.sort ()
+		self.snippets [ "__interfaces" ] = self.join_newlines(k)
+
+		# write the header
+		out.write ( TEMPL [ 'METHODS_FILE_START' ] % self.snippets )
+
+		"""
+		for ep in mod.endpoints.values ():
+			self._generate_endpoint_code ( ep, out, mod )
+		"""
+
+		out.write ( TEMPL [ 'METHODS_FILE_END' ] % self.snippets )
+
+		# close the output file
+		out.close()
+
+		print( "Generated", outfile )
+
 	def code ( self, mod, output ):
 		self._generate_endpoint ( mod, output )
+		self._generate_methods ( mod, output )
