@@ -78,10 +78,12 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
 
 	"FOLDING_EP_START": """// {{{ %(endpoint_name)s ( req: ILRequest, %(__parameters)scback: LCBack = null ): Promise<%(return_type)s>""",
 	"FOLDING_END": """// }}}\n\n""",
+	"EP_TYPED_PARAM": "%(name)s%(opt)s: %(type)s%(param_default)s",
+	"EP_DOC_FIELD": "@param %(name)s - %(doc)s [%(_is_req)s]",
+	"EP_DOC_RETURN": "@return %(name)s: %(type)s%(doc)s",
 	"EP_START": """
 /**
- * %(description)s
- *
+%(__description)s
  */
 export const %(endpoint_name)s = ( req: ILRequest, %(__parameters)scback: LCback = null ): Promise<%(return_type)s> => {
 	return new Promise( async ( resolve, reject ) => {
@@ -90,5 +92,6 @@ export const %(endpoint_name)s = ( req: ILRequest, %(__parameters)scback: LCback
 		"EP_END": """
 		/*=== d2r_end %(endpoint_name)s ===*/
 	} );
+};
 """,
 }

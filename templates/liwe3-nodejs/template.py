@@ -128,16 +128,54 @@ class Template( TemplateBase ):
 	def _generate_endpoint ( self, fout, ep: Endpoint ):
 		name = self.endpoint_mk_function ( ep )
 
-		params = ep.fields( skip_file_fields= True )
+		params = []
+		doc = []
+		for p in ep.parameters:
+			if p.type == FieldType.FILE: continue
+			params.append ( self.prepare_field ( p, TEMPL [ 'EP_TYPED_PARAM' ], '', honour_float = True, use_enums = True ) )
+			dct = {
+				"name": p.name,
+				"doc": p.description,
+				"_is_req": "req" if p.required else "opt",
+			}
+			doc.append ( TEMPL [ 'EP_DOC_FIELD' ] % dct )
 
 		if params:
 			params = ', '.join ( params ) + ', '
 		else:
 			params = ''
 
+		if ep.description:
+			description = [ x for x in ep.description.split ( '\n' ) if x.strip() ] + [ '' ] + doc
+		else:
+			description = doc
+
+		ret_descr = ep.return_description
+		if ret_descr:
+			ret_descr = " - " + ret_descr
+		else:
+			ret_descr = ''
+
+		description.append ( "" )
+		description.append ( TEMPL [ 'EP_DOC_RETURN' ] % {
+			"doc": ret_descr,
+			"name": ep.return_name,
+			"type": ep.return_type
+		})
+
+		description = ' * ' + '\n * '.join ( description ) + '\n *'
+
+		"""
+		if doc:
+			doc = '\n'.join ( doc )
+		else:
+			doc = ''
+		"""
+
+
 		dct = {
 			"endpoint_name": name,
-			"description": ep.description, # TODO:  + engine._pack_doc_fields ( ep ),
+			"__description": description, # + '\n' +  doc,
 			"return_type": type2typescript ( ep.return_type ),
 			"__parameters": params,
 			"__snippet": self.snippets [ name ],

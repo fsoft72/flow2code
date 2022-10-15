@@ -134,8 +134,6 @@ class TemplateBase:
 		return f
 
 	def prepare_field ( self, field, template, template_obj, honour_float = False, file_is_null = False, use_enums = False ):
-		print ( "=== F: ", field )
-
 		dct = {
 			"name": field.name,
 			"type": "any",
