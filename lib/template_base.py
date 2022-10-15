@@ -12,6 +12,7 @@ re_block_name = re.compile( r'.*(d2r|f2c)_(start|end)\s+(?P<name>[a-zA-Z0-9_]+)\
 
 class TemplateBase:
 	snippets = {}
+	mod: Module = None
 
 	def __init__( self ):
 		self.name = "Base Template"
@@ -25,7 +26,7 @@ class TemplateBase:
 		# using the block_name as key in the snippets dictionary
 		# the code is stored in the snippets dictionary as a list of lines
 
-		self.mod = mod
+		#self.mod = mod
 
 		self.snippets = {}
 
@@ -76,6 +77,7 @@ class TemplateBase:
 
 
 	def code ( self, mod, output ):
+		self.mod = mod
 		print( "=== code() method not refined for", self.name )
 
 	def mod_name ( self, mod: Module ):

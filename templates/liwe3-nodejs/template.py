@@ -53,6 +53,8 @@ class Template( TemplateBase ):
 		self.snippets[ '__methods' ] = self.join_newlines( methods )
 
 	def _generate_endpoint_code ( self, ep: Endpoint, out, mod: Module ):
+		self.mod = mod
+
 		dct = {
 			"__method_lower": ep.method.lower(),
 			"url": ep.path,
@@ -134,6 +136,17 @@ class Template( TemplateBase ):
 		k = list ( [ x.name for x in mod.types.values () ] ) + list ( [ x.name + "Keys" for x in mod.types.values () ] ) +  list ( [ x.name for x in mod.enums.values () ] )
 		k.sort ()
 		self.snippets [ "__interfaces" ] = self.join_newlines(k)
+
+		res = []
+		res2 = []
+
+		for typ in mod.types.values():
+			if typ.coll_table:
+				res.append ( TEMPL [ 'TYPE_COLL_VAR' ] % typ.coll_table )
+				res2.append ( TEMPL [ 'TYPE_COLL_CONST' ] % ( typ.coll_table.upper(), typ.coll_table ) )
+
+		self.snippets [ "__collections" ] = '\n'.join ( res ) + '\n\n' + '\n'.join ( res2 )
+
 
 		# write the header
 		out.write ( TEMPL [ 'METHODS_FILE_START' ] % self.snippets )

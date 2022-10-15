@@ -66,6 +66,7 @@ class Flow2Code:
 
 	def code ( self, outdir ):
 		for m in self.modules:
+			m.flow = self
 			self.template.code( m, outdir )
 
 

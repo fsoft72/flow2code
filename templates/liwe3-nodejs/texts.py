@@ -65,7 +65,7 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
 	return $l( txt, vals, plural, "%(__name_lower)s" );
 };
 
-%(_collections)s
+%(__collections)s
 
 /*=== d2r_start __file_header === */
 %(_snippet)s
@@ -73,6 +73,7 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
 """,
 	"METHODS_FILE_END": """
 };
-"""
-
+""",
+	"TYPE_COLL_VAR": "let _coll_%s: DocumentCollection = null",
+	"TYPE_COLL_CONST": "const COLL_%s = '%s'",
 }
