@@ -73,16 +73,20 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
 
 """,
 	"METHODS_FILE_END": """\n""",
-	"TYPE_COLL_VAR": "let _coll_%s: DocumentCollection = null",
-	"TYPE_COLL_CONST": "const COLL_%s = '%s'",
+	"TYPE_COLL_VAR": "let _coll_%s: DocumentCollection = null;",
+	"TYPE_COLL_CONST": 'const COLL_%s = "%s";',
 
 	"FOLDING_EP_START": """// {{{ %(endpoint_name)s ( req: ILRequest, %(__parameters)scback: LCBack = null ): Promise<%(return_type)s>""",
+	"FOLDING_FN_START": """// {{{ %(function_name)s ( %(__parameters)scback: LCBack = null ): Promise<%(return_type)s>""",
 	"FOLDING_END": """// }}}\n\n""",
 	"EP_TYPED_PARAM": "%(name)s%(opt)s: %(type)s%(param_default)s",
 	"EP_DOC_FIELD": "@param %(name)s - %(doc)s [%(_is_req)s]",
 	"EP_DOC_RETURN": "@return %(name)s: %(type)s%(doc)s",
+	"DB_INDEX": """{ type: "%(_type)s", fields: [ "%(_name)s" ], unique: %(_unique)s },""",
+	"COLL_DEF": """%(coll_name)s = await collection_init( liwe.db, %(table_name)s, [\n\t\t\t%(rows)s\n\t\t], %(coll_drop)s );\n""",
 	"EP_START": """
 /**
+ *
 %(__description)s
  */
 export const %(endpoint_name)s = ( req: ILRequest, %(__parameters)scback: LCback = null ): Promise<%(return_type)s> => {
@@ -91,6 +95,20 @@ export const %(endpoint_name)s = ( req: ILRequest, %(__parameters)scback: LCback
 %(__snippet)s""",
 		"EP_END": """
 		/*=== d2r_end %(endpoint_name)s ===*/
+	} );
+};
+""",
+		"FUNCTION_START": """
+/**
+ *
+%(__description)s
+ */
+export const %(function_name)s = ( %(__parameters)scback: LCback = null ): Promise<%(return_type)s> => {
+	return new Promise( async ( resolve, reject ) => {
+%(__pre_snip)s		/*=== d2r_start %(function_name)s ===*/
+%(__snippet)s
+""",
+		"FUNCTION_END": """		/*=== d2r_end %(function_name)s ===*/
 	} );
 };
 """,

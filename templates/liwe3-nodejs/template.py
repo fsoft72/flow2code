@@ -4,7 +4,7 @@
 import os
 from lib.template_base import TemplateBase
 from lib.const import FieldType
-from lib.types import Module, Endpoint
+from lib.types import Module, Endpoint, Function
 from lib.utils import type2typescript
 
 from texts import texts as TEMPL
@@ -145,37 +145,11 @@ class Template( TemplateBase ):
 		else:
 			params = ''
 
-		if ep.description:
-			description = [ x for x in ep.description.split ( '\n' ) if x.strip() ] + [ '' ] + doc
-		else:
-			description = doc
-
-		ret_descr = ep.return_description
-		if ret_descr:
-			ret_descr = " - " + ret_descr
-		else:
-			ret_descr = ''
-
-		description.append ( "" )
-		description.append ( TEMPL [ 'EP_DOC_RETURN' ] % {
-			"doc": ret_descr,
-			"name": ep.return_name,
-			"type": ep.return_type
-		})
-
-		description = ' * ' + '\n * '.join ( description ) + '\n *'
-
-		"""
-		if doc:
-			doc = '\n'.join ( doc )
-		else:
-			doc = ''
-		"""
-
+		documentation = self.mk_documentation( ep.description, doc, ep.return_name, ep.return_type, ep.return_description, TEMPL )
 
 		dct = {
 			"endpoint_name": name,
-			"__description": description, # + '\n' +  doc,
+			"__description": documentation,
 			"return_type": type2typescript ( ep.return_type ),
 			"__parameters": params,
 			"__snippet": self.snippets [ name ],
@@ -187,6 +161,88 @@ class Template( TemplateBase ):
 		fout.write ( TEMPL [ 'FOLDING_EP_START' ] % dct )
 		fout.write ( TEMPL [ 'EP_START' ] % dct )
 		fout.write ( TEMPL [ 'EP_END' ] % dct )
+		fout.write ( TEMPL [ 'FOLDING_END' ] % dct )
+
+	def _gen_db_init ( self, ep: Endpoint, mod: Module, TEMPL: dict[str, str] ):
+		res = [ "\t\t_liwe = liwe;\n" ]
+
+		DB_INDEX = TEMPL [ 'DB_INDEX' ]
+
+		for k, v in mod.types.items ():
+			coll = []
+			if not v.coll_table: continue
+
+			for f in v.fields:
+				idx = ''
+				if f.idx_unique:
+					idx = DB_INDEX % ( { "_unique": 'true', "_name": f.name, "_type": "persistent" } )
+				elif f.idx_multi:
+					idx = DB_INDEX % ( { "_unique": 'false', "_name": f.name, "_type": "persistent" } )
+				elif f.idx_array:
+					idx = DB_INDEX % ( { "_unique": 'false', "_name": f.name + "[*]", "_type": "persistent" } )
+				elif f.idx_fulltext:
+					idx = DB_INDEX % ( { "_unique": 'false', "_name": f.name, "_type": "fulltext" } )
+
+				if not idx: continue
+
+				coll.append ( idx )
+
+			if coll:
+				dct = {
+					"coll_name": '_coll_%s' % v.coll_table,
+					"table_name": 'COLL_' + v.coll_table.upper (),
+					"rows": '\n\t\t\t'.join ( coll )
+				}
+
+				if v.coll_drop:
+					dct [ 'coll_drop' ] = '{ drop: true }'
+				else:
+					dct [ 'coll_drop' ] = '{ drop: false }'
+
+				res.append ( TEMPL [ 'COLL_DEF' ] % dct )
+
+		return '\n\t\t'.join ( res ) + "\n"
+
+	def _generate_function ( self, fout, fn: Function, mod: Module, ep: Endpoint ):
+		name = fn.name
+
+		params = []
+		doc = []
+		for p in fn.parameters:
+			if p.type == FieldType.FILE: continue
+			params.append ( self.prepare_field ( p, TEMPL [ 'EP_TYPED_PARAM' ], '', honour_float = True, use_enums = True ) )
+			dct = {
+				"name": p.name,
+				"doc": p.description,
+				"_is_req": "req" if p.required else "opt",
+			}
+			doc.append ( TEMPL [ 'EP_DOC_FIELD' ] % dct )
+
+		if params:
+			params = ', '.join ( params ) + ', '
+		else:
+			params = ''
+
+		params, documentation = self.params_and_doc( fn, TEMPL)
+
+		dct = {
+			"function_name": name,
+			"__description": documentation,
+			"return_type": type2typescript ( fn.return_type ),
+			"__parameters": params,
+			"__snippet": self.snippets [ name ],
+			"__pre_snip": "",
+		}
+
+		if fn.is_array:
+			dct [ 'return_type' ] += '[]'
+
+		if name.endswith ( "_db_init" ):
+			dct [ '__pre_snip' ] = self._gen_db_init ( ep, mod, TEMPL )
+
+		fout.write ( TEMPL [ 'FOLDING_FN_START' ] % dct )
+		fout.write ( TEMPL [ 'FUNCTION_START' ] % dct )
+		fout.write ( TEMPL [ 'FUNCTION_END' ] % dct )
 		fout.write ( TEMPL [ 'FOLDING_END' ] % dct )
 
 
@@ -219,6 +275,9 @@ class Template( TemplateBase ):
 
 		for ep in mod.endpoints.values ():
 			self._generate_endpoint ( out, ep )
+
+		for fn in mod.functions.values():
+			self._generate_function ( out, fn, mod, ep )
 
 		out.write ( TEMPL [ 'METHODS_FILE_END' ] % self.snippets )
 

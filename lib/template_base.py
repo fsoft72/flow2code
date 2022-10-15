@@ -5,7 +5,7 @@ import os
 from collections import defaultdict
 
 from .const import FieldType
-from .types import Module, Endpoint, Type
+from .types import Module, Endpoint, Type, Function
 
 # RegExp that extracts the name from d2r_start block_name and d2r_end block_name
 re_block_name = re.compile( r'.*(d2r|f2c)_(start|end)\s+(?P<name>[a-zA-Z0-9_]+)\s*')
@@ -252,3 +252,48 @@ class TemplateBase:
 				res += ', '
 
 		return res
+
+	def mk_documentation ( self, main_doc: str, params_doc: list[str], ret_name: str, ret_type: str, ret_doc: str, TEMPL: dict[str,str] ) -> str:
+		if main_doc:
+			description = [ x for x in main_doc.split ( '\n' ) if x.strip() ] + [ '' ] + params_doc
+		else:
+			description = params_doc
+
+		ret_descr = ret_doc
+		if ret_descr:
+			ret_descr = " - " + ret_descr
+		else:
+			ret_descr = ''
+
+		description.append ( "" )
+		description.append ( TEMPL [ 'EP_DOC_RETURN' ] % {
+			"doc": ret_descr,
+			"name": ret_name,
+			"type": ret_type,
+		})
+
+		description = ' * ' + '\n * '.join ( description ) + '\n *'
+
+		return description
+
+	def params_and_doc ( self, fn: Endpoint | Function, TEMPL: dict[str,str] ) -> tuple[list[str],list[str]]:
+		params = []
+		doc = []
+		for p in fn.parameters:
+			if p.type == FieldType.FILE: continue
+			params.append ( self.prepare_field ( p, TEMPL [ 'EP_TYPED_PARAM' ], '', honour_float = True, use_enums = True ) )
+			dct = {
+				"name": p.name,
+				"doc": p.description,
+				"_is_req": "req" if p.required else "opt",
+			}
+			doc.append ( TEMPL [ 'EP_DOC_FIELD' ] % dct )
+
+		if params:
+			params = ', '.join ( params ) + ', '
+		else:
+			params = ''
+
+		documentation = self.mk_documentation( fn.description, doc, fn.return_name, fn.return_type, fn.return_description, TEMPL )
+
+		return [ params, documentation ]
