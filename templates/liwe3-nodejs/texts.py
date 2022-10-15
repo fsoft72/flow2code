@@ -68,12 +68,27 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
 %(__collections)s
 
 /*=== d2r_start __file_header === */
-%(_snippet)s
+%(__file_header)s
 /*=== d2r_end __file_header ===*/
+
 """,
-	"METHODS_FILE_END": """
-};
-""",
+	"METHODS_FILE_END": """\n""",
 	"TYPE_COLL_VAR": "let _coll_%s: DocumentCollection = null",
 	"TYPE_COLL_CONST": "const COLL_%s = '%s'",
+
+	"FOLDING_EP_START": """// {{{ %(endpoint_name)s ( req: ILRequest, %(__parameters)scback: LCBack = null ): Promise<%(return_type)s>""",
+	"FOLDING_END": """// }}}\n\n""",
+	"EP_START": """
+/**
+ * %(description)s
+ *
+ */
+export const %(endpoint_name)s = ( req: ILRequest, %(__parameters)scback: LCback = null ): Promise<%(return_type)s> => {
+	return new Promise( async ( resolve, reject ) => {
+		/*=== d2r_start %(endpoint_name)s ===*/
+%(__snippet)s""",
+		"EP_END": """
+		/*=== d2r_end %(endpoint_name)s ===*/
+	} );
+""",
 }

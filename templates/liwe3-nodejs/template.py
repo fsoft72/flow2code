@@ -5,6 +5,7 @@ import os
 from lib.template_base import TemplateBase
 from lib.const import FieldType
 from lib.types import Module, Endpoint
+from lib.utils import type2typescript
 
 from texts import texts as TEMPL
 
@@ -15,7 +16,7 @@ class Template( TemplateBase ):
 		super().__init__()
 		self.name = "liwe3-nodejs"
 
-	def _generate_endpoint ( self, mod: Module, output: str ):
+	def _generate_file_endpoints ( self, mod: Module, output: str ):
 		mod_name = self.mod_name( mod )
 
 		# create the output directory
@@ -29,7 +30,7 @@ class Template( TemplateBase ):
 		out.write ( TEMPL [ 'HEADER_START' ] % self.snippets )
 
 		for ep in mod.endpoints.values ():
-			self._generate_endpoint_code ( ep, out, mod )
+			self._endpoint_definition ( ep, out, mod )
 
 		out.write ( TEMPL [ 'HEADER_END' ] % self.snippets )
 
@@ -52,7 +53,7 @@ class Template( TemplateBase ):
 
 		self.snippets[ '__methods' ] = self.join_newlines( methods )
 
-	def _generate_endpoint_code ( self, ep: Endpoint, out, mod: Module ):
+	def _endpoint_definition ( self, ep: Endpoint, out, mod: Module ):
 		self.mod = mod
 
 		dct = {
@@ -123,7 +124,35 @@ class Template( TemplateBase ):
 
 		return 'typed_dict( %s, [\n\t\t\t%s\n\t\t] )' % ( dict_name, ',\n\t\t\t'.join ( res ) )
 
-	def _generate_methods ( self, mod: Module, output: str ):
+
+	def _generate_endpoint ( self, fout, ep: Endpoint ):
+		name = self.endpoint_mk_function ( ep )
+
+		params = ep.fields( skip_file_fields= True )
+
+		if params:
+			params = ', '.join ( params ) + ', '
+		else:
+			params = ''
+
+		dct = {
+			"endpoint_name": name,
+			"description": ep.description, # TODO:  + engine._pack_doc_fields ( ep ),
+			"return_type": type2typescript ( ep.return_type ),
+			"__parameters": params,
+			"__snippet": self.snippets [ name ],
+		}
+
+		if ep.is_array:
+			dct [ 'return_type' ] += '[]'
+
+		fout.write ( TEMPL [ 'FOLDING_EP_START' ] % dct )
+		fout.write ( TEMPL [ 'EP_START' ] % dct )
+		fout.write ( TEMPL [ 'EP_END' ] % dct )
+		fout.write ( TEMPL [ 'FOLDING_END' ] % dct )
+
+
+	def _generate_file_methods ( self, mod: Module, output: str ):
 		"""
 		generate the methods.ts file
 		"""
@@ -147,14 +176,11 @@ class Template( TemplateBase ):
 
 		self.snippets [ "__collections" ] = '\n'.join ( res ) + '\n\n' + '\n'.join ( res2 )
 
-
 		# write the header
 		out.write ( TEMPL [ 'METHODS_FILE_START' ] % self.snippets )
 
-		"""
 		for ep in mod.endpoints.values ():
-			self._generate_endpoint_code ( ep, out, mod )
-		"""
+			self._generate_endpoint ( out, ep )
 
 		out.write ( TEMPL [ 'METHODS_FILE_END' ] % self.snippets )
 
@@ -164,5 +190,5 @@ class Template( TemplateBase ):
 		print( "Generated", outfile )
 
 	def code ( self, mod, output ):
-		self._generate_endpoint ( mod, output )
-		self._generate_methods ( mod, output )
+		self._generate_file_endpoints ( mod, output )
+		self._generate_file_methods ( mod, output )

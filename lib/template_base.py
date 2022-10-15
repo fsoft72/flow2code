@@ -59,7 +59,7 @@ class TemplateBase:
 				block_name = g.group( 'name' )
 
 				# store the block lines in the snippets dictionary
-				self.snippets [ block_name ] = ''.join ( block_lines )
+				self.snippets [ block_name ] = ''.join ( block_lines ).rstrip()
 
 				# initialize the block lines
 				block_lines = []
