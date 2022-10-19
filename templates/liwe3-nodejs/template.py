@@ -140,7 +140,7 @@ class Template( TemplateBase ):
 		doc = []
 		for p in ep.parameters:
 			if p.type == FieldType.FILE: continue
-			params.append ( self.prepare_field ( p, TEMPL [ 'EP_TYPED_PARAM' ], '', honour_float = True, use_enums = True ) )
+			params.append ( self.prepare_field ( p, TEMPL [ 'EP_TYPED_PARAM' ], TEMPL [ 'EP_TYPED_PARAM' ], honour_float = False, use_enums = True ) )
 			dct = {
 				"name": p.name,
 				"doc": p.description,
@@ -158,7 +158,7 @@ class Template( TemplateBase ):
 		dct = {
 			"endpoint_name": name,
 			"__description": documentation,
-			"return_type": type2typescript ( ep.return_type ),
+			"return_type": type2typescript ( ep.return_type, self.mod.flow ),
 			"__parameters": params,
 			"__snippet": self.snippets [ name ],
 		}
@@ -273,7 +273,7 @@ class Template( TemplateBase ):
 		dct = {
 			"function_name": name,
 			"__description": documentation,
-			"return_type": type2typescript ( fn.return_type ),
+			"return_type": type2typescript ( fn.return_type, self.mod.flow ),
 			"__parameters": params,
 			"__snippet": self.snippets [ name ],
 			"__pre_snip": "",

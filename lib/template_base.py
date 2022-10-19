@@ -237,6 +237,10 @@ class TemplateBase:
 		else:
 			dct [ '_req_param' ] = ''
 
+		if dct [ 'type' ].startswith ( ( 'type.', 'enum.' ) ):
+			dct [ 'type' ] = 'any'
+			if self.mod.flow.strict: raise Exception ( "Type or enum not found: %s" % dct [ 'type' ] )
+
 		return templ % dct
 
 

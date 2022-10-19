@@ -32,7 +32,11 @@ class Flow2Code:
 	# The template module instance
 	template = None
 
-	def __init__( self, flow, template ):
+	strict: bool = False
+
+	def __init__( self, flow, template, strict ):
+		self.strict = strict
+
 		self._open_flow ( flow )
 		self._open_template ( template )
 
@@ -75,9 +79,10 @@ if __name__ == "__main__":
 	parser.add_argument( 'flow', help='Flow file to convert' )
 	parser.add_argument( '-o', '--output', help='Output directory' )
 	parser.add_argument( '-t', '--template', help='Template file' )
+	parser.add_argument ( '--strict', action='store_true', help='Strict mode' )
 	parser.add_argument( '-v', '--version', action='version', version='%(prog)s ' + VERSION )
 
 	args = parser.parse_args()
 
-	f2c = Flow2Code( args.flow, args.template )
+	f2c = Flow2Code( args.flow, args.template, args.strict )
 	res = f2c.code ( args.output )
