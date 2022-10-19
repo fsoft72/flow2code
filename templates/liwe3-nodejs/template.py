@@ -106,7 +106,7 @@ class Template( TemplateBase ):
 		# write the endpoint code
 		out.write ( TEMPL [ 'ENDPOINT' ] % dct )
 
-	def _perms_get ( self, ep, mod ):
+	def _perms_get ( self, ep: Endpoint, mod: Module ) -> str:
 		perms = ''
 
 		if not ep.permissions or 'public' in ep.permissions: return perms

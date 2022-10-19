@@ -22,9 +22,9 @@ import {
 	%(__interfaces)s
 } from './types';
 
-// d2r_start __header
+/*=== f2c_start __header ===*/
 %(__header)s
-// d2r_end __header
+/*=== f2c_end __header ===*/
 
 export const init = ( liwe: ILiWE ) => {
 	const app = liwe.app;
@@ -70,9 +70,9 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
 
 %(__collections)s
 
-/*=== d2r_start __file_header === */
+/*=== f2c_start __file_header === */
 %(__file_header)s
-/*=== d2r_end __file_header ===*/
+/*=== f2c_end __file_header ===*/
 
 """,
 	"METHODS_FILE_END": """\n""",
@@ -94,10 +94,10 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
  */
 export const %(endpoint_name)s = ( req: ILRequest, %(__parameters)scback: LCback = null ): Promise<%(return_type)s> => {
 	return new Promise( async ( resolve, reject ) => {
-		/*=== d2r_start %(endpoint_name)s ===*/
+		/*=== f2c_start %(endpoint_name)s ===*/
 %(__snippet)s""",
 		"EP_END": """
-		/*=== d2r_end %(endpoint_name)s ===*/
+		/*=== f2c_end %(endpoint_name)s ===*/
 	} );
 };
 """,
@@ -108,10 +108,10 @@ export const %(endpoint_name)s = ( req: ILRequest, %(__parameters)scback: LCback
  */
 export const %(function_name)s = ( %(__parameters)scback: LCback = null ): Promise<%(return_type)s> => {
 	return new Promise( async ( resolve, reject ) => {
-%(__pre_snip)s		/*=== d2r_start %(function_name)s ===*/
+%(__pre_snip)s		/*=== f2c_start %(function_name)s ===*/
 %(__snippet)s
 """,
-		"FUNCTION_END": """		/*=== d2r_end %(function_name)s ===*/
+		"FUNCTION_END": """		/*=== f2c_end %(function_name)s ===*/
 	} );
 };
 """,

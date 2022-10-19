@@ -179,11 +179,22 @@ class Endpoint:
 			f = Field ( par, mod )
 			self.parameters.append ( f )
 
-		for perm in json_data.get ( 'permissions', {} ):
+		# Set endpoint permissions
+		self.permissions = []
+		perms = json_data.get ( 'permissions', {} )
+		if 'public'	in perms: return
+
+		if 'logged' in perms:
+			self.permissions.append ( 'logged' )
+			return
+
+		for perm in perms:
 			p = mod.persmissions.get ( perm, None )
 			if p and p.name not in self.permissions:
 				self.permissions.append ( p.name )
 				self.mod.flow.permissions [ p.id ] = p
+
+
 
 	def fields ( self, skip_file_fields = False ):
 		if not skip_file_fields:
