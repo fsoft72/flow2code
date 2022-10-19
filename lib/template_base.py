@@ -83,16 +83,21 @@ class TemplateBase:
 	def mod_name ( self, mod: Module ):
 		return mod.name.lower().strip().replace( ' ', '_' ).replace ( '-', '_' )
 
-	def endpoint_mk_function ( self, ep ):
-		name = f"""{ep.method}_{ep.path}""".lower().replace ( "/", "_" ).replace ( "-", "_" )
+	def valid_function_name ( self, name: str ) -> str:
+		name = name.replace( '/', '_' ).replace( '-', '_' ).lower()
 
 		# remove all characters that are not a-z, 0-9 or _
 		name = re.sub( r'[^a-z0-9_-]', '', name )
-
 		# remove all double underscores
 		name = re.sub( r'__+', '_', name )
 		name = name.strip( '_' )
 		return name
+
+
+	def endpoint_mk_function ( self, ep ):
+		name = f"""{ep.method}_{ep.path}"""
+
+		return self.valid_function_name(name)
 
 	def create_file ( self, full_path: str, mod: Module, keep_all_snippets: bool = False ):
 		"""

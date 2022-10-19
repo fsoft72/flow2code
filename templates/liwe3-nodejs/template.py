@@ -54,7 +54,16 @@ class Template( TemplateBase ):
 		# sort the methods
 		methods.sort()
 
+		# prepare the functions
+		functions = []
+		for fn in mod.functions.values():
+			functions.append( fn.name )
+
+		# sort the functions
+		functions.sort()
+
 		self.snippets[ '__methods' ] = self.join_newlines( methods )
+		self.snippets[ '__functions' ] = self.join_newlines( functions )
 
 	def _endpoint_definition ( self, ep: Endpoint, out, mod: Module ):
 		self.mod = mod

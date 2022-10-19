@@ -12,7 +12,10 @@ import { locale_load } from '../../liwe/locale';
 import { perms } from '../../liwe/auth';
 
 import {
+	// endpoints function
 	%(__methods)s
+	// functions
+	%(__functions)s
 } from './methods';
 
 import {
