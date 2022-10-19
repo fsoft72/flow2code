@@ -1,0 +1,4573 @@
+{
+    "id": "mod.l1krk7ku.0.uioltn09xr",
+    "name": "Academy",
+    "endpoints": {
+        "endp.l1mc1rjl.0.3z30utb54gw": {
+            "id": "endp.l1mc1rjl.0.3z30utb54gw",
+            "method": "POST",
+            "url": "/academy/course/admin/add",
+            "short_descr": "Adds a new Course",
+            "description": "The call creates a course header inside the system.\n\nThis function returns the full `Course` structure",
+            "parameters": [
+                {
+                    "id": "param.l1mc3fnq.0.60krh0yoxvw",
+                    "name": "code",
+                    "type": "str",
+                    "description": "Course Code",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3g0o.0.ab6sa4tljt8",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The course Title",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3gcc.0.sgddoothvb7",
+                    "name": "short_description",
+                    "type": "str",
+                    "description": "Course short description (for SEO)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3goa.0.po2erymcl6",
+                    "name": "description",
+                    "type": "str",
+                    "description": "Course description",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3h08.0.48dclo4pqko",
+                    "name": "type",
+                    "type": "enum.l1krmqle.0.ati9oo9jrpd",
+                    "description": "Course type [ `certified` | `default` ]",
+                    "required": false,
+                    "private": false,
+                    "default": ""
+                },
+                {
+                    "id": "param.l1mc3hcu.0.v6c9g5h91q",
+                    "name": "video_promo_url",
+                    "type": "str",
+                    "description": "The URL of the promotional video",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3hq1.0.tw9ctftqjuf",
+                    "name": "video_promo_provider",
+                    "type": "enum.l1krrds2.0.3t239djwbxx",
+                    "description": "The promotional video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3i2m.0.18kejnmxbkq",
+                    "name": "pre_req",
+                    "type": "json",
+                    "description": "A list of pre-requisites",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3iey.0.t9i1jipgt9",
+                    "name": "results",
+                    "type": "json",
+                    "description": "A list of what the student will learn",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3iqo.0.wbuyalycei",
+                    "name": "revenue_trainer",
+                    "type": "num",
+                    "description": "Revenute trainer percentage",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3j65.0.wzsolzju8bf",
+                    "name": "price_vat",
+                    "type": "num",
+                    "description": "Course full price (VAT incl)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3jiw.0.4hrmo8g0bah",
+                    "name": "curr_price_vat",
+                    "type": "num",
+                    "description": "Course current price (VAT incl)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3jvo.0.hddmufq8akl",
+                    "name": "vat",
+                    "type": "num",
+                    "description": "Price VAT",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3k8l.0.7b9qaj4l3ka",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is free",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3klj.0.aw0k0t044v",
+                    "name": "start_date",
+                    "type": "date",
+                    "description": "Starting date the course is visible",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3kwq.0.u8w478axm8i",
+                    "name": "end_date",
+                    "type": "date",
+                    "description": "Ending date the course is visible",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3la6.0.y8rf8ue6sj",
+                    "name": "id_cert",
+                    "type": "str",
+                    "description": "ID Certification",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3ln3.0.sibq71hzjp",
+                    "name": "face_rec",
+                    "type": "boolean",
+                    "description": "Face Recognition",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3m0m.0.pp6k2sgerye",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "ID Category",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3mew.0.g9jzc1w0qjc",
+                    "name": "tags",
+                    "type": "str",
+                    "description": "Course tags",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "param.l1mc3mtg.0.pg5xvfm52bc",
+                    "name": "image",
+                    "type": "str",
+                    "description": "Course image",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1mc3n73.0.1l3q11qxliq",
+                    "name": "max_students",
+                    "type": "num",
+                    "description": "Maximum number of students",
+                    "required": false,
+                    "private": false,
+                    "default": "0"
+                },
+                {
+                    "id": "param.l1mc3no0.0.fmzvb6ozz",
+                    "name": "level",
+                    "type": "num",
+                    "description": "View Level",
+                    "required": false,
+                    "private": false,
+                    "default": "0"
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": false,
+            "returnName": "course"
+        },
+        "endp.l1n8x0iu.0.bo8kdet1ap": {
+            "id": "endp.l1n8x0iu.0.bo8kdet1ap",
+            "method": "PATCH",
+            "url": "/academy/course/admin/update",
+            "short_descr": "Modifies an existing Course",
+            "description": "The call updates an existing course.\n\nThis function returns the full `Course` structure",
+            "parameters": [
+                {
+                    "id": "param.l1n8xpan.0.wy0fil1nyje",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The course ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xq24.0.7kakfhqq5t4",
+                    "name": "code",
+                    "type": "str",
+                    "description": "Course Code",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xqkr.0.80sa3yn5uz3",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The course Title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xr4h.0.pxextcwtugf",
+                    "name": "short_description",
+                    "type": "str",
+                    "description": "Course short description (for SEO)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xri7.0.igggtuvuhg",
+                    "name": "description",
+                    "type": "str",
+                    "description": "Course description",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xrwr.0.dhorhndm6a7",
+                    "name": "type",
+                    "type": "str",
+                    "description": "Course type [ `certified` | `default` ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xsci.0.25zgvtggveg",
+                    "name": "price_vat",
+                    "type": "float",
+                    "description": "Course full price",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xsrf.0.94jctpfdmlh",
+                    "name": "curr_price_vat",
+                    "type": "float",
+                    "description": "Current price",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xt6d.0.729snd1rsvj",
+                    "name": "vat",
+                    "type": "num",
+                    "description": "Product VAT",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xtla.0.u613g2yr4lr",
+                    "name": "video_promo_url",
+                    "type": "str",
+                    "description": "The URL of the promotional video",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xtzt.0.mks9yv3xud",
+                    "name": "video_promo_provider",
+                    "type": "enum.l1krrds2.0.3t239djwbxx",
+                    "description": "The promotional video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xud7.0.pz7c2img6p",
+                    "name": "pre_req",
+                    "type": "json",
+                    "description": "A list of pre-requisites",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xur4.0.m55cdondsp",
+                    "name": "results",
+                    "type": "json",
+                    "description": "A list of what the student will learn",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xv53.0.2t5qjr0ktmf",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is free",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xvii.0.w6qzzj4t7g9",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is visible",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xvws.0.08xiqwnukpyy",
+                    "name": "tags",
+                    "type": "str",
+                    "description": "Tags",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "param.l1n8xwcc.0.qc222u6bic",
+                    "name": "image",
+                    "type": "str",
+                    "description": "Course image",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xwsp.0.mds89la27i8",
+                    "name": "max_students",
+                    "type": "num",
+                    "description": "Maximum number of students",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xx89.0.l1ddejb2b3q",
+                    "name": "level",
+                    "type": "num",
+                    "description": "View Level",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n8xxkm.0.5colhbvk6gu",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "Category ID",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true,
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": false,
+            "returnName": "course"
+        },
+        "endp.l1n95r7t.0.dtjax9dwit": {
+            "id": "endp.l1n95r7t.0.dtjax9dwit",
+            "method": "PATCH",
+            "url": "/academy/course/admin/fields",
+            "short_descr": "Modifies some fields",
+            "description": "The call modifies one or more fields.\n\nThis function returns the full `Course` structure",
+            "parameters": [
+                {
+                    "id": "param.l1n966ro.0.gvvoj7l4lxs",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The academy/course ID",
+                    "required": true,
+                    "private": false,
+                    "is_array": false
+                },
+                {
+                    "id": "param.l1n966xy.0.xdioh7qx1s",
+                    "name": "data",
+                    "type": "json",
+                    "description": "The field / value to patch",
+                    "required": true,
+                    "private": false,
+                    "is_array": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": false,
+            "returnName": "course"
+        },
+        "endp.l1n97a68.0.9u6wwi7ege": {
+            "id": "endp.l1n97a68.0.9u6wwi7ege",
+            "method": "DELETE",
+            "url": "/academy/course/admin/del",
+            "short_descr": "Deletes a Course",
+            "description": "This call deletes a course and all its data.",
+            "parameters": [
+                {
+                    "id": "param.l1n97l71.0.vpildgfeg7q",
+                    "name": "id",
+                    "type": "str",
+                    "description": "Ths ID category to be deleted",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "str",
+            "is_array": false,
+            "returnName": "id"
+        },
+        "endp.l1n98dqv.0.jcbgoa6n0g": {
+            "id": "endp.l1n98dqv.0.jcbgoa6n0g",
+            "method": "GET",
+            "url": "/academy/course/admin/list",
+            "short_descr": "Returns all the courses available",
+            "description": "This endpoint returns all the courses available ordered by course title",
+            "parameters": [],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": true,
+            "returnName": "courses"
+        },
+        "endp.l1n9bazf.0.2d95erw2evc": {
+            "id": "endp.l1n9bazf.0.2d95erw2evc",
+            "method": "POST",
+            "url": "/academy/course/admin/tag",
+            "short_descr": "Tags a academy/course",
+            "description": "This endpoint allows you to add tags to a academy/course.",
+            "parameters": [
+                {
+                    "id": "param.l1n9bqn2.0.ihko9j0plhc",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The academy/course ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n9bqw9.0.ouvd1ksiw",
+                    "name": "tags",
+                    "type": "str",
+                    "description": "A list of tags to be added to the user",
+                    "required": true,
+                    "private": false,
+                    "is_array": true
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": false,
+            "returnName": "course"
+        },
+        "endp.l1n9cuat.0.591rganky9m": {
+            "id": "endp.l1n9cuat.0.591rganky9m",
+            "method": "GET",
+            "url": "/academy/course/admin/tree",
+            "short_descr": "Gets the tree of sections / lessons",
+            "description": "Gets the tree of sections / lessons.\n\nIf the `rebuild` flag is `true`, the tree is created from data from DB, otherwise\nthe data is taken from cache if available.",
+            "parameters": [
+                {
+                    "id": "param.l1n9d5lb.0.gwsak4h967v",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The academy/course ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n9d5rv.0.q9as0cdv3x9",
+                    "name": "rebuild",
+                    "type": "boolean",
+                    "description": "If True, the tree is rebuilt from data",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m8m1uy.0.i29owkemzk",
+            "is_array": true,
+            "returnName": "tree"
+        },
+        "endp.l1n9frkb.0.w281kk0pccf": {
+            "id": "endp.l1n9frkb.0.w281kk0pccf",
+            "method": "GET",
+            "url": "/academy/course/admin/list/trainer",
+            "short_descr": "Returns all the courses from the given trainer",
+            "description": "This endpoint returns all the courses of the speicifed trainer via `id_trainer`.\n\nThe courses are returned regardless of the `visible` status.",
+            "parameters": [
+                {
+                    "id": "param.l1n9g18h.0.7bfx22ksiun",
+                    "name": "id_trainer",
+                    "type": "str",
+                    "description": "User ID of the trainer",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": true,
+            "returnName": "courses"
+        },
+        "endp.l1n9grj7.0.i3ibs8b8l4": {
+            "id": "endp.l1n9grj7.0.i3ibs8b8l4",
+            "method": "GET",
+            "url": "/academy/course/list",
+            "short_descr": "Returns all the courses available",
+            "description": "This endpoint returns all the courses available (with status == `visible`) ordered by course title",
+            "parameters": [],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": true,
+            "returnName": "courses"
+        },
+        "endp.l1n9hl87.0.rw38recv7kt": {
+            "id": "endp.l1n9hl87.0.rw38recv7kt",
+            "method": "GET",
+            "url": "/academy/course/details",
+            "short_descr": "Gets all academy/course details",
+            "description": "Returns all academy/course details only if the academy/course is `visible`.\n\nThe academy/course can be identified by  `id`.\n\nYou can pass more than a field, but one is enough.\n\nThis function returns the full `CoursePageDetails` structure",
+            "parameters": [
+                {
+                    "id": "param.l1n9hx0t.0.uz4nl8wxhx",
+                    "name": "id",
+                    "type": "str",
+                    "description": "Course unique ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1n9hx6t.0.quotshk3owh",
+                    "name": "slug",
+                    "type": "str",
+                    "description": "Course slug",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m6r61h.0.jmh9v96rg28",
+            "is_array": false,
+            "returnName": "details"
+        },
+        "endp.l1njk81f.0.wmggakjy8x": {
+            "id": "endp.l1njk81f.0.wmggakjy8x",
+            "method": "POST",
+            "url": "/academy/section/admin/add",
+            "short_descr": "Adds a Section",
+            "description": "The call creates a section.\n\nThis function returns the full `AcademySection` structure",
+            "parameters": [
+                {
+                    "id": "param.l1njkp11.0.a2pwys2wma",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The id of the course the section belongs to",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njkp7z.0.sy9rq4atzw",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The Section title",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njkpf2.0.ivh3apwd7la",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "The order of appearence of this Section among the others",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njkpmv.0.3rczc0dh1xn",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is the section is visible",
+                    "required": false,
+                    "private": false,
+                    "default": "true"
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "type.l1m7awnk.0.j1jiyrfrel",
+            "is_array": false,
+            "returnName": "section"
+        },
+        "endp.l1njmc6l.0.j9wbn07ghaf": {
+            "id": "endp.l1njmc6l.0.j9wbn07ghaf",
+            "method": "PATCH",
+            "url": "/academy/section/admin/update",
+            "short_descr": "Updates a section",
+            "description": "The call creates a section.\n\nThis function returns the full `Section` structure",
+            "parameters": [
+                {
+                    "id": "param.l1njmpfe.0.hzuhlralguj",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The ID Section",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njmpoi.0.clll4qlo91j",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The Section title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njmpvl.0.fsi8jmqp1p",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is the section is visible",
+                    "required": false,
+                    "private": false,
+                    "default": "true"
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "type.l1m7awnk.0.j1jiyrfrel",
+            "is_array": false,
+            "returnName": "section"
+        },
+        "endp.l1njo7ew.0.unw934jlri": {
+            "id": "endp.l1njo7ew.0.unw934jlri",
+            "method": "PATCH",
+            "url": "/academy/section/admin/fields",
+            "short_descr": "Modifies some fields",
+            "description": "The call modifies one or more fields.\n\nThis function returns the full `Section` structure",
+            "parameters": [
+                {
+                    "id": "param.l1njojhq.0.m9t7y5fz3xi",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The academy/section ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njojp0.0.0raxj6q1ip9h",
+                    "name": "data",
+                    "type": "json",
+                    "description": "The field / value to patch",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7awnk.0.j1jiyrfrel",
+            "is_array": false,
+            "returnName": "section"
+        },
+        "endp.l1njpej5.0.5v5iwxg6gpx": {
+            "id": "endp.l1njpej5.0.5v5iwxg6gpx",
+            "method": "GET",
+            "url": "/academy/section/admin/list",
+            "short_descr": "Lists all academy/sections",
+            "description": "Returns all academy/sections.\n\nThis function returns a list of full `Section` structure.\n\nThis function supports pagination.",
+            "parameters": [
+                {
+                    "id": "param.l1njpqhp.0.fo7tifxh9qb",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The Course ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njpqox.0.u1x39lezqxb",
+                    "name": "skip",
+                    "type": "num",
+                    "description": "First line to return",
+                    "required": false,
+                    "private": false,
+                    "default": "0"
+                },
+                {
+                    "id": "param.l1njpqvn.0.x0xug30jbnh",
+                    "name": "rows",
+                    "type": "num",
+                    "description": "How many rows to return",
+                    "required": false,
+                    "private": false,
+                    "default": "-1"
+                }
+            ],
+            "permissions": {
+                "perm.l1njr7ax.0.r8icczjbcx": true
+            },
+            "returnType": "type.l1m7awnk.0.j1jiyrfrel",
+            "is_array": true,
+            "returnName": "sections"
+        },
+        "endp.l1njrwi6.0.rgeq8bwyo9q": {
+            "id": "endp.l1njrwi6.0.rgeq8bwyo9q",
+            "method": "DELETE",
+            "url": "/academy/section/admin/del",
+            "short_descr": "Deletes a Section",
+            "description": "This call deletes a section and all its data.",
+            "parameters": [
+                {
+                    "id": "param.l1njs7pr.0.6h251u6mo6p",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The ID section to be deleted",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "str",
+            "is_array": false,
+            "returnName": "id"
+        },
+        "endp.l1njswb4.0.3wb795kqxxv": {
+            "id": "endp.l1njswb4.0.3wb795kqxxv",
+            "method": "GET",
+            "url": "/academy/section/list",
+            "short_descr": "Returns all the sections of the give course",
+            "description": "This endpoint returns all the sections available (with status == `visible`) ordered by section `position`",
+            "parameters": [
+                {
+                    "id": "param.l1njt6v5.0.gluembcsx6p",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The ID of the course the sections belong to",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m7awnk.0.j1jiyrfrel",
+            "is_array": true,
+            "returnName": "sections"
+        },
+        "endp.l1nju1ih.0.ks1ceym5yfn": {
+            "id": "endp.l1nju1ih.0.ks1ceym5yfn",
+            "method": "GET",
+            "url": "/academy/section/details",
+            "short_descr": "Gets all academy/section details",
+            "description": "Returns all academy/section details only if the academy/section is `visible`.\n\nThe academy/section can be identified by  `id`.\n\nYou can pass more than a field, but one is enough.\n\nThis function returns the full `Section` structure",
+            "parameters": [
+                {
+                    "id": "param.l1njueja.0.cncnc07o9va",
+                    "name": "id",
+                    "type": "str",
+                    "description": "Section unique ID",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m7awnk.0.j1jiyrfrel",
+            "is_array": false,
+            "returnName": "section"
+        },
+        "endp.l1njv143.0.4pwwmk4y49g": {
+            "id": "endp.l1njv143.0.4pwwmk4y49g",
+            "method": "POST",
+            "url": "/academy/lesson/admin/add",
+            "short_descr": "Adds a Lesson",
+            "description": "The call creates a Lesson.\n\nThis function returns the full `Lesson` structure\n",
+            "parameters": [
+                {
+                    "id": "param.l1njvics.0.xhmvouy1eei",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The id of the section this lesson belongs to",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njviqd.0.ps7dzxm29n",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The Section title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njvj8v.0.xrp3mk23uc",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "The order of appearence of this Section among the others",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njvjk8.0.jr7cdg97xn",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is the section is visible",
+                    "required": false,
+                    "private": false,
+                    "default": "true"
+                },
+                {
+                    "id": "param.l1njvk0i.0.4jfmj8pvte6",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is free",
+                    "required": false,
+                    "private": false,
+                    "default": "false"
+                },
+                {
+                    "id": "param.l1njvkd7.0.bydrkv1lxxk",
+                    "name": "text",
+                    "type": "str",
+                    "description": "Text of the lesson",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njvkrq.0.x4n7apeg5wt",
+                    "name": "video_url",
+                    "type": "str",
+                    "description": "The URL of the promotional video",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njvl61.0.865d71hjzr9",
+                    "name": "video_provider",
+                    "type": "enum.l1krrds2.0.3t239djwbxx",
+                    "description": "The promotional video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1njvljb.0.tryvx7kprjh",
+                    "name": "duration",
+                    "type": "str",
+                    "description": "Length (in \"HH:MM:SS\") of the video",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "type.l1m7fu1y.0.krtaindlrwk",
+            "is_array": false,
+            "returnName": "lesson"
+        },
+        "endp.l1njzgsk.0.st4x3zcsf88": {
+            "id": "endp.l1njzgsk.0.st4x3zcsf88",
+            "method": "PATCH",
+            "url": "/academy/lesson/admin/update",
+            "short_descr": "Updates a lesson",
+            "description": "The call updates a Lesson.\n\nThis function returns the full `Lesson` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nk02ch.0.brz750uh7t",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The Lesson ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk02qq.0.j7y58fvbf7c",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The id of the section this lesson belongs to",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk035u.0.mwp5hkm124",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The Section title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk03k7.0.g9pny4g72rw",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "The order of appearence of this Section among the others",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk03y3.0.ofvqo4zj85o",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is the section is visible",
+                    "required": false,
+                    "private": false,
+                    "default": "true"
+                },
+                {
+                    "id": "param.l1nk04c6.0.t0jbgyarj0o",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is free",
+                    "required": false,
+                    "private": false,
+                    "default": "false"
+                },
+                {
+                    "id": "param.l1nk04qn.0.qmvcl58ao9",
+                    "name": "text",
+                    "type": "str",
+                    "description": "Text of the lesson",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk054e.0.ddql1u74fbc",
+                    "name": "video_url",
+                    "type": "str",
+                    "description": "The URL of the promotional video",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk05if.0.5s4q36d5vf8",
+                    "name": "video_provider",
+                    "type": "enum.l1krrds2.0.3t239djwbxx",
+                    "description": "The promotional video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk05vf.0.i499h8y1ihd",
+                    "name": "duration",
+                    "type": "str",
+                    "description": "Length (in \"HH:MM:SS\") of the video",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "type.l1m7fu1y.0.krtaindlrwk",
+            "is_array": false,
+            "returnName": "lesson"
+        },
+        "endp.l1nk3l9g.0.tbnxj7lmnns": {
+            "id": "endp.l1nk3l9g.0.tbnxj7lmnns",
+            "method": "PATCH",
+            "url": "/academy/lesson/admin/fields",
+            "short_descr": "Modifies some fields",
+            "description": "The call modifies one or more fields.\n\nThis function returns the full `Lesson` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nk3z3d.0.youj2pj3q9",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The academy/lesson ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk3zc4.0.bdt1zsidyyf",
+                    "name": "data",
+                    "type": "json",
+                    "description": "The field / value to patch",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7fu1y.0.krtaindlrwk",
+            "is_array": false,
+            "returnName": "lesson"
+        },
+        "endp.l1nk4wpe.0.pknb31aips": {
+            "id": "endp.l1nk4wpe.0.pknb31aips",
+            "method": "GET",
+            "url": "/academy/lesson/admin/list",
+            "short_descr": "Lists all academy/lessons",
+            "description": "Returns all academy/lessons.\n\nThis function returns a list of full `Lesson` structure.\n\nYou at least one between `id_course` and `id_section` must be specified.\n\nThis function supports pagination.",
+            "parameters": [
+                {
+                    "id": "param.l1nk5ik5.0.9e18g8t9ofh",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The Course ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk5itr.0.jqszs8fbqca",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The Section ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk5j25.0.f70chyveio7",
+                    "name": "skip",
+                    "type": "num",
+                    "description": "First line to return",
+                    "required": false,
+                    "private": false,
+                    "default": "0"
+                },
+                {
+                    "id": "param.l1nk5ja9.0.m26zbxvx8u",
+                    "name": "rows",
+                    "type": "num",
+                    "description": "How many rows to return",
+                    "required": false,
+                    "private": false,
+                    "default": "-1"
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7fu1y.0.krtaindlrwk",
+            "is_array": true,
+            "returnName": "lessons"
+        },
+        "endp.l1nk6uz5.0.7qppjdtcp6g": {
+            "id": "endp.l1nk6uz5.0.7qppjdtcp6g",
+            "method": "DELETE",
+            "url": "/academy/lesson/admin/del",
+            "short_descr": "Deletes a Lesson",
+            "description": "This call deletes a Lesson and all its data.",
+            "parameters": [
+                {
+                    "id": "param.l1nk76ry.0.v4lgw09ehm",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The ID lesson to be deleted",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "str",
+            "is_array": false,
+            "returnName": "id"
+        },
+        "endp.l1nk824m.0.pdv6jidrzd": {
+            "id": "endp.l1nk824m.0.pdv6jidrzd",
+            "method": "GET",
+            "url": "/academy/lesson/details",
+            "short_descr": "Gets all academy/lesson details",
+            "description": "Returns all academy/lesson details only if the academy/lesson is `visible`.\n\nThe academy/lesson can be identified by  `id`.\n\nYou can pass more than a field, but one is enough.\n\nThis function returns the full `Lesson` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nk8fon.0.7t8qikp2p8r",
+                    "name": "id",
+                    "type": "str",
+                    "description": "Lesson unique ID",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m7fu1y.0.krtaindlrwk",
+            "is_array": false,
+            "returnName": "lesson"
+        },
+        "endp.l1nk92ga.0.t5axfejy5sp": {
+            "id": "endp.l1nk92ga.0.t5axfejy5sp",
+            "method": "GET",
+            "url": "/academy/lesson/list",
+            "short_descr": "Lists all academy/lessons",
+            "description": "Returns all visible academy/lessons.\n\nLessons with `visible` set to `false` are not shown.\n\nThis function returns a list of full `Lesson` structure.\n\nThis function supports pagination.",
+            "parameters": [
+                {
+                    "id": "param.l1nk9lt4.0.j5g6c0ixinm",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The Section ID to get lessons for",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nk9m4g.0.2x99w1jqzvo",
+                    "name": "skip",
+                    "type": "num",
+                    "description": "First line to return",
+                    "required": false,
+                    "private": false,
+                    "default": "0"
+                },
+                {
+                    "id": "param.l1nk9meo.0.2tklls5ynon",
+                    "name": "rows",
+                    "type": "num",
+                    "description": "How many rows to return",
+                    "required": false,
+                    "private": false,
+                    "default": "-1"
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m7fu1y.0.krtaindlrwk",
+            "is_array": true,
+            "returnName": "lessons"
+        },
+        "endp.l1nke7c7.0.s0y0fi53ni": {
+            "id": "endp.l1nke7c7.0.s0y0fi53ni",
+            "method": "GET",
+            "url": "/academy/courses/most/viewed/list",
+            "short_descr": "Returns most viewed courses",
+            "description": "Returns most viewed courses",
+            "parameters": [
+                {
+                    "id": "param.l1nkeyad.0.j5xtdz3ai1",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "The id category",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkeywl.0.9o059ymii66",
+                    "name": "limit",
+                    "type": "num",
+                    "description": "How many courses to return",
+                    "required": false,
+                    "private": false,
+                    "default": "8"
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m72jkc.0.f9cmbe9300f",
+            "is_array": true,
+            "returnName": "courses"
+        },
+        "endp.l1nkgru5.0.qahyevmlavj": {
+            "id": "endp.l1nkgru5.0.qahyevmlavj",
+            "method": "GET",
+            "url": "/academy/courses/spotlight/tabs",
+            "short_descr": "Returns most viewed courses with tabs",
+            "description": "Returns most viewed courses with tabs",
+            "parameters": [
+                {
+                    "id": "param.l1nkh25f.0.okmwco9axjq",
+                    "name": "tabs",
+                    "type": "num",
+                    "description": "",
+                    "required": false,
+                    "private": false,
+                    "default": "4"
+                },
+                {
+                    "id": "param.l1nkh2c2.0.eablpvyhz6",
+                    "name": "courses",
+                    "type": "num",
+                    "description": "",
+                    "required": false,
+                    "private": false,
+                    "default": "8"
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m77r0e.0.if51py36m0f",
+            "is_array": true,
+            "returnName": "courses"
+        },
+        "endp.l1nkiipf.0.z7eeo9t96s": {
+            "id": "endp.l1nkiipf.0.z7eeo9t96s",
+            "method": "POST",
+            "url": "/academy/student/enroll/admin/add",
+            "short_descr": "Adds a new academy/student/enroll",
+            "description": "This function can enroll a student to the specified course.\n\nThis function returns the full `Enroll` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nkitty.0.09uec1x4mypl",
+                    "name": "id_user",
+                    "type": "str",
+                    "description": "The student user id",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkiu24.0.bic8btdrpb8",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course status",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkiu9v.0.ysc8272y0a",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "If the course is visible to the user",
+                    "required": false,
+                    "private": false,
+                    "default": "true"
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7w37l.0.jqyrl8czf1g",
+            "is_array": false,
+            "returnName": "enroll"
+        },
+        "endp.l1nkk1g2.0.7otncfcqx8i": {
+            "id": "endp.l1nkk1g2.0.7otncfcqx8i",
+            "method": "POST",
+            "url": "/academy/student/enroll/admin/add/by-code",
+            "short_descr": "Adds a new academy/student/enroll",
+            "description": "This function can enroll a student to the specified course.\n\nThis function returns the full `Enroll` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nkkeqs.0.1r78bm6fzz7",
+                    "name": "email",
+                    "type": "str",
+                    "description": "The student user email",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkkey8.0.mwq9vt3dn3g",
+                    "name": "code",
+                    "type": "str",
+                    "description": "The course code",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkkf76.0.4f20sbfzzk2",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "If the course is visible to the user",
+                    "required": false,
+                    "private": false,
+                    "default": "true"
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7w37l.0.jqyrl8czf1g",
+            "is_array": false,
+            "returnName": "enroll"
+        },
+        "endp.l1nkmdod.0.v3q61ctzskf": {
+            "id": "endp.l1nkmdod.0.v3q61ctzskf",
+            "method": "PATCH",
+            "url": "/academy/student/enroll/admin/update",
+            "short_descr": "Updates an existing academy/student/enroll",
+            "description": "Updates the student Enrolment specified by `id`.\n\nThis function returns the full `Enroll` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nkmxie.0.91tos0t117",
+                    "name": "id",
+                    "type": "str",
+                    "description": "Enroll ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkmxp1.0.y4yva8qxl1",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "If the course is visible to the user",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7w37l.0.jqyrl8czf1g",
+            "is_array": false,
+            "returnName": "enroll"
+        },
+        "endp.l1nko2di.0.21559gxd8buh": {
+            "id": "endp.l1nko2di.0.21559gxd8buh",
+            "method": "PATCH",
+            "url": "/academy/student/enroll/admin/fields",
+            "short_descr": "Modifies some fields",
+            "description": "The call modifies one or more fields.\n\nThis function returns the full `Enroll` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nkqzkk.0.5j293llm3be",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The academy/student/enroll ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkqzqf.0.3ckb5qc9wys",
+                    "name": "data",
+                    "type": "json",
+                    "description": "The field / value to patch",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7w37l.0.jqyrl8czf1g",
+            "is_array": false,
+            "returnName": "enroll"
+        },
+        "endp.l1nks7g3.0.5syd3np28vd": {
+            "id": "endp.l1nks7g3.0.5syd3np28vd",
+            "method": "GET",
+            "url": "/academy/student/enroll/admin/list",
+            "short_descr": "Lists all enrolments",
+            "description": "This function returns a list of full `Enroll` structure.",
+            "parameters": [
+                {
+                    "id": "param.l1nkshbv.0.rs1acvs13zm",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course to see enrolment",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkshi9.0.7j2i4von71v",
+                    "name": "date_start",
+                    "type": "date",
+                    "description": "First date of enrolment",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkshqm.0.wfz1biht9sf",
+                    "name": "date_end",
+                    "type": "date",
+                    "description": "Last date of enrolment",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m7w37l.0.jqyrl8czf1g",
+            "is_array": true,
+            "returnName": "enrolls"
+        },
+        "endp.l1nktnmb.0.k3jweoofxwl": {
+            "id": "endp.l1nktnmb.0.k3jweoofxwl",
+            "method": "GET",
+            "url": "/academy/student/enroll/admin/list/details",
+            "short_descr": "Lists all enrolments",
+            "description": "This function returns a list of full `EnrollDetail` structure.",
+            "parameters": [
+                {
+                    "id": "param.l1nktxl4.0.lgs7lao5hs",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course to see enrolment",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l1m84e9p.0.xhn0v2h99le",
+            "is_array": true,
+            "returnName": "enrolls"
+        },
+        "endp.l1nkuq1i.0.aquwm82s23l": {
+            "id": "endp.l1nkuq1i.0.aquwm82s23l",
+            "method": "DELETE",
+            "url": "/academy/student/enroll/admin/del",
+            "short_descr": "Deletes a academy/student/enroll",
+            "description": "Deletes a academy/student/enroll from the system.",
+            "parameters": [
+                {
+                    "id": "param.l1nkv6l5.0.72ah63fcbxe",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The academy/student/enroll id to be deleted",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "type.l6xklnvi.0.to1i1ohq0a",
+            "is_array": false,
+            "returnName": "enroll"
+        },
+        "endp.l1nkvozd.0.bizafh1tdrd": {
+            "id": "endp.l1nkvozd.0.bizafh1tdrd",
+            "method": "GET",
+            "url": "/academy/student/enroll/details",
+            "short_descr": "Gets all academy/student/enroll details",
+            "description": "Returns all details of the specified enroll.",
+            "parameters": [
+                {
+                    "id": "param.l1nkw26b.0.uf5tk20pg3",
+                    "name": "id",
+                    "type": "str",
+                    "description": "Enroll ID",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l1m7w37l.0.jqyrl8czf1g",
+            "is_array": false,
+            "returnName": "enroll"
+        },
+        "endp.l1nkwwse.0.jaetxw78z8": {
+            "id": "endp.l1nkwwse.0.jaetxw78z8",
+            "method": "GET",
+            "url": "/academy/student/my/courses/list",
+            "short_descr": "Gets all courses belonging to a student",
+            "description": "Returns all courses belonging to a student.\n\nOnly courses with the `visible` flag will be returned.",
+            "parameters": [
+                {
+                    "id": "param.l1nkx8wv.0.whj89dyyd3p",
+                    "name": "sort_by",
+                    "type": "enum.l1krs8bj.0.jj3h1b4amg",
+                    "description": "Sorting order",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkx95n.0.j3ckhnoiss",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "Category ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkx9h6.0.dz0am64isvq",
+                    "name": "id_teacher",
+                    "type": "str",
+                    "description": "Teacher id",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nkx9qm.0.tc55zlfuyb",
+                    "name": "text",
+                    "type": "str",
+                    "description": "Full text search",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m72jkc.0.f9cmbe9300f",
+            "is_array": true,
+            "returnName": "courses"
+        },
+        "endp.l1nkz0y3.0.10kgd1u2njw": {
+            "id": "endp.l1nkz0y3.0.10kgd1u2njw",
+            "method": "GET",
+            "url": "/academy/student/course/open",
+            "short_descr": "Gets all info to the related course",
+            "description": "Returns course info",
+            "parameters": [
+                {
+                    "id": "param.l1nkzl4x.0.27tx0bpbshlj",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "Course ID",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m79lxg.0.n5qfmcs16mk",
+            "is_array": false,
+            "returnName": "status"
+        },
+        "endp.l1nl00bq.0.jea9togrty9": {
+            "id": "endp.l1nl00bq.0.jea9togrty9",
+            "method": "POST",
+            "url": "/academy/student/lesson/attend",
+            "short_descr": "Updates the time a user has attended a specific lesson",
+            "description": "The call creates or updates a student `LessonAttended` record for a specific lesson in a specific course.\n\nThis function returns the full `LessonAttended` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nl0d2z.0.bd53i4uy918",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course status",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nl0db1.0.mhdia8r5qxi",
+                    "name": "id_lesson",
+                    "type": "str",
+                    "description": "If the course is visible to the user",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nl0dje.0.m9vl23mvs0m",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "The current position of the video (in seconds)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nl0dqu.0.2dplmys3zcc",
+                    "name": "always_update",
+                    "type": "boolean",
+                    "description": "Flag T/F. If True, the position is updated even if it is lower than the current one",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m8i740.0.o6fh7nmwqwo",
+            "is_array": false,
+            "returnName": "attended"
+        },
+        "endp.l1nl23jr.0.pqjqwq5a6eg": {
+            "id": "endp.l1nl23jr.0.pqjqwq5a6eg",
+            "method": "GET",
+            "url": "/academy/student/lesson/info",
+            "short_descr": "Updates the time a user has attended a specific lesson",
+            "description": "Returns the info about the lesson the user is requesting",
+            "parameters": [
+                {
+                    "id": "param.l1nl2c38.0.glaec6fhc35",
+                    "name": "id_lesson",
+                    "type": "str",
+                    "description": "The lesson to get info",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m7qdxx.0.2eg400d50im",
+            "is_array": false,
+            "returnName": "lesson_info"
+        },
+        "endp.l1nl34y1.0.00a6yb2n49qxw": {
+            "id": "endp.l1nl34y1.0.00a6yb2n49qxw",
+            "method": "GET",
+            "url": "/academy/student/course/tree",
+            "short_descr": "Gets the tree of the specified course",
+            "description": "This function returns the full `TreeNode[]` structure",
+            "parameters": [
+                {
+                    "id": "param.l1nl3gg4.0.zknydon99y",
+                    "name": "code",
+                    "type": "str",
+                    "description": "The course code",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m8m1uy.0.i29owkemzk",
+            "is_array": true,
+            "returnName": "sections"
+        },
+        "endp.l1nl49ge.0.959ie7sm2is": {
+            "id": "endp.l1nl49ge.0.959ie7sm2is",
+            "method": "GET",
+            "url": "/academy/student/my/categories",
+            "short_descr": "Gets all categories belonging to user",
+            "description": "This function returns the full `CategorySmallItem[]` structure.",
+            "parameters": [],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l0szd038.0.jmbdu4qj4i",
+            "is_array": true,
+            "returnName": "categories"
+        },
+        "endp.l1nl575r.0.m7v1hbormg": {
+            "id": "endp.l1nl575r.0.m7v1hbormg",
+            "method": "GET",
+            "url": "/academy/student/my/trainers",
+            "short_descr": "Gets all trainers of a user",
+            "description": "This function returns the full `TrainerSmall[]` structure",
+            "parameters": [],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m92nyg.0.7thkgote1tp",
+            "is_array": true,
+            "returnName": "trainers"
+        },
+        "endp.l1nl60hr.0.8t0sgs657ah": {
+            "id": "endp.l1nl60hr.0.8t0sgs657ah",
+            "method": "GET",
+            "url": "/academy/course/student/progress",
+            "short_descr": "Returns all the progress of a student on a course",
+            "description": "Returns all the progresses of the specified `id_student` on the course `id_course`.",
+            "parameters": [
+                {
+                    "id": "param.l1nl691o.0.8x7i4vas0b4",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course id",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l1nl69cp.0.cwibj5gnvbb",
+                    "name": "id_student",
+                    "type": "str",
+                    "description": "The student id",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m8i740.0.o6fh7nmwqwo",
+            "is_array": true,
+            "returnName": "lessons"
+        },
+        "endp.l1nl7842.0.l4sqnm1uiir": {
+            "id": "endp.l1nl7842.0.l4sqnm1uiir",
+            "method": "GET",
+            "url": "/academy/student/enroll/list",
+            "short_descr": "Returns all students enrolled to a course",
+            "description": "Returns a list of students enrolled in the course specified by `id_course`.\n\nThis function returns a list of `UserDetails`",
+            "parameters": [
+                {
+                    "id": "param.l1nl7gz7.0.gf3vd0y3hvw",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course id",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true
+            },
+            "returnType": "",
+            "is_array": true,
+            "returnName": "students"
+        },
+        "endp.l1nlbh54.0.hpx6m4v8jxi": {
+            "id": "endp.l1nlbh54.0.hpx6m4v8jxi",
+            "method": "GET",
+            "url": "/academy/student/list",
+            "short_descr": "Returns all students in the system",
+            "description": "This endpoint returns all the users available (with status == `visible`) ordered by section `position`",
+            "parameters": [
+                {
+                    "id": "param.l1nlbqbj.0.d88zze0mrbu",
+                    "name": "id_trainer",
+                    "type": "str",
+                    "description": "The ID of the course the sections belong to",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "",
+            "is_array": true,
+            "returnName": "users"
+        },
+        "endp.l6hp4yzj.0.f5nari5nef": {
+            "id": "endp.l6hp4yzj.0.f5nari5nef",
+            "method": "PATCH",
+            "url": "/academy/course/admin/update/pos",
+            "short_descr": "Update order positions of elements in a course",
+            "description": "Massively updates sections and lessons positions inside a course.\n\nThe field `updates` is a JSON structure containing\n\n```json\n[\n   \"section_id1\": new_pos,\n   \"section_id2\": new_pos,\n   \"lesson_id1\": new_pos, \n   ...\n]\n```\n",
+            "parameters": [
+                {
+                    "id": "param.l6hp67vk.0.74obaliexus",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The course ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l6hp6pyg.0.kilnhl8e1x",
+                    "name": "updates",
+                    "type": "type.l1m8yqkn.0.q24sg8my9hr",
+                    "description": "The array of all sections and lessons to update",
+                    "required": true,
+                    "private": false,
+                    "is_array": true
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "logged": true
+            },
+            "returnType": "type.l1m8m1uy.0.i29owkemzk",
+            "is_array": true,
+            "returnName": "tree"
+        },
+        "endp.l6iq8bs0.0.iuuybmum7r": {
+            "id": "endp.l6iq8bs0.0.iuuybmum7r",
+            "method": "GET",
+            "url": "/academy/lesson/resources/list",
+            "short_descr": "List all resources bound to a lesson",
+            "description": "List all resources added to the lesson specified by `id`.\n\n",
+            "parameters": [
+                {
+                    "id": "param.l6iq9ipz.0.ajgksslmux6",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The Lesson ID",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1g9xwyj.0.4lzu9rghca",
+            "is_array": true,
+            "returnName": "resources"
+        },
+        "endp.l6isvx71.0.v4wr6yxubus": {
+            "id": "endp.l6isvx71.0.v4wr6yxubus",
+            "method": "DELETE",
+            "url": "/academy/lesson/admin/resource/del",
+            "short_descr": "Deletes a resource from a lesson",
+            "description": "Deletes a resource from a lesson.\n\nOnly admin, owner and trainer can delete a resource.",
+            "parameters": [
+                {
+                    "id": "param.l6iswzwo.0.insrkzt9bws",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The lesson ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l6isx7y7.0.gu24z9e79qb",
+                    "name": "id_resource",
+                    "type": "str",
+                    "description": "The resource ID",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "str",
+            "is_array": false,
+            "returnName": "id"
+        },
+        "endp.l71grs1f.0.shkw5uzkik": {
+            "id": "endp.l71grs1f.0.shkw5uzkik",
+            "method": "POST",
+            "url": "/academy/order/finalize",
+            "short_descr": "Finalizes an order",
+            "description": "This method adds the courses bought by a user\n\nChallenge is:  [ id_order, transaction_id, session_id ]",
+            "parameters": [
+                {
+                    "id": "param.l71gsxdr.0.r3awevgyoz",
+                    "name": "challenge",
+                    "type": "str",
+                    "description": "The verification challenge",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l71gtazq.0.x6z8uigfc9j",
+                    "name": "id_order",
+                    "type": "str",
+                    "description": "The order id",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l71gu028.0.w3ov8sa5y48",
+                    "name": "transaction_id",
+                    "type": "str",
+                    "description": "The transaction id",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l71gu9mn.0.ptycghyhva",
+                    "name": "session_id",
+                    "type": "str",
+                    "description": "The session id",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "boolean",
+            "is_array": false,
+            "returnName": "ok"
+        },
+        "endp.l71o20q2.0.xkgtzk97tn": {
+            "id": "endp.l71o20q2.0.xkgtzk97tn",
+            "method": "GET",
+            "url": "/academy/student/enrolled",
+            "short_descr": "Check if a student already enrolled to a course",
+            "description": "",
+            "parameters": [
+                {
+                    "id": "param.l71o2v0l.0.8ny1tohmb8c",
+                    "name": "code",
+                    "type": "str",
+                    "description": "The course code (not ID)",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1m7w37l.0.jqyrl8czf1g",
+            "is_array": false,
+            "returnName": "enroll"
+        },
+        "endp.l78ppcx7.0.u2btqavg4jl": {
+            "id": "endp.l78ppcx7.0.u2btqavg4jl",
+            "method": "POST",
+            "url": "/academy/lesson/admin/add/quiz",
+            "short_descr": "Adds a Lesson of type Quiz",
+            "description": "The call creates a Lesson of type [Quiz](#module-quiz)\n\nThis function returns the full `Lesson` structure\n",
+            "parameters": [
+                {
+                    "id": "param.l78ppcx7.0.s1hsekv7awm",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The id of the section this lesson belongs to",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l78ppcx7.0.kr0b0vnuxv",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The Section title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l78ppcx7.0.6b9vpduzy9x",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is the section is visible",
+                    "required": false,
+                    "private": false,
+                    "default": "true"
+                },
+                {
+                    "id": "param.l78ppcx7.0.nz58qsquzj",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "A true / false flag if the course is free",
+                    "required": false,
+                    "private": false,
+                    "default": "false"
+                }
+            ],
+            "permissions": {
+                "perm.l1mc2jk4.0.4upv9u0esli": true,
+                "perm.l1mc2u8f.0.rhhlmoq64p8": true
+            },
+            "returnType": "type.l1m7fu1y.0.krtaindlrwk",
+            "is_array": false,
+            "returnName": "lesson"
+        },
+        "endp.l7cvxa2k.0.el1xiw391ho": {
+            "id": "endp.l7cvxa2k.0.el1xiw391ho",
+            "method": "POST",
+            "url": "/academy/course/admin/trainer/add",
+            "short_descr": "Adds a new trainer to a course",
+            "description": "This method allows the course owner (and only the owner) to add a new trainer to a course.",
+            "parameters": [
+                {
+                    "id": "param.l7cvyez6.0.odwyvqxrnv",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course ID to add the trainer to",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l7cvypjw.0.6dztd5bsc49",
+                    "name": "id_trainer",
+                    "type": "str",
+                    "description": "The user ID of the trainer to add",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": false,
+            "returnName": "course"
+        },
+        "endp.l7cvzn5j.0.sojvp1anzl": {
+            "id": "endp.l7cvzn5j.0.sojvp1anzl",
+            "method": "DELETE",
+            "url": "/academy/course/admin/trainer/del",
+            "short_descr": "Removes a trainer from a course",
+            "description": "This method allows the course owner (and only the owner) to remove a trainer from a course.\nThe course owner cannot be removed from the course.",
+            "parameters": [
+                {
+                    "id": "param.l7cvzn5j.0.9iyh2toxw3p",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course ID to delete the trainer from",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l7cvzn5j.0.he9ptrztv95",
+                    "name": "id_trainer",
+                    "type": "str",
+                    "description": "The user ID of the trainer to delete",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l1krzwse.0.lt532e2rbak",
+            "is_array": false,
+            "returnName": "course"
+        },
+        "endp.l7cwfzzf.0.nnmqimw4q9c": {
+            "id": "endp.l7cwfzzf.0.nnmqimw4q9c",
+            "method": "GET",
+            "url": "/academy/trainer/admin/students/list",
+            "short_descr": "Returns all students connected to the trainer",
+            "description": "This endpoint returns all students connected to the current logged in trainer.\n\nThe operation is the following: \n\n1. list all courses that the trainer owns\n2. list all students intersecting courses ids and student enrolls\n3. returns all the students with all enrolls\n\n",
+            "parameters": [],
+            "permissions": {
+                "logged": true
+            },
+            "returnType": "type.l7cwk0z6.0.a0yrw5ti1y",
+            "is_array": true,
+            "returnName": "students"
+        },
+        "endp.l7ou92gz.0.vh5t6l7eshs": {
+            "id": "endp.l7ou92gz.0.vh5t6l7eshs",
+            "method": "GET",
+            "url": "/academy/course/search",
+            "short_descr": "Search all available courses",
+            "description": "This endpoint returns all the courses available (with status == `visible`) ordered by course title that contain the `query` specified.",
+            "parameters": [
+                {
+                    "id": "param.l7oua5td.0.ka0bgdhn56",
+                    "name": "search",
+                    "type": "str",
+                    "description": "The search text parameter",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "param.l7skbctr.0.wvhpsscwxhf",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "The category id to filter by",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "param.l7sjxjfj.0.za7u5sz2j78",
+                    "name": "sort_by",
+                    "type": "str",
+                    "description": "Search result sort by rule",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "public": true
+            },
+            "returnType": "type.l7rn8o07.0.z35bp7asfl",
+            "is_array": false,
+            "returnName": "courses"
+        },
+        "endp.l8v3ui7j.0.u8pyjeurcs": {
+            "id": "endp.l8v3ui7j.0.u8pyjeurcs",
+            "method": "POST",
+            "url": "/academy/settings/write",
+            "short_descr": "Save academy settings",
+            "description": "This is a method that only users with `academy.settings` can call.\n\nIt writes the Academy customization settings on database, **overwriting** any settings already present on DB.\n\nThe settings are bounded to the current user `domain`.",
+            "parameters": [
+                {
+                    "id": "param.l8v3zu7d.0.itydpas6cg9",
+                    "name": "settings",
+                    "type": "json",
+                    "description": "The new academy settings",
+                    "required": true,
+                    "private": false
+                }
+            ],
+            "permissions": {
+                "perm.l8v3ww3e.0.n180vpvgv3b": true
+            },
+            "returnType": "type.l8v3xr5g.0.pu4u37gmwpe",
+            "is_array": false,
+            "returnName": "settings"
+        }
+    },
+    "types": {
+        "type.l1krzwse.0.lt532e2rbak": {
+            "id": "type.l1krzwse.0.lt532e2rbak",
+            "description": "Academy Course",
+            "name": "Course",
+            "fields": [
+                {
+                    "id": "fld.l1ks027c.0.4j82kjtian6",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks038c.0.ngtgbxupee",
+                    "name": "domain",
+                    "type": "str",
+                    "description": "Domain code",
+                    "required": false,
+                    "private": true,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks03nc.0.kca63qnn90b",
+                    "name": "code",
+                    "type": "str",
+                    "description": "Course unique code",
+                    "required": true,
+                    "private": false,
+                    "index": "u"
+                },
+                {
+                    "id": "fld.l7qa7ii2.0.pz23lq71kx",
+                    "name": "slug",
+                    "type": "str",
+                    "description": "Course slug",
+                    "required": false,
+                    "private": false,
+                    "index": "u"
+                },
+                {
+                    "id": "fld.l1ks05ol.0.qfnmtbepmw9",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "The Category this course belongs to",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks06ns.0.yx5lf5irkwg",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Course name",
+                    "required": false,
+                    "private": false,
+                    "index": "f"
+                },
+                {
+                    "id": "fld.l1ks044v.0.3kefrc5nycc",
+                    "name": "id_owner",
+                    "type": "str",
+                    "description": "User that created this course (and it is defined as 'owner') and main trainer",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l7cv98u1.0.lczw66nap8j",
+                    "name": "id_trainers",
+                    "type": "str",
+                    "description": "All the trainers contributing to this course",
+                    "required": false,
+                    "private": false,
+                    "index": "*",
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l1ks065x.0.nsbn11cfnr8",
+                    "name": "id_cert_template",
+                    "type": "str",
+                    "description": "ID for the Certificate template",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks072v.0.tuu0oat7z0c",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "Course visible / hidden",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks07i5.0.vj4yxfjyf",
+                    "name": "short_description",
+                    "type": "str",
+                    "description": "Course short description (for SEO)",
+                    "required": false,
+                    "private": false,
+                    "index": "f"
+                },
+                {
+                    "id": "fld.l1ks08bu.0.kbsrhaw6ia",
+                    "name": "description",
+                    "type": "str",
+                    "description": "Course description",
+                    "required": false,
+                    "private": false,
+                    "index": "f"
+                },
+                {
+                    "id": "fld.l1ks08so.0.5xosyhi90wu",
+                    "name": "id_product",
+                    "type": "str",
+                    "description": "Product related to this course",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks09ad.0.hwunadtowvd",
+                    "name": "tot_lessons",
+                    "type": "num",
+                    "description": "Number of lessions [defaults: 0]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks09rh.0.xrl3jiefoj",
+                    "name": "tot_time",
+                    "type": "num",
+                    "description": "Total running length (in seconds)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0a66.0.qi458njzapo",
+                    "name": "tot_sections",
+                    "type": "num",
+                    "description": "Total number of sections",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0aqt.0.k3ectak2dlg",
+                    "name": "image",
+                    "type": "str",
+                    "description": "Course image ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0btj.0.931v3ofkjs9",
+                    "name": "image_url",
+                    "type": "str",
+                    "description": "Course image URL",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0chj.0.5mgb4du8e39",
+                    "name": "video_promo_url",
+                    "type": "str",
+                    "description": "The URL of the promotional video of the Course",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0cwr.0.jnbm7e9jtue",
+                    "name": "video_promo_provider",
+                    "type": "VideoProvider",
+                    "description": "The video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0ddj.0.hlp17yn5q2",
+                    "name": "pre_req",
+                    "type": "json",
+                    "description": "A list of pre-requisites",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0dtp.0.n0tu5pimu5p",
+                    "name": "results",
+                    "type": "json",
+                    "description": "A list of what the student will learn",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0ea8.0.0m79xkyxuyi",
+                    "name": "type",
+                    "type": "CourseType",
+                    "description": "Course type [ `cnf` | `default` ]",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks0eqw.0.zsk7zlfm5pl",
+                    "name": "start_date",
+                    "type": "date",
+                    "description": "Starting date the course is visible",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks0f73.0.8isizsy1otm",
+                    "name": "end_date",
+                    "type": "date",
+                    "description": "Ending date the course is visible",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks0fna.0.pqdrc808jpm",
+                    "name": "face_recognition",
+                    "type": "boolean",
+                    "description": "Flag T/F if the course requires face recognition",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks0g4j.0.0hoqbxcsphc",
+                    "name": "revenue_platform",
+                    "type": "num",
+                    "description": "% of revenue for the platform",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0gl5.0.o66byrn2le",
+                    "name": "revenue_trainer",
+                    "type": "num",
+                    "description": "% of revenue for the trainer",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0h1z.0.k3679qdgn3",
+                    "name": "max_students",
+                    "type": "num",
+                    "description": "Maximum number of students",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0hl2.0.in1imvjwggc",
+                    "name": "num_students",
+                    "type": "num",
+                    "description": "Number of students enrolled",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks0i05.0.yclku7pg5bs",
+                    "name": "language",
+                    "type": "str",
+                    "description": "The course language",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks0jiz.0.en6q7umj4i7",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "If the course is free / open to all",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1ks48at.0.7orzvwe5c9",
+                    "name": "tags",
+                    "type": "str",
+                    "is_array": true,
+                    "index": "*",
+                    "description": "tags for the type",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ks4baw.0.wyyhku025k",
+                    "name": "sections",
+                    "type": "type.l1m7awnk.0.j1jiyrfrel",
+                    "description": "The sections belonging to this Course (read only)",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                }
+            ],
+            "db_clear": false,
+            "db_table": "academy_courses"
+        },
+        "type.l1ksh59j.0.bc9ywzh5dug": {
+            "id": "type.l1ksh59j.0.bc9ywzh5dug",
+            "description": "Course Details",
+            "name": "CourseDetails",
+            "fields": [
+                {
+                    "id": "fld.l1ksi0de.0.y8ajxrkf2a",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi1kk.0.lorc0sfjq",
+                    "name": "code",
+                    "type": "str",
+                    "description": "Course unique code",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi1yr.0.acygzkyze0u",
+                    "name": "owner",
+                    "type": "type.l1bqgn8m.0.u99ddt9zsp",
+                    "description": "Full details of the user that created this course (and it is defined as 'owner') and main trainer",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi30k.0.v1mkvnqlet",
+                    "name": "category",
+                    "type": "str",
+                    "description": "Category Name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi3fs.0.vj9cxlonth9",
+                    "name": "cert_template",
+                    "type": "str",
+                    "description": "Certificate Template Name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi3u8.0.7vp8p4h3l5s",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Course name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi48d.0.tmrk4o3z9",
+                    "name": "status",
+                    "type": "str",
+                    "description": "Course status [undefined, active, hidden]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi4pe.0.tdfe48bt2qj",
+                    "name": "short_description",
+                    "type": "str",
+                    "description": "Course short description (for SEO)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi564.0.rn5vtb22eee",
+                    "name": "description",
+                    "type": "str",
+                    "description": "Course description",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi5kx.0.waabqinm8et",
+                    "name": "id_product",
+                    "type": "str",
+                    "description": "Product related to this course",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi60o.0.y8u9fxm1t8n",
+                    "name": "product",
+                    "type": "type.l1ku8vj6.0.ub6i6gmrd6s",
+                    "description": "The full product",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi6ip.0.rt6gm8wds0j",
+                    "name": "image",
+                    "type": "str",
+                    "description": "Course image URL",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi6yi.0.yu3upr69v6l",
+                    "name": "video_promo_url",
+                    "type": "str",
+                    "description": "The URL of the promotional video of the Course",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi7ef.0.x8vfodg47z8",
+                    "name": "video_promo_provider",
+                    "type": "VideoProvider",
+                    "description": "The video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi7tv.0.iul4tzy77y",
+                    "name": "pre_req",
+                    "type": "json",
+                    "description": "A list of pre-requisites",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi8ab.0.sj3rh1ceio",
+                    "name": "results",
+                    "type": "json",
+                    "description": "A list of what the student will learn",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi8pz.0.iwmt9cskl2i",
+                    "name": "type",
+                    "type": "CourseType",
+                    "description": "Course type [ `cnf` | `default` ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi95o.0.eqmz9zkcjnl",
+                    "name": "start_date",
+                    "type": "date",
+                    "description": "Starting date the course is visible",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi9jk.0.k57a4hzlf0e",
+                    "name": "end_date",
+                    "type": "date",
+                    "description": "Ending date the course is visible",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksi9xy.0.pqc1igkic3",
+                    "name": "face_recognition",
+                    "type": "boolean",
+                    "description": "Flag T/F if the course requires face recognition",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksiadr.0.h28d5utamm",
+                    "name": "revenue_platform",
+                    "type": "num",
+                    "description": "% of revenue for the platform",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksiav8.0.7eaguflx0bc",
+                    "name": "revenue_trainer",
+                    "type": "num",
+                    "description": "% of revenue for the trainer",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksibaa.0.kzmui2c9uw9",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "If the course is free / open to all",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksibp1.0.uh9s7hqxx3",
+                    "name": "tot_time",
+                    "type": "num",
+                    "description": "Total running length (in seconds)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksic45.0.omv94yb0tln",
+                    "name": "tot_sections",
+                    "type": "num",
+                    "description": "Total number of sections",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksigis.0.00r54lcpjl8k",
+                    "name": "tags",
+                    "type": "str",
+                    "is_array": true,
+                    "index": "*",
+                    "description": "tags for the type",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksik3l.0.mhsmwweq91n",
+                    "name": "sections",
+                    "type": "type.l1m7awnk.0.j1jiyrfrel",
+                    "description": "The sections belonging to this Course (read only)",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l1ksikgz.0.49tqjwz03il",
+                    "name": "lessons",
+                    "type": "type.l1m7fu1y.0.krtaindlrwk",
+                    "description": "All course lessons",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l1ksikty.0.fkymk6vjxtn",
+                    "name": "max_students",
+                    "type": "num",
+                    "description": "Maximum number of students",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1ksil9w.0.w3p6u2pd7yn",
+                    "name": "num_students",
+                    "type": "num",
+                    "description": "Number of students enrolled",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m6r61h.0.jmh9v96rg28": {
+            "id": "type.l1m6r61h.0.jmh9v96rg28",
+            "description": "Course Page Details",
+            "name": "CoursePageDetails",
+            "fields": [
+                {
+                    "id": "fld.l1m6rcdj.0.kcmsxjuu2n",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rdh2.0.ct8qh188pli",
+                    "name": "code",
+                    "type": "str",
+                    "description": "Course unique code",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rdzv.0.h8bvzyouaia",
+                    "name": "author",
+                    "type": "str",
+                    "description": "Author name / lastname",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6refh.0.k0csaads7w9",
+                    "name": "id_owner",
+                    "type": "str",
+                    "description": "Author (user) ID",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6revc.0.xhucbsszy3",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "Main category id",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rf9h.0.6jk56b3r1z6",
+                    "name": "category",
+                    "type": "str",
+                    "description": "Main Category Name",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rfnt.0.ym5vko4yxmm",
+                    "name": "id_sub_category",
+                    "type": "str",
+                    "description": "Sub category id",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rg2j.0.er1z6ryqc8t",
+                    "name": "sub_category",
+                    "type": "str",
+                    "description": "Sub Category Name",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rggf.0.w3krdzv52xe",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Course name",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rgtp.0.ll3r8y3wak",
+                    "name": "short_description",
+                    "type": "str",
+                    "description": "Course short description (for SEO)",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rh7g.0.ikwdpfl9fxk",
+                    "name": "description",
+                    "type": "str",
+                    "description": "Course description",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rhmh.0.yvj8j6tufl",
+                    "name": "curr_price",
+                    "type": "num",
+                    "description": "Current price",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6ri5d.0.t9boptz4lf",
+                    "name": "full_price",
+                    "type": "num",
+                    "description": "Full Price",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rilw.0.uzww9kxn6m",
+                    "name": "rating",
+                    "type": "num",
+                    "description": "Course rating",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rj1p.0.nfxi3zecdvp",
+                    "name": "rating_votes",
+                    "type": "num",
+                    "description": "How many ratings",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rjf6.0.lz8zn26fc7f",
+                    "name": "students",
+                    "type": "num",
+                    "description": "How many students",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rjty.0.at7k83nqsz7",
+                    "name": "language",
+                    "type": "str",
+                    "description": "The course language",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rk82.0.znhtrltslzn",
+                    "name": "image_url",
+                    "type": "str",
+                    "description": "Course image URL",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rkn3.0.o0ry4pei7ng",
+                    "name": "video_promo_url",
+                    "type": "str",
+                    "description": "The URL of the promotional video of the Course",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rl2v.0.9qhw8h4omps",
+                    "name": "video_promo_provider",
+                    "type": "VideoProvider",
+                    "description": "The video hoster [ vimeo | youtube ]",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rli4.0.tki9sddzbr",
+                    "name": "pre_req",
+                    "type": "json",
+                    "description": "A list of pre-requisites",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rlwh.0.j9r7gfqhrws",
+                    "name": "results",
+                    "type": "json",
+                    "description": "A list of what the student will learn",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rmbt.0.v79b2x9vlr",
+                    "name": "type",
+                    "type": "CourseType",
+                    "description": "Course type [ `cnf` | `default` ]",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rmtc.0.kysbbfqch7c",
+                    "name": "last_update",
+                    "type": "str",
+                    "description": "Last course update month / year",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rnut.0.ozi7n259qwf",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "If the course is free / open to all",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6roiv.0.ezbvfdn1agb",
+                    "name": "tags",
+                    "type": "str",
+                    "is_array": true,
+                    "index": "*",
+                    "description": "tags for the type",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rqqf.0.omzweegvix",
+                    "name": "tree",
+                    "type": "type.l1m8m1uy.0.i29owkemzk",
+                    "description": "Tree node structure",
+                    "required": true,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l1m6rrc4.0.a64meqt63x6",
+                    "name": "tot_sections",
+                    "type": "num",
+                    "description": "Total number of sections",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rrq9.0.20ftxo2gt4qj",
+                    "name": "tot_lectures",
+                    "type": "num",
+                    "description": "Total number of lessons",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rs4x.0.03j2aekhxwv3",
+                    "name": "tot_time",
+                    "type": "num",
+                    "description": "Total time in seconds",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m6rsi8.0.oozyrzhe3m",
+                    "name": "tot_time_str",
+                    "type": "str",
+                    "description": "Total time in str (hours minutes)",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cve2o2.0.3prqjh3a0l",
+                    "name": "id_trainers",
+                    "type": "str",
+                    "description": "Trainers contributing to this course",
+                    "required": false,
+                    "private": false,
+                    "index": "*",
+                    "is_array": true
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m72jkc.0.f9cmbe9300f": {
+            "id": "type.l1m72jkc.0.f9cmbe9300f",
+            "description": "Course Box Details",
+            "name": "CourseBoxDetails",
+            "fields": [
+                {
+                    "id": "fld.l1m72qe6.0.bytz657gc7",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72rd6.0.o63bxuznfkn",
+                    "name": "code",
+                    "type": "str",
+                    "description": "Course unique code",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7qa8brj.0.33hu9536tet",
+                    "name": "slug",
+                    "type": "str",
+                    "description": "Course slug",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72rvr.0.xtqpt3t6h0j",
+                    "name": "author",
+                    "type": "str",
+                    "description": "Author Name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72sbs.0.aequsz06ymd",
+                    "name": "id_owner",
+                    "type": "str",
+                    "description": "Author id",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72spv.0.lbeh9gktmzd",
+                    "name": "category",
+                    "type": "str",
+                    "description": "Category Name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72t65.0.kabrpehnlje",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "Category ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72tku.0.gr1m85kn219",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Course name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72tzh.0.lbpceaq4h6",
+                    "name": "short_description",
+                    "type": "str",
+                    "description": "Course short description (for SEO)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72uf3.0.gexbkg7ro",
+                    "name": "image",
+                    "type": "str",
+                    "description": "Course image ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72uub.0.7nkzx0nekdj",
+                    "name": "image_url",
+                    "type": "str",
+                    "description": "Course Image URL",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72v9w.0.90t6j2f3o9u",
+                    "name": "type",
+                    "type": "CourseType",
+                    "description": "Course type [ `cnf` | `default` ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72vpg.0.e6sjfvo1wj",
+                    "name": "rating",
+                    "type": "num",
+                    "description": "Course ratings",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72w6t.0.ovqkp8fqsmr",
+                    "name": "rating_votes",
+                    "type": "num",
+                    "description": "How many ratings",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72wn5.0.i8i3gtrh9sj",
+                    "name": "curr_price",
+                    "type": "num",
+                    "description": "Current price",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72x33.0.ffur9cbmfkg",
+                    "name": "full_price",
+                    "type": "num",
+                    "description": "Full Price",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72xhq.0.khmmxl4i9s",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "If the course is free",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m72yeg.0.wwdnko2n57",
+                    "name": "tags",
+                    "type": "str",
+                    "is_array": true,
+                    "index": "*",
+                    "description": "tags for the type",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cvaq50.0.to1n52s7g79",
+                    "name": "id_trainers",
+                    "type": "str",
+                    "description": "Trainsers contributing to this project",
+                    "required": false,
+                    "private": false,
+                    "index": "*",
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l7pyjquo.0.1wjisuc7q4f",
+                    "name": "tot_time",
+                    "type": "num",
+                    "description": "Total running time in seconds",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7pyk4j4.0.qh7hb3mgpg",
+                    "name": "tot_lessons",
+                    "type": "num",
+                    "description": "Total number of lessons",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m77r0e.0.if51py36m0f": {
+            "id": "type.l1m77r0e.0.if51py36m0f",
+            "description": "Course Box Category List",
+            "name": "CourseBoxCategList",
+            "fields": [
+                {
+                    "id": "fld.l1m78d5w.0.ntqdzukzk2i",
+                    "name": "id_category",
+                    "type": "str",
+                    "description": "Category ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m78dh6.0.pig1xe90xv",
+                    "name": "category",
+                    "type": "str",
+                    "description": "Category Name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m78dsv.0.qr0z3gak9am",
+                    "name": "courses",
+                    "type": "type.l1m72jkc.0.f9cmbe9300f",
+                    "description": "List of courses in this category",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m79lxg.0.n5qfmcs16mk": {
+            "id": "type.l1m79lxg.0.n5qfmcs16mk",
+            "description": "Course Status",
+            "name": "CourseStatus",
+            "fields": [
+                {
+                    "id": "fld.l1m79uqk.0.36vdnhxqqx",
+                    "name": "code",
+                    "type": "str",
+                    "description": "Course code",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m79v5b.0.6vcu2iwqja6",
+                    "name": "id_lesson",
+                    "type": "str",
+                    "description": "Last lesson id",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m79ve7.0.wfnz0tqen3i",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "Lesson pos (in seconds)",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m7awnk.0.j1jiyrfrel": {
+            "id": "type.l1m7awnk.0.j1jiyrfrel",
+            "description": "Section",
+            "name": "Section",
+            "fields": [
+                {
+                    "id": "fld.l1m7b3o4.0.cu8zzbtqbo9",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7b514.0.zvasu39ybqo",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The id course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7b5ej.0.yxxgyrqh6s",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Category name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7b5u0.0.4ybw8hsvvni",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "Position of the Section in the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7b67f.0.ml7929t0xrk",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "Flag T/F if this section is visible (default: true)",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7b6k7.0.j6uvoayzfyc",
+                    "name": "lessons",
+                    "type": "type.l1m7fu1y.0.krtaindlrwk",
+                    "description": "The lessons belongin to this Section (read only)",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l1m7b6yq.0.ydc4xr0prt8",
+                    "name": "tot_time",
+                    "type": "num",
+                    "description": "Total running time (in seconds)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7b7cz.0.5t5lrpsquxg",
+                    "name": "tot_lessons",
+                    "type": "num",
+                    "description": "Total number of lessons",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7b7qe.0.qf1xpmhg5ni",
+                    "name": "tot_watched",
+                    "type": "num",
+                    "description": "Total number of watched lessons",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7b84x.0.hvu8unnb5o5",
+                    "name": "tot_completed",
+                    "type": "num",
+                    "description": "Total number of completed lessons",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": "academy_sections"
+        },
+        "type.l1m7fu1y.0.krtaindlrwk": {
+            "id": "type.l1m7fu1y.0.krtaindlrwk",
+            "description": "Lesson",
+            "name": "Lesson",
+            "fields": [
+                {
+                    "id": "fld.l1m7g1lc.0.abih37i2zlu",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7g3b7.0.1ev1xwm8f2y",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The id course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7g3pq.0.mdt0ysg15ad",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The AcademySection ID",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7g46u.0.if16w0yemx",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Category name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7g4ju.0.uokn4stq8h9",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "If the lesson is available for everyone",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l78phada.0.41uswpz9ldb",
+                    "name": "kind",
+                    "type": "enum.l78phozi.0.yz1txgy82yt",
+                    "description": "The kind of lesson",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7g4xj.0.fh7mgvbi4hu",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "Position of the Lesson in the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7g5ak.0.51lyp73rovg",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "Flag T/F if this section is visible [default: true]",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7g5nz.0.cl00sndg7u",
+                    "name": "text",
+                    "type": "str",
+                    "description": "The text inside this lesson",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7g61o.0.zzkz0aa5wyo",
+                    "name": "video_url",
+                    "type": "str",
+                    "description": "The URL of the video of the Lesson (if any)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7g6fx.0.iqnqf33y9e8",
+                    "name": "video_provider",
+                    "type": "VideoProvider",
+                    "description": "The video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7g6rr.0.ordytrk6er",
+                    "name": "duration",
+                    "type": "num",
+                    "description": "Video duration in seconds",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6lpex3p.0.ghn13adn3ml",
+                    "name": "resources",
+                    "type": "type.l6lq79sg.0.4lkp98iw3lv",
+                    "description": "Lesson resources",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l78qbquh.0.vo3v6pgl6cc",
+                    "name": "id_quiz",
+                    "type": "str",
+                    "description": "The Quiz ID",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": "academy_lessons"
+        },
+        "type.l1m7qdxx.0.2eg400d50im": {
+            "id": "type.l1m7qdxx.0.2eg400d50im",
+            "description": "Lesson Student Info",
+            "name": "LessonStudentInfo",
+            "fields": [
+                {
+                    "id": "fld.l1m7qnuz.0.5nsys8mak9s",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7qp1g.0.7pbofb8ra05",
+                    "name": "code",
+                    "type": "str",
+                    "description": "The id course",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7qpg7.0.jhbap4s205s",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The AcademySection ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7qpu2.0.1b0f5l9wtp7",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Category name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7qqd3.0.715egukm06o",
+                    "name": "text",
+                    "type": "str",
+                    "description": "The text inside this lesson",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7qqqa.0.sqgzyryi4rr",
+                    "name": "video_url",
+                    "type": "str",
+                    "description": "The URL of the video of the Lesson (if any)",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7qr4s.0.pd4gs9e00rg",
+                    "name": "video_provider",
+                    "type": "VideoProvider",
+                    "description": "The video hoster [ vimeo | youtube ]",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7qrhj.0.dxujt61uu9i",
+                    "name": "duration",
+                    "type": "num",
+                    "description": "Video duration is seconds",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7s2lr.0.v36q0di4ypq",
+                    "name": "time_pos",
+                    "type": "num",
+                    "description": "Position of the student in the video",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m7w37l.0.jqyrl8czf1g": {
+            "id": "type.l1m7w37l.0.jqyrl8czf1g",
+            "description": "Enroll",
+            "name": "Enroll",
+            "fields": [
+                {
+                    "id": "fld.l1m7wdh2.0.7s72lcxr54l",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7weqj.0.74pj5z13ec",
+                    "name": "id_user",
+                    "type": "str",
+                    "description": "User that enrolled to a course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7wf65.0.fk9axs1lww",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course the user is enrolled to",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7wfkh.0.dueptlx2o86",
+                    "name": "completed",
+                    "type": "boolean",
+                    "description": "If the user has completed the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7wfyk.0.ev76ma795r7",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "Flag T/F if this course is visible to the user (default: true)",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7wge2.0.fx44706h3ug",
+                    "name": "id_order",
+                    "type": "str",
+                    "description": "Order ID with payment info",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7wgug.0.cjica59ht6j",
+                    "name": "lessons",
+                    "type": "num",
+                    "description": "Total number of lessons",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7whax.0.xt7umsri24j",
+                    "name": "lessons_completed",
+                    "type": "num",
+                    "description": "Number of lessons completed",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7wi4p.0.3nmz5ud1m6d",
+                    "name": "lesson_last",
+                    "type": "str",
+                    "description": "Last lesson id opened in this course",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m7wink.0.5itsj4pvr",
+                    "name": "date_start",
+                    "type": "date",
+                    "description": "The date the user started the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m7wj1w.0.xwqpyuq4pl",
+                    "name": "date_completed",
+                    "type": "date",
+                    "description": "The date the user completed the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                }
+            ],
+            "db_clear": false,
+            "db_table": "academy_enrolls"
+        },
+        "type.l1m84e9p.0.xhn0v2h99le": {
+            "id": "type.l1m84e9p.0.xhn0v2h99le",
+            "description": "Enroll Details",
+            "name": "EnrollDetails",
+            "fields": [
+                {
+                    "id": "fld.l1m84jjd.0.55tk6o0x732",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m84klo.0.i0fu8cj0s38",
+                    "name": "id_user",
+                    "type": "str",
+                    "description": "User that enrolled to a course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m84l48.0.7ybcux1ldl2",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course the user is enrolled to",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m84ll2.0.cfvppw9247a",
+                    "name": "student",
+                    "type": "str",
+                    "description": "Student first and last name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m84lyo.0.k4w8g5jve1",
+                    "name": "email",
+                    "type": "str",
+                    "description": "Student email",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m84mdd.0.dgcztrczi3m",
+                    "name": "course",
+                    "type": "str",
+                    "description": "Course Title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m84mqz.0.9hy7yibez0f",
+                    "name": "completed",
+                    "type": "boolean",
+                    "description": "If the user has completed the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m84n3r.0.bppphrcni48",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "Flag T/F if this course is visible to the user (default: true)",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m84nhl.0.g50wohenw7a",
+                    "name": "id_order",
+                    "type": "str",
+                    "description": "Order ID with payment info",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m84nvf.0.0ltl7kimrwin",
+                    "name": "lessons",
+                    "type": "num",
+                    "description": "Total number of lessons",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m84o8t.0.6xbg0h7rj8y",
+                    "name": "lessons_completed",
+                    "type": "num",
+                    "description": "Number of lessons completed",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m84omp.0.xcnca5wxz5c",
+                    "name": "lesson_last",
+                    "type": "str",
+                    "description": "Last lesson id opened in this course",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m84oza.0.ypjpyi3hvi",
+                    "name": "date_start",
+                    "type": "date",
+                    "description": "The date the user started the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m84pbw.0.tvv1shptz7",
+                    "name": "date_completed",
+                    "type": "date",
+                    "description": "The date the user completed the course",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m8i740.0.o6fh7nmwqwo": {
+            "id": "type.l1m8i740.0.o6fh7nmwqwo",
+            "description": "Lesson Attended",
+            "name": "LessonAttended",
+            "fields": [
+                {
+                    "id": "fld.l1m8ii0h.0.qncg02pxif",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8ij4r.0.b0a0mbuxa2m",
+                    "name": "id_user",
+                    "type": "str",
+                    "description": "User that attended the lesson",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m8ijlf.0.r69zxl0zygf",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The course the user is enrolled to",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m8ik2t.0.k30zbznosab",
+                    "name": "code",
+                    "type": "str",
+                    "description": "The course unique code",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m8ikg9.0.u1v7m4cczqa",
+                    "name": "id_section",
+                    "type": "str",
+                    "description": "The lesson ID section",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m8ikts.0.45xgdu68x9s",
+                    "name": "id_lesson",
+                    "type": "str",
+                    "description": "The lesson attended by the user",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m8il6b.0.uwhdn500q7",
+                    "name": "duration",
+                    "type": "num",
+                    "description": "Duration (in seconds) of the video lesson",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8ill3.0.xfs5dlh5oo",
+                    "name": "time_pos",
+                    "type": "num",
+                    "description": "Position (in seconds) of the amount of video viewed by the user",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8ilzv.0.6cclvnolqfm",
+                    "name": "completed",
+                    "type": "boolean",
+                    "description": "If the user has completed the lesson",
+                    "required": false,
+                    "private": false,
+                    "index": "y"
+                },
+                {
+                    "id": "fld.l1m8imea.0.181b4dwoyeq",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Lesson title",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": "academy_attended_lessons"
+        },
+        "type.l1m8m1uy.0.i29owkemzk": {
+            "id": "type.l1m8m1uy.0.i29owkemzk",
+            "description": "Tree Node",
+            "name": "TreeNode",
+            "fields": [
+                {
+                    "id": "fld.l1m8m6j8.0.iotqbvuze5s",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8m7n0.0.h0vvb8cvxz",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The Node title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8m7z5.0.0jnrs7xp3ch",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "If the node is visible",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8m8ar.0.e3j3jmt1mrf",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "If the node is free",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8m8q5.0.ltmyxp5m9kf",
+                    "name": "extra",
+                    "type": "type.l1m90f8n.0.oj6p4g51yh",
+                    "description": "Extra fields",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8m97u.0.sophe6ezvfj",
+                    "name": "tot_lectures",
+                    "type": "num",
+                    "description": "Total number of lectures",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8m9lh.0.ydym38304y",
+                    "name": "tot_completed",
+                    "type": "num",
+                    "description": "Number of completed lectures",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8m9zy.0.3s9368j0e8g",
+                    "name": "tot_seconds",
+                    "type": "num",
+                    "description": "Total number of seconds",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8macc.0.2mk0c16xz9",
+                    "name": "tot_time",
+                    "type": "str",
+                    "description": "Total time",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8mapl.0.ej7hkdmiaga",
+                    "name": "children",
+                    "type": "type.l1m8m1uy.0.i29owkemzk",
+                    "description": "Children nodes",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m8xfat.0.xobppxjunk8": {
+            "id": "type.l1m8xfat.0.xobppxjunk8",
+            "description": "Tree Node Cache",
+            "name": "TreeNodeCache",
+            "fields": [
+                {
+                    "id": "fld.l1m8xs11.0.wz8d3wzgo5d",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The cache id course",
+                    "required": false,
+                    "private": false,
+                    "index": "u"
+                },
+                {
+                    "id": "fld.l1m8xs8u.0.fzjoch351wo",
+                    "name": "data",
+                    "type": "json",
+                    "description": "The tree data",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": "academy_tree_caches"
+        },
+        "type.l1m8yqkn.0.q24sg8my9hr": {
+            "id": "type.l1m8yqkn.0.q24sg8my9hr",
+            "description": "Tree Node Position",
+            "name": "TreeNodePos",
+            "fields": [
+                {
+                    "id": "fld.l1m8z070.0.mq1i47bkn5l",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m8z1jb.0.9p19xkofei",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "The new pos",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6hqbr29.0.t7wytgjlk7",
+                    "name": "sect",
+                    "type": "str",
+                    "description": "The section ID",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m90f8n.0.oj6p4g51yh": {
+            "id": "type.l1m90f8n.0.oj6p4g51yh",
+            "description": "Tree Node Extra",
+            "name": "TreeNodeExtra",
+            "fields": [
+                {
+                    "id": "fld.l1m90ne4.0.f3qy7unhd7j",
+                    "name": "visible",
+                    "type": "boolean",
+                    "description": "Flag T/F for visibility",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m90ns7.0.t6esr6m0t4d",
+                    "name": "free",
+                    "type": "boolean",
+                    "description": "Flag T/F if it is free",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m90o9x.0.pxapdklwise",
+                    "name": "duration",
+                    "type": "num",
+                    "description": "Duration in seconds",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m90ons.0.x3s4ern3aes",
+                    "name": "video",
+                    "type": "str",
+                    "description": "Video URL",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m90p0r.0.a982detjt3",
+                    "name": "pos",
+                    "type": "num",
+                    "description": "Lesson position",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m90pda.0.magxoh2iooq",
+                    "name": "completed",
+                    "type": "boolean",
+                    "description": "Flag T/F if the video is completed",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6lpmfnr.0.0chly0zjhbbm",
+                    "name": "resources",
+                    "type": "type.l6lq79sg.0.4lkp98iw3lv",
+                    "description": "List of resources to this node",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l78pzuhk.0.t4193u1a42",
+                    "name": "kind",
+                    "type": "enum.l78phozi.0.yz1txgy82yt",
+                    "description": "The lesson kind",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l78q8ehn.0.0nbarrld1mcm",
+                    "name": "id_quiz",
+                    "type": "str",
+                    "description": "",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l1m92nyg.0.7thkgote1tp": {
+            "id": "type.l1m92nyg.0.7thkgote1tp",
+            "description": "Trainer Small",
+            "name": "TrainerSmall",
+            "fields": [
+                {
+                    "id": "fld.l1m92zqf.0.71dem581wqc",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l1m93174.0.jx2fcqn2grd",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The trainer name and lastname",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l2bkf2zg.0.syfodk2p5o": {
+            "id": "type.l2bkf2zg.0.syfodk2p5o",
+            "description": "Progress of a user in a lesson",
+            "name": "LessonProgress",
+            "fields": [
+                {
+                    "id": "fld.l2bkfb19.0.bpw77md4zx4",
+                    "name": "id_lesson",
+                    "type": "str",
+                    "description": "Lesson id",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l2bkfvni.0.m6vsn3keip",
+                    "name": "id_user",
+                    "type": "str",
+                    "description": "User ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l2bkg39b.0.3tsrs01tp2z",
+                    "name": "duration",
+                    "type": "int",
+                    "description": "Lesson duration time in seconds",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l2bkgih3.0.ho6mu5kfk4",
+                    "name": "title",
+                    "type": "str",
+                    "description": "Lesson title",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l2bkgsrd.0.xzk82k49qn",
+                    "name": "completed",
+                    "type": "boolean",
+                    "description": "Flag T/F if lesson was completed or not",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l2bkhcvb.0.eoz98lkkb1c",
+                    "name": "perc",
+                    "type": "int",
+                    "description": "Completion percentage",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l2bkhlzd.0.k7ch5dwr62m",
+                    "name": "time_pos",
+                    "type": "int",
+                    "description": "Position of the video (in seconds)",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l6lq79sg.0.4lkp98iw3lv": {
+            "id": "type.l6lq79sg.0.4lkp98iw3lv",
+            "description": "An attached resource to a lesson",
+            "name": "LessonResource",
+            "fields": [
+                {
+                    "id": "fld.l6lq7t6x.0.yzqed3o8n3f",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "The resource id (from uploads)",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6lq87sj.0.4gatp68etyy",
+                    "name": "original_filename",
+                    "type": "str",
+                    "description": "The real resource name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6lq8hfs.0.pbi66tkkmli",
+                    "name": "thumbnail",
+                    "type": "str",
+                    "description": "Path for the thumbnail file",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6lq8u5i.0.71zcqnlqmwt",
+                    "name": "size",
+                    "type": "num",
+                    "description": "Size in bytes",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6lq94qi.0.3ta706cquit",
+                    "name": "ext",
+                    "type": "str",
+                    "description": "Resource extension",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l6xklnvi.0.to1i1ohq0a": {
+            "id": "type.l6xklnvi.0.to1i1ohq0a",
+            "description": "Structure returned when an enrolled user is removed",
+            "name": "EnrollDelete",
+            "fields": [
+                {
+                    "id": "fld.l6xkm2c2.0.v3bmvd5hdxg",
+                    "name": "id_course",
+                    "type": "str",
+                    "description": "The Course ID",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6xkmeuq.0.0xroo786tuak",
+                    "name": "id_enroll",
+                    "type": "str",
+                    "description": "The Enroll ID being deleted",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l6xkmosg.0.9h8vspczboh",
+                    "name": "num_students",
+                    "type": "int",
+                    "description": "Number of students in course",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l7cvlcaj.0.9icv9k1h9yr": {
+            "id": "type.l7cvlcaj.0.9icv9k1h9yr",
+            "description": "Trainer data",
+            "name": "Trainer",
+            "fields": [
+                {
+                    "id": "fld.l7cvlyoe.0.haort816wxv",
+                    "name": "id_user",
+                    "type": "str",
+                    "index": "u",
+                    "description": "The user ID the trainer belongs to",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cvma1y.0.ok0v26z2vz",
+                    "name": "fullname",
+                    "type": "str",
+                    "description": "Trainer name and lastname",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cvmnp3.0.94bsj53knfb",
+                    "name": "image_url",
+                    "type": "str",
+                    "description": "Trainer image",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cvmwvj.0.2761462n04a",
+                    "name": "bio",
+                    "type": "str",
+                    "description": "Trainer bio",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l7cwk0z6.0.a0yrw5ti1y": {
+            "id": "type.l7cwk0z6.0.a0yrw5ti1y",
+            "description": "The student data",
+            "name": "Student",
+            "fields": [
+                {
+                    "id": "fld.l7cwk91f.0.stdocbv8zw",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The user ID of the student",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cwkjij.0.s736c6a1vtr",
+                    "name": "name",
+                    "type": "str",
+                    "description": "Student name",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cwkpcl.0.u6o8xelrbz",
+                    "name": "lastname",
+                    "type": "str",
+                    "description": "Student lastname",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cwkv1x.0.6hs9qz4041h",
+                    "name": "avatar",
+                    "type": "str",
+                    "description": "Student avatar URL",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cwl6a5.0.0js982rd9zj",
+                    "name": "courses",
+                    "type": "type.l7cx0bs7.0.6opxjgsz7k2",
+                    "description": "Courses the student is enrolled in",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l7cx0bs7.0.6opxjgsz7k2": {
+            "id": "type.l7cx0bs7.0.6opxjgsz7k2",
+            "description": "Just course id and title",
+            "name": "CourseSmall",
+            "fields": [
+                {
+                    "id": "fld.l7cx0q1e.0.cylkib0tsmg",
+                    "name": "id",
+                    "type": "str",
+                    "description": "The course id",
+                    "required": false,
+                    "private": false
+                },
+                {
+                    "id": "fld.l7cx0vk3.0.w3uem10fb7i",
+                    "name": "title",
+                    "type": "str",
+                    "description": "The course title",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l7rn8o07.0.z35bp7asfl": {
+            "id": "type.l7rn8o07.0.z35bp7asfl",
+            "description": "The structure returned after a search",
+            "name": "CourseSearchResults",
+            "fields": [
+                {
+                    "id": "fld.l7rn90mf.0.2lzy7kaue7e",
+                    "name": "courses",
+                    "type": "type.l1m72jkc.0.f9cmbe9300f",
+                    "description": "The courses returned",
+                    "required": false,
+                    "private": false,
+                    "is_array": true
+                },
+                {
+                    "id": "fld.l7rn9d47.0.w3gqqgnrqpm",
+                    "name": "count",
+                    "type": "num",
+                    "description": "Total courses found",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": ""
+        },
+        "type.l8v3xr5g.0.pu4u37gmwpe": {
+            "id": "type.l8v3xr5g.0.pu4u37gmwpe",
+            "description": "The Academy customization settings",
+            "name": "AcademySettings",
+            "fields": [
+                {
+                    "id": "fld.l8v3y9d3.0.mc6d6i8v92",
+                    "name": "id",
+                    "type": "str",
+                    "index": "u",
+                    "description": "the main id field",
+                    "required": true,
+                    "private": false
+                },
+                {
+                    "id": "fld.l8v3yb1c.0.u4911f3g56i",
+                    "name": "domain",
+                    "type": "str",
+                    "description": "The Academy Domain",
+                    "required": true,
+                    "private": false,
+                    "index": "u"
+                },
+                {
+                    "id": "fld.l8v3yt2q.0.66i9k9toree",
+                    "name": "settings",
+                    "type": "json",
+                    "description": "The saved settings",
+                    "required": false,
+                    "private": false
+                }
+            ],
+            "db_clear": false,
+            "db_table": "academy_settings"
+        }
+    },
+    "permissions": {
+        "perm.l1mc2jk4.0.4upv9u0esli": {
+            "id": "perm.l1mc2jk4.0.4upv9u0esli",
+            "name": "course.editor",
+            "description": "Only the one with this permission can change ALL the courses"
+        },
+        "perm.l1mc2u8f.0.rhhlmoq64p8": {
+            "id": "perm.l1mc2u8f.0.rhhlmoq64p8",
+            "name": "course.trainer",
+            "description": "The user with the same id as the id_trainer can modify the course"
+        },
+        "perm.l1njr7ax.0.r8icczjbcx": {
+            "id": "perm.l1njr7ax.0.r8icczjbcx",
+            "name": "academy_section.add",
+            "description": "Only users with `academy_section.add` can call this"
+        },
+        "perm.l8v3ww3e.0.n180vpvgv3b": {
+            "id": "perm.l8v3ww3e.0.n180vpvgv3b",
+            "name": "academy.settings",
+            "description": "Can manage Academy Settings"
+        }
+    },
+    "functions": {
+        "fn.l1kwcyrh.0.4k4vtgxn83": {
+            "id": "fn.l1kwcyrh.0.4k4vtgxn83",
+            "name": "academy_db_init",
+            "short_descr": "Initializes the module database",
+            "description": "This function initializes the module database tables.",
+            "parameters": [
+                {
+                    "id": "param.l1kwdano.0.9jcpct3zg1q",
+                    "name": "liwe",
+                    "type": "iliwe",
+                    "description": "LiWE full config",
+                    "required": true
+                }
+            ],
+            "returnType": "boolean",
+            "is_array": false
+        },
+        "fn.l6lq9gox.0.89rnsdv3cgv": {
+            "id": "fn.l6lq9gox.0.89rnsdv3cgv",
+            "name": "academy_lesson_fetch_resources",
+            "short_descr": "Fetch all lesson resources",
+            "description": "This function fetch all lesson resources (from the `Upload` module)",
+            "parameters": [
+                {
+                    "id": "param.l6lqaeh8.0.054hzqero4dh",
+                    "name": "req",
+                    "type": "ilrequest",
+                    "description": "the Request field",
+                    "required": true
+                },
+                {
+                    "id": "param.l6lqafet.0.mqdryrft44",
+                    "name": "lesson",
+                    "type": "type.l1m7fu1y.0.krtaindlrwk",
+                    "description": "The lesson to fetch resources for",
+                    "required": true
+                }
+            ],
+            "returnType": "type.l6lq79sg.0.4lkp98iw3lv",
+            "is_array": true
+        }
+    },
+    "enums": {
+        "enum.l1krmqle.0.ati9oo9jrpd": {
+            "id": "enum.l1krmqle.0.ati9oo9jrpd",
+            "description": "Course type",
+            "name": "CourseType",
+            "fields": [
+                {
+                    "id": "fld.l1krmwqx.0.xizdg1dz0ta",
+                    "name": "default",
+                    "description": "Standard course"
+                },
+                {
+                    "id": "fld.l1krn2ax.0.x9zq5krhd0g",
+                    "name": "cnf",
+                    "description": "Course with CNF certification"
+                }
+            ]
+        },
+        "enum.l1krrds2.0.3t239djwbxx": {
+            "id": "enum.l1krrds2.0.3t239djwbxx",
+            "description": "Video Provider",
+            "name": "VideoProvider",
+            "fields": [
+                {
+                    "id": "fld.l1krrjpe.0.i4bk2tn2stn",
+                    "name": "vimeo",
+                    "description": "Vimeo video provider"
+                },
+                {
+                    "id": "fld.l1krru22.0.3ayof2fsraw",
+                    "name": "youtube",
+                    "description": "Youtube video provider"
+                }
+            ]
+        },
+        "enum.l1krs8bj.0.jj3h1b4amg": {
+            "id": "enum.l1krs8bj.0.jj3h1b4amg",
+            "description": "Sorts the preview of the Courses",
+            "name": "CourseViewSort",
+            "fields": [
+                {
+                    "id": "fld.l1krt16u.0.yezzqwyqbn",
+                    "name": "alphabetical",
+                    "description": "Sets an alphabetical order"
+                },
+                {
+                    "id": "fld.l1krt6l2.0.a0l9pungoj8",
+                    "name": "recent",
+                    "description": "Sorts by the publication date of the courses"
+                },
+                {
+                    "id": "fld.l1krt79y.0.828gwpbqqrh",
+                    "name": "progress",
+                    "description": "Sorts by the progress of the courses"
+                },
+                {
+                    "id": "fld.l1krt7rl.0.yy8ulh9sss",
+                    "name": "progress_desc",
+                    "description": "Sorts by the progress description of the courses"
+                },
+                {
+                    "id": "fld.l1krt85j.0.p6sctk0xr8",
+                    "name": "buy",
+                    "description": "Shows the bought courses"
+                }
+            ]
+        },
+        "enum.l78phozi.0.yz1txgy82yt": {
+            "id": "enum.l78phozi.0.yz1txgy82yt",
+            "description": "Kind of lesson",
+            "name": "LessonKind",
+            "fields": [
+                {
+                    "id": "fld.l78phue7.0.x37j15r9bfa",
+                    "name": "video",
+                    "description": "The lesson shows a video"
+                },
+                {
+                    "id": "fld.l78pi45x.0.8xwjjgi0io4",
+                    "name": "quiz",
+                    "description": "The lesson shows a quiz"
+                },
+                {
+                    "id": "fld.l78pid9j.0.ymo67rog7gc",
+                    "name": "download",
+                    "description": "The lesson shows some resources"
+                }
+            ]
+        }
+    },
+    "doc": "The `academy` module is responsible of all the functions of the Academy management.",
+    "short_descr": "Academy module",
+    "menus": {
+        "menu.l1uuife2.0.0kfcd0tab9x": {
+            "id": "menu.l1uuife2.0.0kfcd0tab9x",
+            "name": "List",
+            "description": "List all courses",
+            "path": "/admin/academy/list",
+            "perm": "perm.l1mc2jk4.0.4upv9u0esli"
+        },
+        "menu.l1uuiwj0.0.u9ybmkpqm1": {
+            "id": "menu.l1uuiwj0.0.u9ybmkpqm1",
+            "name": "Enroll",
+            "description": "Enroll new users",
+            "path": "/admin/academy/course/enroll",
+            "perm": "perm.l1mc2u8f.0.rhhlmoq64p8"
+        }
+    }
+}

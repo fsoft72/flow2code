@@ -26,6 +26,9 @@ class Template( TemplateBase ):
 		# prepare the methods names
 		self._prepare_methods_names ( mod )
 
+		k = self._types_and_enums_list( mod, add_obj = True )
+		self.snippets [ "__interfaces" ] = self.join_newlines(k)
+
 		# write the header
 		out.write ( TEMPL [ 'HEADER_START' ] % self.snippets )
 
@@ -278,6 +281,15 @@ class Template( TemplateBase ):
 		fout.write ( TEMPL [ 'FUNCTION_END' ] % dct )
 		fout.write ( TEMPL [ 'FOLDING_END' ] % dct )
 
+	def _types_and_enums_list ( self, mod: Module, *, add_obj = False ):
+		k = list ( [ x.name for x in mod.types.values () ] ) + list ( [ x.name + "Keys" for x in mod.types.values () ] ) +  list ( [ x.name for x in mod.enums.values () ] )
+
+		if add_obj:
+			k += list ( [ x.name + "Obj" for x in mod.enums.values () ] )
+
+		k.sort ()
+
+		return k
 
 	def _generate_file_methods ( self, mod: Module, output: str ):
 		"""
@@ -289,8 +301,7 @@ class Template( TemplateBase ):
 		outfile = os.path.join( output, "server", "modules", mod_name, "methods.ts" )
 		out = self.create_file( outfile, mod )
 
-		k = list ( [ x.name for x in mod.types.values () ] ) + list ( [ x.name + "Keys" for x in mod.types.values () ] ) +  list ( [ x.name for x in mod.enums.values () ] )
-		k.sort ()
+		k = self._types_and_enums_list( mod)
 		self.snippets [ "__interfaces" ] = self.join_newlines(k)
 
 		res = []
