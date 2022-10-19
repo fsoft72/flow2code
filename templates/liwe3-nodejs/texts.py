@@ -29,7 +29,7 @@ export const init = ( liwe: ILiWE ) => {
 	console.log( "    - %(__name_camel)s " );
 
 	liwe.cfg.app.languages.map( ( l ) => locale_load( "%(__name_lower)s", l ) );
-	user_db_init ( liwe );
+	%(__name_lower)s_db_init ( liwe );
 """,
 	"HEADER_END": """
 };
