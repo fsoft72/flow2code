@@ -175,8 +175,6 @@ class TemplateBase:
 
 		_typ = field.type [ 0 ]
 
-		print ( "=== _typ: ", _typ )
-
 		if _typ == FieldType.STR:
 			dct [ 'type' ] = 'string'
 			if dct [ 'param_default' ] and dct [ 'param_default' ] != 'undefined':
@@ -198,12 +196,11 @@ class TemplateBase:
 			typ = field.type [ 1 ]
 			dct [ 'type' ] = typ
 			if typ in self.mod.flow.enums:
-				dct [ 'type' ] = self.parser.enums [ typ ].name
+				dct [ 'type' ] = self.mod.flow.enums [ typ ].name
 				dct [ 'type_obj' ] = True
-				print ( dct )
 				if use_enums: templ = template_obj
 			elif typ in self.mod.flow.types:
-				dct [ 'type' ] = self.parser.structures [ typ ].name
+				dct [ 'type' ] = self.mod.flow.types [ typ ].name
 				dct [ 'type_obj' ] = True
 
 		if dct [ 'type' ] == 'iliwe':
@@ -234,9 +231,6 @@ class TemplateBase:
 			dct [ '_req_param' ] = ', required: %(_req)s%(_default)s' % dct
 		else:
 			dct [ '_req_param' ] = ''
-
-		print ( dct )
-
 
 		return templ % dct
 

@@ -51,17 +51,20 @@ class Function:
 class Enum:
 	id: str = ''
 	name: str = ''
+	description: str = ''
 	consts: dict[str,str] = {}
 
 	def __init__ ( self, json_data, mod: Module ):
-		self.name = name
 		self.consts = {}
 		self.id = json_data [ 'id' ]
 		self.name = json_data [ 'name' ]
+		self.description = json_data.get ( 'description', '' )
 		self.consts = {}
 
-		for v in j_data [ 'fields' ].values ():
-			self.consts [ v [ 'name' ] ] = v [ 'name' ].lower ()
+		for v in json_data [ 'fields' ]:
+			self.consts [ v [ 'name' ] ] = { "name": v [ 'name' ].lower (), "description": v [ 'description' ] }
+
+		mod.flow.enums [ self.id ] = self
 
 	def __str__ ( self ):
 		dct = { "name": self.name, "consts": self.consts.keys () }
@@ -224,7 +227,6 @@ class Type:
 	fields: list[Field] = []
 
 	def __init__ ( self, json_data, mod: Module ):
-		print ( json_data )
 		self.id = json_data [ 'id' ]
 		self.coll_table = json_data.get ( 'db_table', '' )
 		self.coll_drop  = json_data.get ( 'db_clear', False )

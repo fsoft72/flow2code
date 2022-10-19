@@ -1,4 +1,4 @@
-def type2typescript ( typ: str ):
+def type2typescript ( typ: str, flow: any = None ):
 	if typ in ( 'str', 'string', 'text' ):
 		return 'string'
 	elif typ in ( 'int', 'num', 'number', 'float' ):
@@ -10,4 +10,11 @@ def type2typescript ( typ: str ):
 	elif typ in ( 'date', 'datetime', 'time' ):
 		return 'date'
 	else:
+		if not flow: return typ
+
+		if typ in flow.types:
+			return flow.types[ typ ].name
+		if typ in flow.enums:
+			return flow.enums[ typ ].name
+
 		return typ

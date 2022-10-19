@@ -4,7 +4,7 @@
 import os
 from lib.template_base import TemplateBase
 from lib.const import FieldType
-from lib.types import Module, Endpoint, Function
+from lib.types import Module, Endpoint, Function, Enum, Type
 from lib.utils import type2typescript
 
 from texts import texts as TEMPL
@@ -63,6 +63,8 @@ class Template( TemplateBase ):
 			"__perms": self._perms_get(ep, mod),
 			"__typed_dict": '',
 			"__params": "",
+			"__return_var_name": ep.return_name,
+			"__return_type": type2typescript ( ep.return_type, self.mod.flow ),
 		}
 
 		#params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
@@ -100,12 +102,6 @@ class Template( TemplateBase ):
 		if 'logged' in ep.permissions:
 			perms = 'perms( [ "is-logged" ] )'
 		else:
-			"""
-			print ( "=== PERMS: ", ep.permissions )
-			for k in ep.permissions:
-				perm_names.append ( mod [ 'permissions' ].get ( k ) [ 'name' ] )
-			"""
-
 			perms = 'perms( [ %s ] )' % ( '"' + '", "'.join ( ep.permissions ) + '"' )
 
 		return perms
@@ -203,6 +199,43 @@ class Template( TemplateBase ):
 
 		return '\n\t\t'.join ( res ) + "\n"
 
+	def _gen_enum ( self, fout, enum: Enum ):
+		keys = sorted ( list ( enum.consts.keys () ) )
+
+		dct = { "name": enum.name, "description": enum.description }
+
+		if dct [ 'description' ]:
+			dct [ 'description' ] = ' - ' + dct [ 'description' ]
+
+		fout.write ( TEMPL [ 'ENUM_START' ] % dct )
+		for k in keys:
+			v = enum.consts [ k ]
+			d = { "name": k, "val": v [ 'name' ], "description": v [ 'description' ] }
+			fout.write ( TEMPL [ 'ENUM_ROW' ] % d )
+
+		fout.write ( TEMPL [ 'ENUM_END' ] % dct )
+
+		fout.write ( TEMPL [ 'ENUM_OBJ_START' ] % dct )
+		for k in keys:
+			v = enum.consts [ k ]
+			d = { "name": k, "val": v [ 'name' ] }
+			fout.write ( TEMPL [ 'ENUM_OBJ_ROW' ] % d )
+
+		fout.write ( TEMPL [ 'ENUM_OBJ_END' ] % dct )
+
+	def _gen_type ( self, fout, typ: Type ):
+		dct = { "name": typ.name }
+
+		fout.write ( TEMPL [ 'INTERFACE_START' ] % dct )
+		for f in typ.fields:
+			fout.write ( self.prepare_field(f, TEMPL [ 'INTERFACE_PARAM' ], '' ) )
+		fout.write ( TEMPL [ 'INTERFACE_END' ] )
+
+		fout.write ( TEMPL [ 'INTERFACE_KEYS_START' ] % dct )
+		for f in typ.fields:
+			fout.write ( self.prepare_field(f, TEMPL [ 'INTERFACE_KEY_PARAM' ], '' ) )
+		fout.write ( TEMPL [ 'INTERFACE_KEYS_END' ] )
+
 	def _generate_function ( self, fout, fn: Function, mod: Module, ep: Endpoint ):
 		name = fn.name
 
@@ -286,6 +319,31 @@ class Template( TemplateBase ):
 
 		print( "Generated", outfile )
 
+	def _generate_file_types ( self, mod: Module, output: str ):
+		"""
+		generate the methods.ts file
+		"""
+		mod_name = self.mod_name( mod )
+
+		# create the output directory
+		outfile = os.path.join( output, "server", "modules", mod_name, "types.ts" )
+		out = self.create_file( outfile, mod )
+
+		for ep in mod.enums.values ():
+			self._gen_enum ( out, ep )
+
+		for ep in mod.types.values ():
+			self._gen_type ( out, ep )
+
+
+		out.write ( TEMPL [ 'TYPES_FILE_END' ] % self.snippets )
+		# close the output file
+		out.close()
+
+		print( "Generated", outfile )
+
+
 	def code ( self, mod, output ):
 		self._generate_file_endpoints ( mod, output )
 		self._generate_file_methods ( mod, output )
+		self._generate_file_types ( mod, output )

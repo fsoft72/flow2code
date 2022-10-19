@@ -16,7 +16,7 @@ import {
 } from './methods';
 
 import {
-	User, UserActivationCode, UserFaceRec, UserPerms, UserRegistration, UserSessionData
+	%(__interfaces)s
 } from './types';
 
 // d2r_start __header
@@ -39,10 +39,10 @@ export const init = ( liwe: ILiWE ) => {
 	app.%(__method_lower)s ( '/api%(url)s', %(__perms)s( req: ILRequest, res: ILResponse ) => {
 		%(__typed_dict)s
 
-		%(__endpoint_name)s ( %(__params)s( err: ILError, user: User ) => {
+		%(__endpoint_name)s ( req, %(__params)s( err: ILError, %(__return_var_name)s: %(__return_type)s ) => {
 			if ( err ) return send_error( res, err );
 
-			send_ok( res, { user } );
+			send_ok( res, { %(__return_var_name)s } );
 		} );
 	} );
 """,
@@ -112,4 +112,25 @@ export const %(function_name)s = ( %(__parameters)scback: LCback = null ): Promi
 	} );
 };
 """,
+	"TYPES_FILE_START": "",
+	"TYPES_FILE_END": "",
+	"ENUM_START": """/** %(name)s%(description)s */
+export enum %(name)s {\n""",
+	"ENUM_END": """};\n\n""",
+	"ENUM_ROW": """\t/** %(description)s */
+	%(name)s = "%(val)s",\n""",
+
+	"ENUM_OBJ_START": """export const %(name)sObj = {
+	__name: "%(name)s",\n""",
+	"ENUM_OBJ_END": """};\n\n""",
+	"ENUM_OBJ_ROW": """\t%(name)s: "%(val)s",\n""",
+	"INTERFACE_START": """/** %(name)s */
+export interface %(name)s {
+""",
+	"INTERFACE_END": """}\n\n""",
+	"INTERFACE_KEYS_START": """export const %(name)sKeys = {
+""",
+	"INTERFACE_KEYS_END": """};\n\n""",
+	"INTERFACE_PARAM": "	/** %(description)s */\n	%(name)s?: %(type)s;\n",
+	"INTERFACE_KEY_PARAM": "	'%(name)s': { type: '%(type)s', priv: %(private)s },\n",
 }
