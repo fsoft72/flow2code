@@ -3,16 +3,13 @@
 # import TemplateBase
 import os
 from lib.template_base import TemplateBase
-from lib.const import FieldType
-from lib.types import Module, Endpoint, Function, Enum, Type
-from lib.utils import type2typescript
+from lib.types import Module
 
 from texts import texts as TEMPL
 
 from gen_endpoints import generate_file_endpoints, _endpoint_definition, _prepare_methods_names, _typed_dict
 from gen_methods   import generate_file_methods, _generate_endpoint, _generate_function
 from gen_types     import generate_file_types, _gen_type
-
 
 class Template( TemplateBase ):
 	def __init__( self ):
