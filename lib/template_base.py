@@ -76,9 +76,10 @@ class TemplateBase:
 		} )
 
 
-	def code ( self, mod, output ):
+	def code ( self, mod, flow, output ):
 		self.mod = mod
-		print( "=== code() method not refined for", self.name )
+		self.flow = flow
+		#print( "=== code() method not refined for", self.name )
 
 	def mod_name ( self, mod: Module ):
 		return mod.name.lower().strip().replace( ' ', '_' ).replace ( '-', '_' )

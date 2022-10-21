@@ -26,7 +26,8 @@ class Template( TemplateBase ):
 
 		return k
 
-	def code ( self, mod, output ):
+	def code ( self, mod: Module, flow: any, output: str ):
+		super().code( mod, flow, output )
 		self.generate_file_endpoints ( mod, output )
 		self.generate_file_methods ( mod, output )
 		self.generate_file_types ( mod, output )

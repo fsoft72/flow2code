@@ -70,8 +70,7 @@ class Flow2Code:
 
 	def code ( self, outdir ):
 		for m in self.modules:
-			m.flow = self
-			self.template.code( m, outdir )
+			self.template.code( m, self, outdir )
 
 
 if __name__ == "__main__":
