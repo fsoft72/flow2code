@@ -38,8 +38,6 @@ def _gen_reducer_function( self, fout, ep: Endpoint, mod: Module ):
 		"_snippet": ''
 	}
 
-	print ( "=== ", ep.path, self.valid_function_name( ep.path ) )
-
 	dct [ '_snippet' ] = self.snippets.get ( dct [ 'action_name' ], '' )
 	s = dct['_snippet'].strip()
 	if s == '':
