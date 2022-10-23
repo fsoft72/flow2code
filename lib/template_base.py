@@ -85,6 +85,7 @@ class TemplateBase:
 		return mod.name.lower().strip().replace( ' ', '_' ).replace ( '-', '_' )
 
 	def valid_function_name ( self, name: str ) -> str:
+		name = name.split ( ":" )[0]
 		name = name.replace( '/', '_' ).replace( '-', '_' ).lower()
 
 		# remove all characters that are not a-z, 0-9 or _

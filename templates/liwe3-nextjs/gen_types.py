@@ -34,6 +34,8 @@ def generate_file_types ( self, mod: Module, output: str ):
 	outfile = os.path.join( output, "src", "components", mod_name, "core", "types.ts" )
 	fout = self.create_file( outfile, mod )
 
+	fout.write ( TEMPL [ 'TYPES_START' ] % self.snippets )
+
 	for ep in mod.enums.values():
 		_gen_enum(fout, ep)
 

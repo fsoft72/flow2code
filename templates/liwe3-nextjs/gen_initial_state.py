@@ -40,7 +40,7 @@ def _perms ( snippets: dict[str,str], mod: Module ):
 	res = []
 	for perm in mod.permissions.values ():
 		n = {
-			"name": perm.name,
+			"name": perm.name.split ( '.' )[-1],
 			"description": perm.description,
 		}
 		res.append(TEMPL['PERM_ROW'] % n)

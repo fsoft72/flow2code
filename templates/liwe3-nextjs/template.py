@@ -12,6 +12,7 @@ from gen_urls import generate_file_urls, _gen_url
 from gen_actions import generate_file_actions, _gen_action_enum, _gen_store_fn, _gen_action
 from gen_reducers import generate_file_reducer
 from gen_initial_state import generate_file_initial_state
+from gen_reducer_functions import generate_file_reducer_functions, _gen_reducer_function
 
 class Template( TemplateBase ):
 	def __init__( self ):
@@ -25,6 +26,7 @@ class Template( TemplateBase ):
 		self.generate_file_actions ( mod, output )
 		self.generate_file_reducer ( mod, output )
 		self.generate_file_initial_state ( mod, output )
+		self.generate_file_reducer_functions ( mod, output )
 
 	@staticmethod
 	def endpoint_action_name(ep: Endpoint, prefix=''):
@@ -49,3 +51,6 @@ Template._gen_action = _gen_action
 Template.generate_file_reducer = generate_file_reducer
 
 Template.generate_file_initial_state = generate_file_initial_state
+
+Template.generate_file_reducer_functions = generate_file_reducer_functions
+Template._gen_reducer_function = _gen_reducer_function
