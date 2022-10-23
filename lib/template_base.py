@@ -280,12 +280,12 @@ class TemplateBase:
 
 		return description
 
-	def params_and_doc ( self, fn: Endpoint | Function, TEMPL: dict[str,str] ) -> tuple[list[str],list[str]]:
+	def params_and_doc ( self, fn: Endpoint | Function, TEMPL: dict[str,str], honour_float: bool = True ) -> tuple[list[str],list[str]]:
 		params = []
 		doc = []
 		for p in fn.parameters:
 			if p.type == FieldType.FILE: continue
-			params.append ( self.prepare_field ( p, TEMPL [ 'EP_TYPED_PARAM' ], '', honour_float = True, use_enums = True ) )
+			params.append ( self.prepare_field ( p, TEMPL [ 'EP_TYPED_PARAM' ], '', honour_float = honour_float, use_enums = True ) )
 			dct = {
 				"name": p.name,
 				"doc": p.description,

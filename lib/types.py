@@ -189,7 +189,7 @@ class Endpoint:
 			return
 
 		for perm in perms:
-			p = mod.persmissions.get ( perm, None )
+			p = mod.permissions.get ( perm, None )
 			if p and p.name not in self.permissions:
 				self.permissions.append ( p.name )
 				self.mod.flow.permissions [ p.id ] = p
@@ -261,7 +261,7 @@ class Type:
 class Module:
 	endpoints: dict[str,Endpoint] = {}
 	types: dict[str, Type] = {}
-	persmissions: dict[str, Permission] = {}
+	permissions: dict[str, Permission] = {}
 	enums: dict[str, Enum] = {}
 	functions: dict[str, Function] = {}
 
@@ -272,7 +272,7 @@ class Module:
 
 		self.types = {}
 		self.endpoints = {}
-		self.persmissions = {}
+		self.permissions = {}
 		self.enums = {}
 		self.functions = {}
 
@@ -284,7 +284,7 @@ class Module:
 		# Permissions
 		for perm in json_mod.get ( 'permissions', {} ).values ():
 			new_perm = Permission ( perm, self )
-			self.persmissions [ new_perm.id ] = new_perm
+			self.permissions [ new_perm.id ] = new_perm
 			self.flow.permissions [ new_perm.id ] = new_perm
 
 		# Enums

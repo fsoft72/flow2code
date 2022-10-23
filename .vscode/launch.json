@@ -16,7 +16,7 @@
 				"-o",
 				"/ramdisk/test",
 				"-t",
-				"liwe3-nodejs",
+				"liwe3-nextjs",
 			]
 		}
 	]
