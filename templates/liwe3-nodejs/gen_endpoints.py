@@ -64,7 +64,7 @@ def _endpoint_definition ( self, ep: Endpoint, out, mod: Module ):
 	}
 
 	#params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
-	params = ep.fields( skip_file_fields= True )
+	params = ep.fields( skip_file_fields= False )
 
 	if params:
 		dct [ '__params' ] = ', '.join ( params ) + ', '

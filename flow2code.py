@@ -12,7 +12,10 @@ import argparse
 import json
 import os
 import sys
-import importlib
+import imp
+
+# append the path of this file in the python path
+APP_PATH = os.path.dirname(os.path.realpath(__file__))
 
 from lib.types import Module, Permission, Endpoint, Type, Enum, Function
 
@@ -37,6 +40,8 @@ class Flow2Code:
 	def __init__( self, flow, template, strict ):
 		self.strict = strict
 
+		print ( "=== ", flow, template )
+
 		self._open_flow ( flow )
 		self._open_template ( template )
 
@@ -55,18 +60,39 @@ class Flow2Code:
 		else:
 			self.modules.append( Module ( data, self ) )
 
-	def _open_template ( self, template_fname ):
+	def _open_template ( self, template_name ):
 		# instance the template file from template_fname
 		# and assign it to self.template
 
+		fname = os.path.join( APP_PATH, "templates", template_name, "template.py")
+
+		if not os.path.exists(fname):
+			print ( "ERROR: could not find: ", fname )
+			return None
+
+		full_path = os.path.dirname ( os.path.abspath ( fname ) )
+
+		# Add (if needed) template dir inside the sys.path
+		# This is because a template is actually a Python class
+		template_path = os.path.dirname ( full_path )
+		if template_path not in sys.path:
+			print ( "==== PATH: ", template_path )
+			sys.path.append ( os.path.join ( template_path ) )
+			sys.path.append ( os.path.join ( template_path, template_name ) )
+
+		mod = imp.load_source ( "mod_%s" % template_name, fname )
+		self.template = mod.Template ()
+
+		"""
 		# import the template module
-		mod_path = os.path.join( os.path.join( "templates", template_fname ) ) #, 'template.py' )
+		mod_path = os.path.join( os.path.join( "templates", template_name ) ) #, 'template.py' )
 		sys.path.append( mod_path )
 		template_module = importlib.import_module( 'template' )
 
 		# create the template instance
 		self.template = template_module.Template()
 		sys.path.pop()
+		"""
 
 	def code ( self, outdir ):
 		for m in self.modules:
