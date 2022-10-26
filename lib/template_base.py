@@ -47,14 +47,14 @@ class TemplateBase:
 		# iterate over the lines
 		for line in lines:
 			# check if the line starts with dr_start
-			if line.find( "d2r_start" ) != -1:
+			if ( line.find( "f2c_start" ) != -1 ) or ( line.find ( "d2r_start" ) != -1 ):
 				g = re_block_name.match( line )
 				block_name = g.group( 'name' )
 				# initialize the block lines
 				block_lines = []
 
 			# check if the line starts with dr_end
-			elif line.find( "d2r_end" ) != -1:
+			elif ( line.find ( "f2c_end" ) != -1 ) or ( line.find ( "d2r_end" ) != -1 ):
 				g = re_block_name.match( line )
 				block_name = g.group( 'name' )
 
