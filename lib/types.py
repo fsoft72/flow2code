@@ -263,6 +263,7 @@ class Module:
 	types: dict[str, Type] = {}
 	permissions: dict[str, Permission] = {}
 	enums: dict[str, Enum] = {}
+	menus: dict[str, any] = {}
 	functions: dict[str, Function] = {}
 
 	def __init__ ( self, json_mod: any, flow: any ):
@@ -312,6 +313,9 @@ class Module:
 			new_typ = Type ( typ, self )
 			self.types [ new_typ.id ] = new_typ
 			self.flow.types [ new_typ.id ] = new_typ
+
+		# Menus
+		self.menus = json_mod.get ( 'menus', {} ).values ()
 
 	def json_enums ( self, enums ):
 		if not enums: return

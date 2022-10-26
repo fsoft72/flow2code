@@ -47,6 +47,22 @@ def _perms ( snippets: dict[str,str], mod: Module ):
 
 	snippets['_perms'] = '\n'.join(res )
 
+def _menu_item ( menu: any, mod: Module ):
+	print ( "=== MENU: ", menu )
+	perm = mod.permissions.get ( menu [ "perm" ] )
+
+	if perm:
+		perm = perm.name
+	else:
+		perm = menu [ 'perm' ]
+
+	return {
+		"name": menu [ "name" ],
+		"perm": perm,
+		"path": menu [ "path" ],
+		"description": menu [ "description" ],
+	}
+
 
 # ==================================================================================================
 # CLASS METHODS
@@ -63,6 +79,7 @@ def generate_file_initial_state ( self, mod: Module, output: str ):
 
 	self.snippets[ 'module_name' ] = mod.name
 	self.snippets[ 'module_name_low' ] = mod.name.lower()
+	self.snippets['_menus'] = ',\n\t'.join ( [ str ( _menu_item ( menu, mod ) ) for menu in mod.menus ] )
 
 	fout.write(TEMPL['REDUCER_STATE'] % self.snippets)
 

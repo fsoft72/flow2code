@@ -28,9 +28,9 @@ const urls = {
 """,
 	"URL": '\t%(action_name)s: () => `${ process.env.NEXT_PUBLIC_API_SERVER }/api%(path)s`,\n',
 	"URL_END": "};\nexport default urls;\n",
-	"ACTIONS_FILE_HEADER": """/*=== d2r_start __custom_code ===*/
+	"ACTIONS_FILE_HEADER": """/*=== f2c_start __custom_code ===*/
 %(__custom_code)s
-/*=== d2r_end __custom_code ===*/
+/*=== f2c_end __custom_code ===*/
 
 import liweUseFetch from "@liwe3/hooks/use_fetch";
 import urls from './urls';
@@ -79,9 +79,9 @@ export enum Actions {
 	"PERM_ROW": """	"%(name)s": "%(description)s",""",
 	"REDUCER_STATE": """/* define here the reducer state for %(module_name)s */
 
-/*=== d2r_start _import ===*/
+/*=== f2c_start _import ===*/
 %(_import)s
-/*=== d2r_end _import ===*/
+/*=== f2c_end _import ===*/
 import dynamic from 'next/dynamic';
 
 import system_menu, { system_paths } from '@LiWEComponents/system/menu';
@@ -96,21 +96,21 @@ system_perms[ '%(module_name_low)s' ] = {
 %(_perms)s
 };
 
-/*=== d2r_start _system_paths ===*/
+/*=== f2c_start _system_paths ===*/
 %(_system_paths)s
-/*=== d2r_end _system_paths ===*/
+/*=== f2c_end _system_paths ===*/
 
 
 export interface %(module_name)sState {
-	/*=== d2r_start __state ===*/
+	/*=== f2c_start __state ===*/
 %(__state)s
-	/*=== d2r_end __state ===*/
+	/*=== f2c_end __state ===*/
 };
 
 const initial_state: %(module_name)sState = {
-	/*=== d2r_start __initial_state ===*/
+	/*=== f2c_start __initial_state ===*/
 %(__initial_state)s
-	/*=== d2r_end __initial_state ===*/
+	/*=== f2c_end __initial_state ===*/
 };
 
 export default initial_state;
@@ -119,9 +119,9 @@ export default initial_state;
 	"EP_TYPED_PARAM": "%(name)s%(opt)s: %(type)s%(param_default)s",
 	"EP_DOC_FIELD": "@param %(name)s - %(doc)s [%(_is_req)s]",
 	"EP_DOC_RETURN": "@return %(name)s: %(type)s%(doc)s",
-	"REDUCERS_START": """/*=== d2r_start __custom_code ===*/
+	"REDUCERS_START": """/*=== f2c_start __custom_code ===*/
 %(_snippet)s
-/*=== d2r_end __custom_code ===*/
+/*=== f2c_end __custom_code ===*/
 
 import { Actions } from './actions';
 import { ReduxFunctions } from '../reducer_functions';
@@ -152,18 +152,18 @@ export default reducer;
 
 import { %(__name_camel)sState } from './initial_state';
 
-/*=== d2r_start __file ===*/
+/*=== f2c_start __file ===*/
 %(__file)s
-/*=== d2r_end __file ===*/
+/*=== f2c_end __file ===*/
 
 export const ReduxFunctions: Record<string, ( new_state: %(__name_camel)sState, data: any ) => UserState> = {
 """,
 	"FUNCTIONS_END": """};""",
 	"FUNCTION": """
 	"%(action_name)s": ( new_state: %(module_name)sState, %(_var_name)s: %(type)s ) => {
-	%(_expand_payload)s	/*=== d2r_start %(action_name)s ===*/
+	%(_expand_payload)s	/*=== f2c_start %(action_name)s ===*/
 %(_snippet)s
-		/*=== d2r_end %(action_name)s ===*/
+		/*=== f2c_end %(action_name)s ===*/
 		return new_state;
 	},
 """,
