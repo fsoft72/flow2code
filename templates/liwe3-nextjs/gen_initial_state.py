@@ -48,7 +48,6 @@ def _perms ( snippets: dict[str,str], mod: Module ):
 	snippets['_perms'] = '\n'.join(res )
 
 def _menu_item ( menu: any, mod: Module ):
-	print ( "=== MENU: ", menu )
 	perm = mod.permissions.get ( menu [ "perm" ] )
 
 	if perm:

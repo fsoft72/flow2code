@@ -5,7 +5,7 @@ import os
 from collections import defaultdict
 
 from .const import FieldType
-from .types import Module, Endpoint, Type, Function
+from .types import Module, Endpoint, Type, Function, Field
 
 # RegExp that extracts the name from d2r_start block_name and d2r_end block_name
 re_block_name = re.compile( r'.*(d2r|f2c)_(start|end)\s+(?P<name>[a-zA-Z0-9_]+)\s*')
@@ -76,14 +76,23 @@ class TemplateBase:
 		} )
 
 
-	def code ( self, mod, flow, output ):
+	def code ( self, mod: Module, flow: any, output: str ):
+		"""
+		Empty code generation method
+		"""
 		self.mod = mod
 		self.flow = flow
 
 	def mod_name ( self, mod: Module ):
+		"""
+		Returns the module name in `snake_case`
+		"""
 		return mod.name.lower().strip().replace( ' ', '_' ).replace ( '-', '_' )
 
 	def valid_function_name ( self, name: str ) -> str:
+		"""
+		Returns the passed `name` as a valid function name, stripping all the invalid characters
+		"""
 		name = name.split ( ":" )[0]
 		name = name.replace( '/', '_' ).replace( '-', '_' ).lower()
 
@@ -95,7 +104,7 @@ class TemplateBase:
 		return name
 
 
-	def endpoint_mk_function ( self, ep ):
+	def endpoint_mk_function ( self, ep: Endpoint ):
 		name = f"""{ep.method}_{ep.path}"""
 
 		return self.valid_function_name(name)
@@ -139,7 +148,7 @@ class TemplateBase:
 		# return the file object
 		return f
 
-	def prepare_field ( self, field, template, template_obj, honour_float = False, file_is_null = False, use_enums = False ):
+	def prepare_field ( self, field: Field, template, template_obj, honour_float = False, use_enums = False ):
 		dct = {
 			"name": field.name,
 			"type": "any",

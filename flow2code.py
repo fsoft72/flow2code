@@ -8,6 +8,10 @@ Author: Fabio Rotondo <fabio.rotondo@gmail.com>
 See: https://flow.liwe.org
 """
 
+# remove deprecated warnings
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import argparse
 import json
 import os
@@ -39,8 +43,6 @@ class Flow2Code:
 
 	def __init__( self, flow, template, strict ):
 		self.strict = strict
-
-		print ( "=== ", flow, template )
 
 		self._open_flow ( flow )
 		self._open_template ( template )
@@ -76,7 +78,6 @@ class Flow2Code:
 		# This is because a template is actually a Python class
 		template_path = os.path.dirname ( full_path )
 		if template_path not in sys.path:
-			print ( "==== PATH: ", template_path )
 			sys.path.append ( os.path.join ( template_path ) )
 			sys.path.append ( os.path.join ( template_path, template_name ) )
 
