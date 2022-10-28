@@ -61,6 +61,7 @@ def _endpoint_definition ( self, ep: Endpoint, out, mod: Module ):
 		"__params": "",
 		"__return_var_name": ep.return_name,
 		"__return_type": type2typescript ( ep.return_type, self.mod.flow ),
+		"__spread": "",
 	}
 
 	#params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
@@ -86,6 +87,8 @@ def _endpoint_definition ( self, ep: Endpoint, out, mod: Module ):
 	if dct [ '__typed_dict' ]:
 		dct [ '__typed_dict' ] = "const { %s___errors } = %s;\n\n\t\tif ( ___errors.length ) return send_error ( res, { message: `Parameters error: ${___errors.join ( ', ' )}` } );" %  ( dct [ '__params' ], dct [ '__typed_dict' ] )
 
+	if dct [ '__return_var_name' ] == '__plain__':
+		dct [ '__spread' ] = '...'
 
 	# write the endpoint code
 	out.write ( TEMPL [ 'ENDPOINT' ] % dct )

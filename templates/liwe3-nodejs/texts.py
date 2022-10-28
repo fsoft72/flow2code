@@ -45,7 +45,7 @@ export const init = ( liwe: ILiWE ) => {
 		%(__endpoint_name)s ( req, %(__params)s( err: ILError, %(__return_var_name)s: %(__return_type)s ) => {
 			if ( err ) return send_error( res, err );
 
-			send_ok( res, { %(__return_var_name)s } );
+			send_ok( res, { %(__spread)s%(__return_var_name)s } );
 		} );
 	} );
 """,
