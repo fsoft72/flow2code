@@ -264,7 +264,7 @@ class TemplateBase:
 			else:
 				res += ', '
 
-		return res
+		return res.rstrip()
 
 	def mk_documentation ( self, main_doc: str, params_doc: list[str], ret_name: str, ret_type: str, ret_doc: str, TEMPL: dict[str,str] ) -> str:
 		if main_doc:
@@ -285,7 +285,7 @@ class TemplateBase:
 			"type": ret_type,
 		})
 
-		description = ' * ' + '\n * '.join ( description ) + '\n *'
+		description = ' *' + '\n *'.join ( [ " " + d if len ( d ) else "" for d in description ] ) + '\n *'
 
 		return description
 
