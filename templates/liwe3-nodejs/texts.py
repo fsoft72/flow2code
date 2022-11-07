@@ -84,7 +84,7 @@ const _ = ( txt: string, vals: any = null, plural = false ) => {
 	"FOLDING_END": """// }}}\n\n""",
 	"EP_TYPED_PARAM": "%(name)s%(opt)s: %(type)s%(param_default)s",
 	"EP_DOC_FIELD": "@param %(name)s - %(doc)s [%(_is_req)s]",
-	"EP_DOC_RETURN": "@return %(name)s: %(type)s%(doc)s",
+	"EP_DOC_RETURN": "@return %(name)s: %(return_type)s%(doc)s",
 	"DB_INDEX": """{ type: "%(_type)s", fields: [ "%(_name)s" ], unique: %(_unique)s },""",
 	"COLL_DEF": """%(coll_name)s = await collection_init( liwe.db, %(table_name)s, [\n\t\t\t%(rows)s\n\t\t], %(coll_drop)s );\n""",
 	"EP_START": """
