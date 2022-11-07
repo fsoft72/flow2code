@@ -6,6 +6,7 @@ from collections import defaultdict
 
 from .const import FieldType
 from .types import Module, Endpoint, Type, Function, Field
+from .utils import type2typescript
 
 # RegExp that extracts the name from d2r_start block_name and d2r_end block_name
 re_block_name = re.compile( r'.*(d2r|f2c)_(start|end)\s+(?P<name>[a-zA-Z0-9_]+)\s*')
@@ -283,6 +284,7 @@ class TemplateBase:
 			"doc": ret_descr,
 			"name": ret_name,
 			"type": ret_type,
+			"return_type": type2typescript ( ret_type, self.mod.flow ),
 		})
 
 		description = ' *' + '\n *'.join ( [ " " + d if len ( d ) else "" for d in description ] ) + '\n *'
