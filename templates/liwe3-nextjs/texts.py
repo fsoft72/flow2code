@@ -61,7 +61,7 @@ export const %(action_name)s = ( %(params)s ) => async ( dispatch: any = null ) 
 
 			if ( _has_error( u, res, __data ) ) return;
 
-			dispatch && %(store_fn)s ( dispatch, %(_return_payload)s );
+			dispatch && %(store_fn)s( dispatch, %(_return_payload)s );
 			onsuccess && onsuccess( %(_return_payload)s );
 
 			return %(_return_payload)s;
