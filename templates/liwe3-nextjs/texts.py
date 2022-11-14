@@ -156,7 +156,7 @@ import { %(__name_camel)sState } from './initial_state';
 %(__file)s
 /*=== f2c_end __file ===*/
 
-export const ReduxFunctions: Record<string, ( new_state: %(__name_camel)sState, data: any ) => UserState> = {
+export const ReduxFunctions: Record<string, ( new_state: %(__name_camel)sState, data: any ) => %(__name_camel)sState> = {
 """,
 	"FUNCTIONS_END": """};""",
 	"FUNCTION": """
