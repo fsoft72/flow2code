@@ -61,7 +61,7 @@ export const %(action_name)s = ( %(params)s ) => async ( dispatch: any = null ) 
 
 			if ( _has_error( u, res, __data ) ) return;
 
-			dispatch && %(store_fn)s ( dispatch, %(_return_payload)s );
+			dispatch && %(store_fn)s( dispatch, %(_return_payload)s );
 			onsuccess && onsuccess( %(_return_payload)s );
 
 			return %(_return_payload)s;
@@ -156,7 +156,7 @@ import { %(__name_camel)sState } from './initial_state';
 %(__file)s
 /*=== f2c_end __file ===*/
 
-export const ReduxFunctions: Record<string, ( new_state: %(__name_camel)sState, data: any ) => UserState> = {
+export const ReduxFunctions: Record<string, ( new_state: %(__name_camel)sState, data: any ) => %(__name_camel)sState> = {
 """,
 	"FUNCTIONS_END": """};""",
 	"FUNCTION": """
