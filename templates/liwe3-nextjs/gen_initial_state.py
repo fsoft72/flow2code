@@ -58,7 +58,7 @@ def _menu_item ( menu: any, mod: Module ):
 	return {
 		"name": menu [ "name" ],
 		"perm": perm,
-		"path": menu [ "path" ],
+		"link": menu [ "path" ],
 		"description": menu [ "description" ],
 	}
 
