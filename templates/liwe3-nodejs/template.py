@@ -10,7 +10,12 @@ from gen_endpoints import (
     _prepare_methods_names,
     _typed_dict,
 )
-from gen_methods import generate_file_methods, _generate_endpoint, _generate_function
+from gen_methods import (
+    generate_file_methods,
+    _generate_endpoint,
+    _generate_function,
+    _clean_functions,
+)
 from gen_types import generate_file_types, _gen_type
 
 
@@ -50,6 +55,7 @@ Template._typed_dict = _typed_dict
 Template.generate_file_methods = generate_file_methods
 Template._generate_endpoint = _generate_endpoint
 Template._generate_function = _generate_function
+Template._clean_functions = _clean_functions
 
 # Types.ts file
 Template.generate_file_types = generate_file_types

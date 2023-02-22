@@ -65,6 +65,37 @@ def _gen_db_init(mod: Module, TEMPL: dict[str, str]):
 # =================================================================================================
 # METHODS
 # =================================================================================================
+def _clean_functions(self, mod: Module, mod_name: str):
+    # check if inside functions there is a function called "db_init"
+    # if so, delete it
+    for fn in mod.functions.values():
+        if fn.name.endswith("db_init"):
+            mod.functions.pop(fn.id)
+            break
+
+    # creates the db_init function
+    fn = Function(
+        dict(
+            id="db_init",
+            name="%s_db_init" % mod_name,
+            description="Initializes the module's database",
+            parameters=[
+                {
+                    "id": "liwe",
+                    "name": "liwe",
+                    "type": "iliwe",
+                    "description": "The Liwe object",
+                    "required": True,
+                }
+            ],
+            return_name="",
+            returnType="bool",
+            return_description="",
+        ),
+        mod,
+    )
+
+    mod.functions[fn.id] = fn
 
 
 def generate_file_methods(self, mod: Module, output: str):
@@ -97,6 +128,8 @@ def generate_file_methods(self, mod: Module, output: str):
 
     for ep in mod.endpoints.values():
         self._generate_endpoint(out, ep)
+
+    self._clean_functions(mod, mod_name)
 
     for fn in mod.functions.values():
         self._generate_function(out, fn, mod)
