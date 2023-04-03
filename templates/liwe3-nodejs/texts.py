@@ -12,6 +12,7 @@ import { locale_load } from '../../liwe/locale';
 import { perms } from '../../liwe/auth';
 
 import {
+\t%(__name_lower)s_db_init,
 \t// endpoints function
 \t%(__methods)s
 \t// functions

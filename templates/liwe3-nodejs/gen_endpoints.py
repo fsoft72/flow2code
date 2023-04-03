@@ -40,6 +40,9 @@ def generate_file_endpoints(self, mod: Module, output: str):
     k = self.types_and_enums_list(mod, add_obj=True)
     self.snippets["__interfaces"] = self.join_newlines(k)
 
+    self.snippets["__name_camel"] = mod_name
+    self.snippets["__name_lower"] = mod_name.lower()
+
     # write the header
     out.write(TEMPL["HEADER_START"] % self.snippets)
 
