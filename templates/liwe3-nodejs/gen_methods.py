@@ -111,17 +111,18 @@ def generate_file_methods(self, mod: Module, output: str):
     k = self.types_and_enums_list(mod)
     self.snippets["__interfaces"] = self.join_newlines(k)
 
-    res = []
+    # res = []
     res2 = []
 
     for typ in mod.types.values():
         if typ.coll_table:
-            res.append(TEMPL["TYPE_COLL_VAR"] % typ.coll_table)
+            # res.append(TEMPL["TYPE_COLL_VAR"] % typ.coll_table)
             res2.append(
                 TEMPL["TYPE_COLL_CONST"] % (typ.coll_table.upper(), typ.coll_table)
             )
 
-    self.snippets["__collections"] = "\n".join(res) + "\n\n" + "\n".join(res2)
+    # self.snippets["__collections"] = "\n".join(res) + "\n\n" + "\n".join(res2)
+    self.snippets["__collections"] = "\n".join(res2)
 
     # write the header
     out.write(TEMPL["METHODS_FILE_START"] % self.snippets)
