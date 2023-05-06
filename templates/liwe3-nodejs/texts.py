@@ -52,8 +52,6 @@ export const init = ( liwe: ILiWE ) => {
     "TYPED_DICT_OBJ": '{ name: "%(name)s", type: %(type)sObj%(_req_param)s }',
     "METHODS_FILE_START": """
 import { ILRequest, ILResponse, LCback, ILiweConfig, ILError, ILiWE } from '../../liwe/types';
-import { mkid } from '../../liwe/utils';
-import { DocumentCollection } from 'arangojs/collection';
 import { $l } from '../../liwe/locale';
 
 import {
