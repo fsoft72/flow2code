@@ -107,7 +107,7 @@ class Template(TemplateBase):
             dct["type"] = "Date"
 
         if dct["is_array"]:
-            dct["type"] += "[]"
+            dct["type"] = "List<%s>" % dct["type"]
 
         if dct["default"]:
             if dct["type"].startswith("string"):
