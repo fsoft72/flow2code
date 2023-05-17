@@ -25,5 +25,9 @@ class %(name)s {
 %(__constructor)s
     /*=== f2c_end __constructor ===*/
   }
+
+  /*=== f2c_start __methods ===*/
+%(__methods)s
+  /*=== f2c_end __methods ===*/
 """,
 }
