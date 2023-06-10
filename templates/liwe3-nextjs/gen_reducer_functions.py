@@ -16,7 +16,7 @@ def generate_file_reducer_functions ( self, mod: Module, output: str ):
 	mod_name = self.mod_name( mod )
 
 	# create the output directory
-	outfile = os.path.join( output, "src", "components", mod_name, "reducer_functions.ts" )
+	outfile = os.path.join( output, "src", "modules", mod_name, "reducer_functions.ts" )
 	fout = self.create_file( outfile, mod )
 
 	fout.write ( TEMPL [ 'FUNCTIONS_START' ] % self.snippets )

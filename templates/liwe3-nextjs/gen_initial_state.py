@@ -26,7 +26,7 @@ def _def_snippets ( snippets: dict[str,str] ):
  */
 // system_path [ '/path/name' ] = {
 // perms: [ 'post', 'create' ],
-// comp: () => dynamic( () => import( './components/_PostList' ), { ssr: false } ),
+// comp: () => dynamic( () => import( './modules/_PostList' ), { ssr: false } ),
 // };
 		"""
 
@@ -70,7 +70,7 @@ def generate_file_initial_state ( self, mod: Module, output: str ):
 	mod_name = self.mod_name( mod )
 
 	# create the output directory
-	outfile = os.path.join( output, "src", "components", mod_name, "initial_state.ts" )
+	outfile = os.path.join( output, "src", "modules", mod_name, "initial_state.ts" )
 	fout = self.create_file( outfile, mod )
 
 	_def_snippets ( self.snippets )

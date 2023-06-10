@@ -84,8 +84,8 @@ export enum Actions {
 /*=== f2c_end _import ===*/
 import dynamic from 'next/dynamic';
 
-import system_menu, { system_paths } from '@LiWEComponents/system/menu';
-import system_perms from '@LiWEComponents/system/perms';
+import system_menu, { system_paths } from '@modules/system/menu';
+import system_perms from '@modules/system/perms';
 
 system_menu[ '%(module_name)s' ] = [
 	%(_menus)s

@@ -16,7 +16,7 @@ def generate_file_actions ( self, mod: Module, output: str ):
 	mod_name = self.mod_name( mod )
 
 	# create the output directory
-	outfile = os.path.join( output, "src", "components", mod_name, "core", "actions.ts" )
+	outfile = os.path.join( output, "src", "modules", mod_name, "core", "actions.ts" )
 	fout = self.create_file( outfile, mod )
 
 	fout.write ( TEMPL [ 'ACTIONS_FILE_HEADER' ] % self.snippets )

@@ -31,7 +31,7 @@ def generate_file_types ( self, mod: Module, output: str ):
 	mod_name = self.mod_name( mod )
 
 	# create the output directory
-	outfile = os.path.join( output, "src", "components", mod_name, "core", "types.ts" )
+	outfile = os.path.join( output, "src", "modules", mod_name, "core", "types.ts" )
 	fout = self.create_file( outfile, mod )
 
 	fout.write ( TEMPL [ 'TYPES_START' ] % self.snippets )
