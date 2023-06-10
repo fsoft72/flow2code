@@ -78,7 +78,7 @@ class Template(TemplateBase):
         elif _typ == FieldType.NUMBER:
             dct["type"] = "int"
         elif _typ == FieldType.FLOAT:
-            dct["type"] = "float"
+            dct["type"] = "double"
         elif _typ == FieldType.BOOL:
             dct["type"] = "bool"
         elif _typ == FieldType.DATE:
