@@ -35,7 +35,7 @@ class Template(TemplateBase):
     ):
         dct = {
             "name": field.name,
-            "type": "any",
+            "type": "dynamic",
             "type_obj": False,
             "required": field.required,
             "private": field.private,
@@ -103,11 +103,14 @@ class Template(TemplateBase):
             dct["type"] = "ILRequest"
         elif dct["type"] == "ilresponse":
             dct["type"] = "ILResponse"
-        elif dct["type"] in ("date", "datetime"):
-            dct["type"] = "Date"
+        elif dct["type"] in ("date", "datetime", "Date", "DateTime"):
+            dct["type"] = "DateTime"
 
         if dct["is_array"]:
             dct["type"] = "List<%s>" % dct["type"]
+
+        if dct["opt"] == "?" and dct["type"] == "dynamic":
+            dct["opt"] = ""
 
         if dct["default"]:
             if dct["type"].startswith("string"):
