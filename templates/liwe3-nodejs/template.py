@@ -17,6 +17,7 @@ from gen_methods import (
     _clean_functions,
 )
 from gen_types import generate_file_types, _gen_type
+from gen_perms import generate_file_perms
 
 
 class Template(TemplateBase):
@@ -43,6 +44,7 @@ class Template(TemplateBase):
         self.generate_file_endpoints(mod, output)
         self.generate_file_methods(mod, output)
         self.generate_file_types(mod, output)
+        self.generate_file_perms(mod, output)
 
 
 # Endpoints.ts file methods
@@ -60,3 +62,6 @@ Template._clean_functions = _clean_functions
 # Types.ts file
 Template.generate_file_types = generate_file_types
 Template._gen_type = _gen_type
+
+# Permissions.ts file
+Template.generate_file_perms = generate_file_perms
