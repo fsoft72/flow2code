@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-from lib.types import Module, Type, Enum
+from lib.types import Module
 from texts import texts as TEMPL
 
 

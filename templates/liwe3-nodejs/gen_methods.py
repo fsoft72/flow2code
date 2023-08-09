@@ -12,7 +12,10 @@ from texts import texts as TEMPL
 
 
 def _gen_db_init(mod: Module, TEMPL: dict[str, str]):
-    res = ["\t\t_liwe = liwe;\n"]
+    res = [
+        "\t\t_liwe = liwe;\n",
+        "system_permissions_register( '%s', _module_perms);\n" % mod.name.lower(),
+    ]
 
     DB_INDEX = TEMPL["DB_INDEX"]
 
@@ -110,6 +113,12 @@ def generate_file_methods(self, mod: Module, output: str):
 
     k = self.types_and_enums_list(mod)
     self.snippets["__interfaces"] = self.join_newlines(k)
+    self.snippets[
+        "__import_system_perms_register"
+    ] = "import { system_permissions_register } from '../system/methods';\n"
+
+    if mod.name.lower() == "system":
+        self.snippets["__import_system_perms_register"] = "\n"
 
     # res = []
     res2 = []
