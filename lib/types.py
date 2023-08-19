@@ -96,6 +96,7 @@ class Field:  # noqa
     types = []
     private: bool = False
     is_array: bool = False
+    query: bool = False
     idx_unique: bool = False
     idx_multi: bool = False
     idx_array: bool = False
@@ -107,6 +108,7 @@ class Field:  # noqa
         self.type = self._get_type(json_data.get("type", {}))
         self.required = json_data.get("required", False)
         self.is_array = json_data.get("is_array", False)
+        self.query = json_data.get("query", False)
         self.description = json_data.get("description", "")
         self.private = json_data.get("private", False)
         self.default = json_data.get("default", "")
@@ -220,6 +222,21 @@ class Endpoint:
             return [p.name for p in self.parameters]
 
         return [p.name for p in self.parameters if p.type[0] != FieldType.FILE]
+
+    def fields_ext(self, skip_file_fields=False):
+        params = []
+        queries = []
+
+        for param in self.parameters:
+            if param.type[0] == FieldType.FILE and skip_file_fields:
+                continue
+
+            if param.query:
+                queries.append(param.name)
+            else:
+                params.append(param.name)
+
+        return params, queries
 
     def __str__(self):
         return "[%s] %s [%s]" % (self.method, self.path, self.return_type)

@@ -64,9 +64,4 @@ def _gen_action(self, fout, ep: Endpoint):
     else:
         dct["_return_payload"] = "__data.%(return_name)s" % dct
 
-    if dct["params"]:
-        dct["params"] += "onsuccess?: any, onerror?: any"
-    else:
-        dct["params"] = "onsuccess?: any, onerror?: any"
-
     fout.write(TEMPL["ACTION_START"] % dct)

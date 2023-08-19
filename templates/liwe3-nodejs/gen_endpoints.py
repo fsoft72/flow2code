@@ -66,21 +66,30 @@ def _endpoint_definition(self, ep: Endpoint, out, mod: Module):
         "__perms": _perms_get(ep, mod),
         "__typed_dict": "",
         "__params": "",
+        "__full_params": "",
         "__return_var_name": ep.return_name,
         "__return_type": type2typescript(ep.return_type, self.mod.flow),
         "__spread": "",
     }
 
     # params = [ f [ 'name' ] for f in ep.get ( 'parameters', [] ) if f [ 'type' ] != FieldType.FILE ]
-    params = ep.fields(skip_file_fields=False)
+    params, queries = ep.fields_ext(skip_file_fields=False)
+    full_params = ep.fields(skip_file_fields=False)
 
     if params:
         dct["__params"] = ", ".join(params) + ", "
+
+    if full_params:
+        dct["__full_params"] = ", ".join(full_params) + ", "
+
+    if queries:
+        dct["__queries"] = ", ".join(queries) + ", "
 
     if dct["__perms"]:
         dct["__perms"] += ", "
 
     m = dct["__method_lower"]
+
     if m in ("post", "patch", "put", "delete"):
         dct["req_mode"] = "req.body"
     elif m == "get":
@@ -89,13 +98,36 @@ def _endpoint_definition(self, ep: Endpoint, out, mod: Module):
         else:
             dct["req_mode"] = "req.params"
 
-    dct["__typed_dict"] = self._typed_dict(ep, dct["req_mode"])
-
-    if dct["__typed_dict"]:
-        dct["__typed_dict"] = (
-            "const { %s___errors } = %s;\n\n\t\tif ( ___errors.length ) return send_error ( res, { message: `Parameters error: ${___errors.join ( ', ' )}` } );"  # noqa
-            % (dct["__params"], dct["__typed_dict"])
+    # If we have queries parameters, we need to parse them along with the body
+    if queries and dct["req_mode"] != "req.query as any":
+        code = "let { %s___errors } = %s;" % (
+            dct["__queries"],
+            self._typed_dict(ep, "req.query", mode="query"),
         )
+
+        if dct["__params"]:
+            code += "\n\n\t\tlet { %s___errors: errors2 } = %s;\n\n" % (
+                dct["__params"],
+                self._typed_dict(ep, dct["req_mode"], mode="body"),
+            )
+
+            code = "%s\t\t___errors = [ ...errors2, ...___errors ];" % code
+
+        code += (
+            "\n\n\t\tif ( ___errors.length ) return send_error "
+            + "( res, { message: `Parameters error: ${___errors.join ( ', ' )}` } );"
+        )
+
+        dct["__typed_dict"] = code
+
+    else:
+        dct["__typed_dict"] = self._typed_dict(ep, dct["req_mode"])
+
+        if dct["__typed_dict"]:
+            dct["__typed_dict"] = (
+                "const { %s___errors } = %s;\n\n\t\tif ( ___errors.length ) return send_error ( res, { message: `Parameters error: ${___errors.join ( ', ' )}` } );"  # noqa
+                % (dct["__params"], dct["__typed_dict"])
+            )
 
     if dct["__return_var_name"] == "__plain__":
         dct["__spread"] = "..."
@@ -129,11 +161,22 @@ def _prepare_methods_names(self, mod: Module):
     self.snippets["__functions"] = self.join_newlines(functions)
 
 
-def _typed_dict(self, ep, dict_name):
+def _typed_dict(self, ep, dict_name, mode="all"):
+    """
+    mode can be:
+        - all: all fields
+        - query: only query fields
+        - body: only body fields
+    """
     res = []
 
     for f in ep.parameters:
         # if f [ "type" ] == FieldType.FILE: continue
+        if mode == "query" and not f.query:
+            continue
+
+        if mode == "body" and f.query:
+            continue
 
         dct = self.prepare_field(
             f,
