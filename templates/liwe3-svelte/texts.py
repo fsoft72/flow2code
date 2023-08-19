@@ -33,7 +33,7 @@ import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
 %(__doc)s
  */
 export const %(action_name)s = async ( %(params)s ) => {
-\treturn await %(method)s( "/api%(url)s", {%(fields)s}, %(_needs_perms)s );
+\treturn await %(method)s( `/api%(url)s%(query)s`, {%(fields)s}, %(_needs_perms)s );
 };
 """,
     "DOC_PARAM": " * @param %(name)s - %(descr)s",

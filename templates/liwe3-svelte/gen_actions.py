@@ -32,12 +32,26 @@ def generate_file_actions(self, mod: Module, output: str):
 def _gen_action(self, fout, ep: Endpoint):
     (params, doc) = self.params_and_doc(ep, TEMPL, honour_float=False)
 
-    fields = ep.fields()
+    fields, queries = ep.fields_ext()
+
+    print("=== FIELDS: ", fields)
+    print("=== QUERIES: ", queries)
+
     if len(fields) > 3:
         fields.sort()
         fields = "\n\t\t" + ",\n\t\t".join(fields) + "\n\t"
     else:
         fields = ", ".join(fields)
+
+    if len(queries):
+        queries.sort()
+        res = []
+        for q in queries:
+            res.append(q + "=${" + q + "}")
+
+        queries = "?" + "&".join(res)
+    else:
+        queries = ""
 
     dct = {
         "action_name": self.endpoint_action_name(ep),  # , "act_"),
@@ -47,6 +61,7 @@ def _gen_action(self, fout, ep: Endpoint):
         "fields": fields  # "\n\t\t" + ",\n\t\t".join(ep.fields()) + "\n\t"
         if ep.fields()
         else "",
+        "query": queries,
         "params": params,
         "return_name": ep.return_name,
         "_needs_perms": "true" if ep.permissions else "false",
