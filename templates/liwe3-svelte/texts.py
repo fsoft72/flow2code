@@ -23,9 +23,11 @@ export interface %(name)s {
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/*=== f2c_start __custom_code ===*/
-%(__custom_code)s
-/*=== f2c_end __custom_code ===*/
+
+/*=== f2c_start __file ===*/
+%(__file)s
+/*=== f2c_end __file ===*/
+
 import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
 """,
     "ACTION_START": """
@@ -33,7 +35,15 @@ import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
 %(__doc)s
  */
 export const %(action_name)s = async ( %(params)s ) => {
-\treturn await %(method)s( `/api%(url)s%(query)s`, {%(fields)s}, %(_needs_perms)s );
+\tconst res = await %(method)s( `/api%(url)s%(query)s`, {%(fields)s}, %(_needs_perms)s );
+
+\tif (res.error) return res;
+
+\t/*=== f2c_start %(action_name)s ===*/
+%(__snippet)s
+\t/*=== f2c_end %(action_name)s ===*/
+
+\treturn %(return_name)s;
 };
 """,
     "DOC_PARAM": " * @param %(name)s - %(descr)s",

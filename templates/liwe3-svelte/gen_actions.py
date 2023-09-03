@@ -17,7 +17,7 @@ def generate_file_actions(self, mod: Module, output: str):
 
     # create the output directory
     outfile = os.path.join(output, "src", "modules", mod_name, "actions.ts")
-    fout = self.create_file(outfile, mod)
+    fout = self.create_file(outfile, mod, True)
 
     fout.write(TEMPL["ACTIONS_FILE_HEADER"] % self.snippets)
 
@@ -33,9 +33,6 @@ def _gen_action(self, fout, ep: Endpoint):
     (params, doc) = self.params_and_doc(ep, TEMPL, honour_float=False)
 
     fields, queries = ep.fields_ext()
-
-    print("=== FIELDS: ", fields)
-    print("=== QUERIES: ", queries)
 
     if len(fields) > 3:
         fields.sort()
@@ -68,6 +65,14 @@ def _gen_action(self, fout, ep: Endpoint):
         "__doc": doc,
     }
 
+    dct["__snippet"] = self.snippets[dct["action_name"]]
+
+    # remove the last "," in the params list
+    if dct["params"]:
+        dct["params"] = dct["params"].strip()
+        if dct["params"].endswith(","):
+            dct["params"] = dct["params"][:-1]
+
     if dct["method"] == "delete":
         dct["method"] = "delete_"
 
@@ -76,7 +81,9 @@ def _gen_action(self, fout, ep: Endpoint):
 
     if ep.return_name == "__plain__":
         dct["_return_payload"] = "__data"
+        dct["return_name"] = "res"
     else:
+        dct["return_name"] = "res.%s" % ep.return_name
         dct["_return_payload"] = "__data.%(return_name)s" % dct
 
     fout.write(TEMPL["ACTION_START"] % dct)
