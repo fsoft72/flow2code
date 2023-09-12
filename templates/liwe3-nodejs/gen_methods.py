@@ -14,7 +14,7 @@ from texts import texts as TEMPL
 def _gen_db_init(mod: Module, TEMPL: dict[str, str]):
     res = [
         "\t\t_liwe = liwe;\n",
-        "system_permissions_register( '%s', _module_perms);\n" % mod.name.lower(),
+        "system_permissions_register( '%s', _module_perms );\n" % mod.name.lower(),
     ]
 
     DB_INDEX = TEMPL["DB_INDEX"]

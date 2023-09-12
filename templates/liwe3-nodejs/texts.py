@@ -154,7 +154,7 @@ export interface %(name)s {
     "INTERFACE_KEYS_START": """export const %(name)sKeys = {
 """,
     "INTERFACE_KEYS_END": """};\n\n""",
-    "INTERFACE_PARAM": "	/** %(description)s */\n	%(name)s?: %(type)s;\n",
+    "INTERFACE_PARAM": "	/** %(description)s */\n	%(name)s%(opt)s: %(type)s;\n",
     "INTERFACE_PARAM_NO_DESCR": "	%(name)s?: %(type)s;\n",
     "INTERFACE_KEY_PARAM": "	'%(name)s': { type: '%(type)s', priv: %(private)s },\n",
 }
