@@ -22,6 +22,7 @@ class Permission:
 
 
 class Function:
+    """
     id: str = ""
     name = None
     parameters = []
@@ -29,6 +30,7 @@ class Function:
     return_description = None
     return_name = None
     is_array = False
+    """
 
     def __init__(self, json_data, mod: Module):
         self.mod = Module
@@ -87,13 +89,14 @@ class Enum:
 
 
 class Field:  # noqa
+    """
     id: str = ""
     name: str = ""
     type = FieldType.NONE
-    required: bool = False
     description: str = ""
     default: str = ""
     types = []
+    required: bool = False
     private: bool = False
     is_array: bool = False
     query: bool = False
@@ -101,16 +104,17 @@ class Field:  # noqa
     idx_multi: bool = False
     idx_array: bool = False
     idx_fulltext: bool = False
+    """
 
     def __init__(self, json_data, mod: any):
         self.id = json_data.get("id", "")
         self.name = json_data.get("name", "")
         self.type = self._get_type(json_data.get("type", {}))
-        self.required = json_data.get("required", False)
+        self.required = json_data.get("is_required", json_data.get("required", False))
+        self.private = json_data.get("is_private", json_data.get("private", False))
         self.is_array = json_data.get("is_array", False)
-        self.query = json_data.get("query", False)
+        self.query = json_data.get("is_query", json_data.get("query", False))
         self.description = json_data.get("description", "")
-        self.private = json_data.get("private", False)
         self.default = json_data.get("default", "")
 
         n = json_data.get("index", "")
@@ -168,6 +172,7 @@ class Field:  # noqa
 
 
 class Endpoint:
+    """
     id: str = None
     method: str = None
     path: str = None
@@ -180,6 +185,7 @@ class Endpoint:
 
     short_descr: str = None
     description: str = None
+    """
 
     def __init__(self, json_data, mod: Module):
         self.mod = mod
