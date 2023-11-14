@@ -341,7 +341,7 @@ class TemplateBase:
             doc,
             fn.return_name,
             fn.return_type,
-            fn.return_description,
+            "",  # fn.return_description,
             TEMPL,
         )
 

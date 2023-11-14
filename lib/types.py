@@ -123,6 +123,11 @@ class Field:  # noqa
         self.types = []
 
     def _idx_set(self, n):
+        self.idx_array = False
+        self.idx_fulltext = False
+        self.idx_multi = False
+        self.idx_unique = False
+
         if n == "u":
             self.idx_unique = True
         elif n in ("m", "y"):

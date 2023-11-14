@@ -186,7 +186,7 @@ def _generate_endpoint(self, fout, ep: Endpoint):
         doc,
         ep.return_name,
         ep.return_type,
-        ep.return_description,
+        "",  # ep.return_description,
         TEMPL,
     )
 
