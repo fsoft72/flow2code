@@ -204,7 +204,7 @@ class Endpoint:
         self.description = json_data["description"]
         self.short_descr = json_data["short_descr"]
         self.is_valid = True
-        self.is_array = json_data["is_array"]
+        self.is_array = json_data.get("is_array", False)
         self.return_type = json_data["returnType"]
         self.return_name = json_data["returnName"]
 
