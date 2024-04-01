@@ -28,14 +28,14 @@ export interface %(name)s {
 %(__file)s
 /*=== f2c_end __file ===*/
 
-import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
+import { get, patch, post, delete_, type LiWEFetcherOptions } from '$liwe3/utils/fetcher';
 """,
     "ACTION_START": """
 /**
 %(__doc)s
  */
 export const %(action_name)s = async ( %(params)s ) => {
-\tconst res = await %(method)s( `/api%(url)s%(query)s`, {%(fields)s}, %(_needs_perms)s );
+\tconst res = await %(method)s( `/api%(url)s%(query)s`, {%(fields)s}, %(_options)s );
 
 \tif (res.error) return res;
 

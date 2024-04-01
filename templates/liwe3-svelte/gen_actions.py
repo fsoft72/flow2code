@@ -55,13 +55,15 @@ def _gen_action(self, fout, ep: Endpoint):
         "action_const": self.endpoint_action_name(ep).upper(),
         "method": ep.method.lower(),
         "url": ep.path,
-        "fields": fields  # "\n\t\t" + ",\n\t\t".join(ep.fields()) + "\n\t"
-        if ep.fields()
-        else "",
+        "fields": (
+            fields  # "\n\t\t" + ",\n\t\t".join(ep.fields()) + "\n\t"
+            if ep.fields()
+            else ""
+        ),
         "query": queries,
         "params": params,
         "return_name": ep.return_name,
-        "_needs_perms": "true" if ep.permissions else "false",
+        "_options": "_options?.skipError ? _options.skipError : false",
         "__doc": doc,
     }
 
@@ -85,5 +87,11 @@ def _gen_action(self, fout, ep: Endpoint):
     else:
         dct["return_name"] = "res.%s" % ep.return_name
         dct["_return_payload"] = "__data.%(return_name)s" % dct
+
+    # Add the _options parameter
+    if dct["params"]:
+        dct["params"] += ", _options?: LiWEFetcherOptions"
+    else:
+        dct["params"] = "_options?: any"
 
     fout.write(TEMPL["ACTION_START"] % dct)
