@@ -17,7 +17,7 @@ import argparse
 import json
 import os
 import sys
-import imp
+import importlib.util
 
 # append the path of this file in the python path
 APP_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -83,7 +83,15 @@ class Flow2Code:
             sys.path.append(os.path.join(template_path))
             sys.path.append(os.path.join(template_path, template_name))
 
-        mod = imp.load_source("mod_%s" % template_name, fname)
+        # mod = imp.load_source("mod_%s" % template_name, fname)
+        # mod = importlib.import_module("template")
+
+        # import importlib.util
+
+        spec = importlib.util.spec_from_file_location(f"mod_{template_name}", fname)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
         self.template = mod.Template()
 
     def code(self, outdir):
