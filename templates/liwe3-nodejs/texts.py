@@ -43,6 +43,7 @@ export const init = ( liwe: ILiWE ) => {
 \t\t%(__typed_dict)s
 
 \t\t%(__endpoint_name)s ( req, %(__full_params)s( err: ILError, %(__return_var_name)s: %(__return_type)s ) => {
+\t\t\tif ( err?.quiet ) return;
 \t\t\tif ( err ) return send_error( res, err );
 
 \t\t\tsend_ok( res, { %(__spread)s%(__return_var_name)s } );
