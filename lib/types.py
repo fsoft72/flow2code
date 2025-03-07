@@ -5,20 +5,16 @@ import re
 from .const import FieldType
 
 
-class Field:
-    ...
+class Field: ...
 
 
-class Module:
-    ...
+class Module: ...
 
 
-class Type:
-    ...
+class Type: ...
 
 
-class Permission:
-    ...
+class Permission: ...
 
 
 class Function:
@@ -37,7 +33,7 @@ class Function:
         self.is_valid = False
 
         self.id = json_data["id"]
-        self.name = json_data["name"]
+        self.name = json_data["name"].strip()
         self.return_type = json_data["returnType"]
         self.return_name = json_data.get("returnName", "")
         self.is_array = json_data.get("is_array", False)
@@ -71,7 +67,7 @@ class Enum:
     def __init__(self, json_data, mod: Module):
         self.consts = {}
         self.id = json_data["id"]
-        self.name = json_data["name"]
+        self.name = json_data["name"].strip()
         self.description = json_data.get("description", "")
         self.consts = {}
 
@@ -108,7 +104,7 @@ class Field:  # noqa
 
     def __init__(self, json_data, mod: any):
         self.id = json_data.get("id", "")
-        self.name = json_data.get("name", "")
+        self.name = json_data.get("name", "").strip()
         self.type = self._get_type(json_data.get("type", {}))
         self.required = json_data.get("is_required", json_data.get("required", False))
         self.private = json_data.get("is_private", json_data.get("private", False))
@@ -200,7 +196,7 @@ class Endpoint:
 
         self.id = json_data["id"]
         self.method = json_data["method"]
-        self.path = json_data["url"]
+        self.path = json_data["url"].strip()
         self.description = json_data["description"]
         self.short_descr = json_data["short_descr"]
         self.is_valid = True
@@ -260,7 +256,7 @@ class Permission:  # noqa
 
     def __init__(self, json_data: dict, mod: Module):
         self.id = json_data["id"]
-        self.name = json_data["name"]
+        self.name = json_data["name"].strip()
         self.description = json_data["description"]
 
     def __str__(self):
@@ -283,7 +279,7 @@ class Type:  # noqa
         self.id = json_data["id"]
         self.coll_table = json_data.get("db_table", "")
         self.coll_drop = json_data.get("db_clear", False)
-        self.name = json_data["name"]
+        self.name = json_data["name"].strip()
         self.fields = []
 
         for p in json_data.get("fields", []):
@@ -311,7 +307,7 @@ class Module:
     def __init__(self, json_mod: any, flow: any):
         self.flow = flow
 
-        self.name = json_mod["name"]
+        self.name = json_mod["name"].strip()
 
         self.types = {}
         self.endpoints = {}
