@@ -24,7 +24,7 @@ APP_PATH = os.path.dirname(os.path.realpath(__file__))
 
 from lib.types import Module, Permission, Endpoint, Type, Enum, Function
 
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 
 
 class Flow2Code:
