@@ -71,7 +71,7 @@ class Enum:
         self.description = json_data.get("description", "")
         self.consts = {}
 
-        for v in json_data["fields"]:
+        for v in json_data.get("fields", []):
             self.consts[v["name"]] = {
                 "name": v["name"].lower(),
                 "description": v["description"],
