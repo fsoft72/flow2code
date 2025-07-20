@@ -55,7 +55,7 @@ export const init = ( liwe: ILiWE ) => {
  */
 
 import { ILRequest, ILResponse, LCback, ILiweConfig, ILError, ILiWE } from '../../liwe/types';
-import { LiWEResponse, responseError, responseSuccess } from '../../liwe/response';
+import { LiWEError, LiWEResponse, responseError, responseSuccess } from '../../liwe/response';
 import { $l } from '../../liwe/locale';
 %(__import_system_perms_register)s
 import {
@@ -106,7 +106,7 @@ export const %(endpoint_name)s = async ( req: ILRequest, %(__parameters)s ): Pro
  *
 %(__description)s
  */
-export const %(function_name)s = async ( %(__parameters)scback: LCback = null ): Promise<%(return_type)s> => {
+export const %(function_name)s = async ( %(__parameters)s): Promise<%(return_type)s> => {
 %(__pre_snip)s	/*=== f2c_start %(function_name)s ===*/
 %(__snippet)s
 """,
