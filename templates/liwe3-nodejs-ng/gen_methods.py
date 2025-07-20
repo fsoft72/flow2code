@@ -241,6 +241,7 @@ def _generate_function(self, fout, fn: Function, mod: Module):
         "__parameters": params,
         "__snippet": self.snippets[name],
         "__pre_snip": "",
+        "__post_snip": "",
     }
 
     if fn.is_array:
@@ -248,6 +249,7 @@ def _generate_function(self, fout, fn: Function, mod: Module):
 
     if name.endswith("_db_init"):
         dct["__pre_snip"] = _gen_db_init(mod, TEMPL)
+        dct["__post_snip"] = "\n\n\treturn true;"
 
     fout.write(TEMPL["FOLDING_FN_START"] % dct)
     fout.write(TEMPL["FUNCTION_START"] % dct)
