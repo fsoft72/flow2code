@@ -151,7 +151,13 @@ class TemplateBase:
         return f
 
     def prepare_field(
-        self, field: Field, template, template_obj, honour_float=False, use_enums=False
+        self,
+        field: Field,
+        template,
+        template_obj,
+        honour_float=False,
+        use_enums=False,
+        is_zod=False,
     ):
         dct = {
             "name": field.name,
@@ -177,8 +183,13 @@ class TemplateBase:
             dct["_req"] = "true"
             dct["_is_req"] = "req"
             dct["param_default"] = ""
+            if is_zod:
+                dct["opt"] = ""
         else:
-            dct["opt"] = "?"
+            if is_zod:
+                dct["opt"] = ".optional()"
+            else:
+                dct["opt"] = "?"
             dct["_is_req"] = "opt"
             dct["_req"] = "false"
 
@@ -189,6 +200,9 @@ class TemplateBase:
 
         _typ = field.type[0]
 
+        if field.name == "privacy":
+            print("=== PRIV: ", field.type, field.name, field.description)
+
         if _typ == FieldType.STR:
             dct["type"] = "string"
             if dct["param_default"] and dct["param_default"] != "undefined":
@@ -196,27 +210,45 @@ class TemplateBase:
         elif _typ == FieldType.NUMBER:
             dct["type"] = "number"
         elif _typ == FieldType.FLOAT:
-            if honour_float:
-                dct["type"] = "float"
-            else:
+            if is_zod:
                 dct["type"] = "number"
+            else:
+                if honour_float:
+                    dct["type"] = "float"
+                else:
+                    dct["type"] = "number"
         elif _typ == FieldType.BOOL:
             dct["type"] = "boolean"
         elif _typ == FieldType.DATE:
-            dct["type"] = "Date"
+            if is_zod:
+                dct["type"] = "date"
+            else:
+                dct["type"] = "Date"
         elif _typ == FieldType.FILE:
             dct["type"] = "File"
+            if is_zod:
+                dct["type"] = "any"
+
         elif _typ == FieldType.CUSTOM:
             typ = field.type[1]
-            dct["type"] = typ
-            if typ in self.mod.flow.enums:
-                dct["type"] = self.mod.flow.enums[typ].name
-                dct["type_obj"] = True
-                if use_enums:
-                    templ = template_obj
-            elif typ in self.mod.flow.types:
-                dct["type"] = self.mod.flow.types[typ].name
-                dct["type_obj"] = True
+            if typ == "datetime" or typ == FieldType.DATETIME:
+                if is_zod:
+                    dct["type"] = "string().datetime"
+                else:
+                    dct["type"] = "Date"
+            else:
+                dct["type"] = typ
+                if not is_zod:
+                    if typ in self.mod.flow.enums:
+                        dct["type"] = self.mod.flow.enums[typ].name
+                        dct["type_obj"] = True
+                        if use_enums:
+                            templ = template_obj
+                    elif typ in self.mod.flow.types:
+                        dct["type"] = self.mod.flow.types[typ].name
+                        dct["type_obj"] = True
+                else:
+                    dct["type"] = "Z" + typ
 
         if dct["type"] == "iliwe":
             dct["type"] = "ILiWE"
@@ -225,10 +257,20 @@ class TemplateBase:
         elif dct["type"] == "ilresponse":
             dct["type"] = "ILResponse"
         elif dct["type"] in ("date", "datetime"):
-            dct["type"] = "Date"
+            if not is_zod:
+                dct["type"] = "Date"
 
         if dct["is_array"]:
-            dct["type"] += "[]"
+            if is_zod:
+                if dct["type"].startswith("Z"):
+                    dct["type"] = f"array( {dct['type']} )"
+                else:
+                    dct["type"] = f"array( z.{dct['type']}() )"
+            else:
+                dct["type"] += "[]"
+        else:
+            if is_zod:
+                dct["type"] += "()"
 
         if dct["default"]:
             if dct["type"].startswith("string"):
@@ -243,9 +285,15 @@ class TemplateBase:
             dct["opt"] = ""
 
         if dct["_req"] == "true":
-            dct["_req_param"] = ", required: %(_req)s%(_default)s" % dct
+            if is_zod:
+                dct["_req_param"] = ""
+            else:
+                dct["_req_param"] = ", required: %(_req)s%(_default)s" % dct
         else:
-            dct["_req_param"] = ""
+            if is_zod:
+                dct["_req_param"] = ".optional()"
+            else:
+                dct["_req_param"] = ""
 
         if dct["type"].startswith(("type.", "enum.")):
             dct["type"] = "any"

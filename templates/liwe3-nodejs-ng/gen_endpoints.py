@@ -102,32 +102,33 @@ def _endpoint_definition(self, ep: Endpoint, out, mod: Module):
     if queries and dct["req_mode"] != "req.query as any":
         code = "let { %s___errors } = %s;" % (
             dct["__queries"],
-            self._typed_dict(ep, "req.query", mode="query"),
+            self._typed_dict(ep, "req.query", mode="query", full_dct=dct),
         )
 
         if dct["__params"]:
             code += "\n\n\t\tlet { %s___errors: errors2 } = %s;\n\n" % (
                 dct["__params"],
-                self._typed_dict(ep, dct["req_mode"], mode="body"),
+                self._typed_dict(ep, dct["req_mode"], mode="body", full_dct=dct),
             )
 
             code = "%s\t\t___errors = [ ...errors2, ...___errors ];" % code
 
-        code += (
-            "\n\n\t\tif ( ___errors.length ) return send_error "
-            + "( res, { message: `Parameters error: ${___errors.join ( ', ' )}` } );"
-        )
+            code += (
+                "\n\n\t\tif ( ___errors.length ) return send_error "
+                + "( res, { message: `Parameters error: ${___errors.join ( ', ' )}` } );"
+            )
 
         dct["__typed_dict"] = code
 
     else:
-        dct["__typed_dict"] = self._typed_dict(ep, dct["req_mode"])
+        dct["__typed_dict"] = self._typed_dict(ep, dct["req_mode"], full_dct=dct)
 
-        if dct["__typed_dict"]:
-            dct["__typed_dict"] = (
-                "const { %s___errors } = %s;\n\n\t\tif ( ___errors.length ) return sendParametersError ( res, ___errors );"
-                % (dct["__params"], dct["__typed_dict"])
-            )
+        dct[
+            "__typed_dict"
+        ] += "\t\tif ( ___errors ) return sendResponse( res, ___errors );\n\n\t\t"
+
+    if not dct["__params"]:
+        dct["__typed_dict"] = ""
 
     if dct["__return_var_name"] == "__plain__":
         dct["__spread"] = "..."
@@ -161,7 +162,7 @@ def _prepare_methods_names(self, mod: Module):
     self.snippets["__functions"] = self.join_newlines(functions)
 
 
-def _typed_dict(self, ep, dict_name, mode="all"):
+def _typed_dict(self, ep, dict_name, mode="all", full_dct=None):
     """
     mode can be:
         - all: all fields
@@ -169,6 +170,9 @@ def _typed_dict(self, ep, dict_name, mode="all"):
         - body: only body fields
     """
     res = []
+
+    if not full_dct:
+        full_dct = {"__params": "", "__name": dict_name}
 
     for f in ep.parameters:
         # if f [ "type" ] == FieldType.FILE: continue
@@ -184,6 +188,7 @@ def _typed_dict(self, ep, dict_name, mode="all"):
             TEMPL["TYPED_DICT_OBJ"],
             honour_float=True,
             use_enums=True,
+            is_zod=True,
         )
 
         res.append(dct)
@@ -191,4 +196,24 @@ def _typed_dict(self, ep, dict_name, mode="all"):
     if not res:
         return ""
 
-    return "typed_dict( %s, [\n\t\t\t%s\n\t\t] )" % (dict_name, ",\n\t\t\t".join(res))
+    res2 = []
+
+    for f in res:
+        if "z.Z" in f:
+            f = f.replace("z.Z", "Z").replace("()", "")
+        res2.append(f)
+
+    d = {
+        "params": "\n\t\t".join(res2),
+        "name": dict_name,
+        "__params": full_dct["__params"],
+    }
+
+    return (
+        """const schema = z.object({\n\t\t%(params)s\n\t\t});
+
+\t\tconst { %(__params)s___errors } = zodParams( schema, %(name)s );\n"""
+        % d
+    )
+
+    # return "typed_dict( %s, [\n\t\t\t%s\n\t\t] )" % (dict_name, ",\n\t\t\t".join(res))

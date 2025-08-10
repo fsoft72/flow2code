@@ -20,8 +20,6 @@ def generate_file_perms(self, mod: Module, output: str):
 
     out.write(TEMPL["PERMS_FILE_START"] % self.snippets)
 
-    print(mod.permissions.values())
-
     for perm in mod.permissions.values():
         out.write(
             TEMPL["PERMS_ROW"] % {"name": perm.name, "description": perm.description}

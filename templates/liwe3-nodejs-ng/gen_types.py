@@ -68,12 +68,18 @@ def _gen_type(self, fout, typ: Type):
     fout.write(TEMPL["INTERFACE_START"] % dct)
     for f in typ.fields:
         if f.description == "":
-            fout.write(self.prepare_field(f, TEMPL["INTERFACE_PARAM_NO_DESCR"], ""))
+            fout.write(
+                self.prepare_field(
+                    f, TEMPL["INTERFACE_PARAM_NO_DESCR"], "", is_zod=True
+                )
+            )
         else:
-            fout.write(self.prepare_field(f, TEMPL["INTERFACE_PARAM"], ""))
-    fout.write(TEMPL["INTERFACE_END"])
+            fout.write(self.prepare_field(f, TEMPL["INTERFACE_PARAM"], "", is_zod=True))
+    fout.write(TEMPL["INTERFACE_END"] % dct)
 
     fout.write(TEMPL["INTERFACE_KEYS_START"] % dct)
+    """
     for f in typ.fields:
         fout.write(self.prepare_field(f, TEMPL["INTERFACE_KEY_PARAM"], ""))
     fout.write(TEMPL["INTERFACE_KEYS_END"])
+    """
