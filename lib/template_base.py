@@ -250,6 +250,9 @@ class TemplateBase:
                 else:
                     dct["type"] = "Z" + typ
 
+                    if typ == "any":
+                        dct["type"] = "any"
+
         if dct["type"] == "iliwe":
             dct["type"] = "ILiWE"
         elif dct["type"] == "ilrequest":
