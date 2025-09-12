@@ -170,6 +170,8 @@ class TemplateBase:
             "param_default": field.default,
             "is_array": field.is_array,
             "default": field.default,
+            "min": field.min_length,
+            "max": field.size,
         }
 
         # The template param holds the default template string to be used
@@ -294,6 +296,31 @@ class TemplateBase:
                 dct["_req_param"] = ".optional()"
             else:
                 dct["_req_param"] = ""
+
+        dct["_min"] = ""
+        dct["_max"] = ""
+
+        if "min" not in dct:
+            dct["min"] = None
+        if "max" not in dct:
+            dct["max"] = None
+        if "min_length" not in dct:
+            dct["min_length"] = None
+        if "size" not in dct:
+            dct["size"] = None
+
+        if is_zod:
+            if dct["min"]:
+                dct["_min"] = f".min({dct['min']})"
+
+            if dct["max"]:
+                dct["_max"] = f".max({dct['max']})"
+
+            if dct["min_length"]:
+                dct["_min"] = f".min({dct['min_length']})"
+
+            if dct["size"]:
+                dct["_max"] = f".max({dct['size']})"
 
         if dct["type"].startswith(("type.", "enum.")):
             dct["type"] = "any"

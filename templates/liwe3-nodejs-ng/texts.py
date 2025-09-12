@@ -150,7 +150,7 @@ export const Z%(name)s = z.object({
     "INTERFACE_END": """});\n\nexport type %(name)s = z.infer<typeof Z%(name)s>;\n""",
     "INTERFACE_KEYS_START": """export const %(name)sKeys = zodKeys( Z%(name)s );\n\n""",
     "INTERFACE_KEYS_END": """};\n\n""",
-    "INTERFACE_PARAM": "\t%(name)s: zodMeta( z.%(type)s%(opt)s.describe( '%(description)s' ), { priv: %(private)s } ),\n",
+    "INTERFACE_PARAM": "\t%(name)s: zodMeta( z.%(type)s%(opt)s%(_min)s%(_max)s.describe( '%(description)s' ), { priv: %(private)s } ),\n",
     "INTERFACE_PARAM_NO_DESCR": "\t%(name)s: zodMeta( z.%(type)s, { priv: %(private)s } ),\n",
     "INTERFACE_KEY_PARAM": "	'%(name)s': { type: '%(type)s', priv: %(private)s },\n",
 }

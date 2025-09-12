@@ -112,6 +112,10 @@ class Field:  # noqa
         self.query = json_data.get("is_query", json_data.get("query", False))
         self.description = json_data.get("description", "")
         self.default = json_data.get("default", "")
+        self.min_length = json_data.get("min_length", None)
+        self.size = json_data.get("size", None)
+        self.min = json_data.get("min", None)
+        self.max = json_data.get("max", None)
 
         n = json_data.get("index", "")
         self._idx_set(n)
