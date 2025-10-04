@@ -2,6 +2,7 @@
 
 texts = {
 	"INDEX_FILE_START": """import { responseError, type LiWEApp, permissions_register } from '@backend/liwe3/core';
+import { type Context } from 'hono';
 import { %(__methods)s } from './methods';
 import { %(__permissions_const)s } from './perms';
 
@@ -18,20 +19,20 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 };
 """,
-	"ENDPOINT_GET": """	app.hono.get( '%(__path)s', async ( c ) => {
+	"ENDPOINT_GET": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const query = c.req.query();
 		const res = await %(__method_name)s( app, query );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_GET_NO_PARAMS": """	app.hono.get( '%(__path)s', async ( c ) => {
+	"ENDPOINT_GET_NO_PARAMS": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_POST": """	app.hono.post( '%(__path)s', async ( c ) => {
+	"ENDPOINT_POST": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s );
@@ -43,13 +44,13 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 
 """,
-	"ENDPOINT_POST_NO_PARAMS": """	app.hono.post( '%(__path)s', async ( c ) => {
+	"ENDPOINT_POST_NO_PARAMS": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_PUT": """	app.hono.put( '%(__path)s', async ( c ) => {
+	"ENDPOINT_PUT": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s );
@@ -61,13 +62,13 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 
 """,
-	"ENDPOINT_PUT_NO_PARAMS": """	app.hono.put( '%(__path)s', async ( c ) => {
+	"ENDPOINT_PUT_NO_PARAMS": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_PATCH": """	app.hono.patch( '%(__path)s', async ( c ) => {
+	"ENDPOINT_PATCH": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s );
@@ -79,20 +80,20 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 
 """,
-	"ENDPOINT_PATCH_NO_PARAMS": """	app.hono.patch( '%(__path)s', async ( c ) => {
+	"ENDPOINT_PATCH_NO_PARAMS": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_DELETE": """	app.hono.delete( '%(__path)s', async ( c ) => {
+	"ENDPOINT_DELETE": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
 		const %(__param_source)s = await c.req.json();
 		const res = await %(__method_name)s( app, %(__param_name)s );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_DELETE_NO_PARAMS": """	app.hono.delete( '%(__path)s', async ( c ) => {
+	"ENDPOINT_DELETE_NO_PARAMS": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
