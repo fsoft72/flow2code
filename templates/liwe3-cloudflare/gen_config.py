@@ -20,15 +20,18 @@ def generate_config_files(self, mod: Module, output: str):
 		'__mod_name': mod_name,
 		'__mod_name_camel': mod_name_camel
 	}
-	self.create_file(package_json_path, content)
+	with self.create_file(package_json_path, mod) as f:
+		f.write(content)
 	print(f"Generated {package_json_path}")
 
 	# Generate tsconfig.json
 	tsconfig_path = os.path.join(output, "tsconfig.json")
-	self.create_file(tsconfig_path, TEMPL["TSCONFIG_JSON"])
+	with self.create_file(tsconfig_path, mod) as f:
+		f.write(TEMPL["TSCONFIG_JSON"])
 	print(f"Generated {tsconfig_path}")
 
 	# Generate vitest.config.ts
 	vitest_config_path = os.path.join(output, "vitest.config.ts")
-	self.create_file(vitest_config_path, TEMPL["VITEST_CONFIG"])
+	with self.create_file(vitest_config_path, mod) as f:
+		f.write(TEMPL["VITEST_CONFIG"])
 	print(f"Generated {vitest_config_path}")
