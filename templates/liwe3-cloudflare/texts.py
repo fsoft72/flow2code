@@ -131,7 +131,8 @@ import { z, LiWEApp, LiWEResponse, responseError, responseSuccess } from './util
 	"METHOD_SCHEMA_START": """/**
  * Schema for %(__schema_description)s
  *
-%(__schema_properties)s */
+%(__schema_properties)s
+ */
 const %(__schema_name)s = z.object( {
 """,
 	"METHOD_SCHEMA_FIELD": """	%(name)s: %(zod_type)s,
