@@ -108,7 +108,8 @@ def _create_function_name(ep: Endpoint, mod: Module) -> str:
 	parts = []
 	for part in path.split("/"):
 		if not part.startswith(":"):
-			parts.append(part)
+			# Replace hyphens with underscores for valid function names
+			parts.append(part.replace("-", "_"))
 
 	return "_".join(parts)
 
