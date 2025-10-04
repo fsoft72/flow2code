@@ -159,6 +159,29 @@ def json_to_drizzle(type_def: dict) -> str:
 
     fields = type_def.get('fields', [])
 
+    # Add automatic created/updated timestamp fields (hidden LiWE framework fields)
+    auto_fields = [
+        {
+            'name': 'created',
+            'type': 'datetime',
+            'is_required': False,
+            'is_array': False,
+            'description': 'Record creation timestamp',
+            'size': 0,
+            'index': ''
+        },
+        {
+            'name': 'updated',
+            'type': 'datetime',
+            'is_required': False,
+            'is_array': False,
+            'description': 'Record last update timestamp',
+            'size': 0,
+            'index': ''
+        }
+    ]
+    fields = list(fields) + auto_fields
+
     # Build the output
     lines = []
 

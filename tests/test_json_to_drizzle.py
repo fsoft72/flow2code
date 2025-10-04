@@ -138,6 +138,11 @@ class TestJsonToDrizzleConverter(unittest.TestCase):
         self.assertIn('/**', result)  # Has JSDoc comments
         self.assertIn('*/', result)
 
+        # Check for automatic timestamp fields
+        self.assertIn('created: timestamp( \'created\' )', result)
+        self.assertIn('updated: timestamp( \'updated\' )', result)
+        self.assertIn('.default( sql`CURRENT_TIMESTAMP` )', result)
+
     def test_json_to_drizzle_table_name(self):
         """Test that table name is correctly generated"""
         result = json_to_drizzle(self.user_type)
