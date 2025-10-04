@@ -108,9 +108,9 @@ def test_basic_mysql():
 	assert 'created DATETIME DEFAULT CURRENT_TIMESTAMP' in result
 	assert 'updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP' in result
 
-	# Verify inline comments (MySQL feature)
-	assert "COMMENT 'the main id field'" in result
-	assert "COMMENT 'The user email'" in result
+	# Verify field comments (using -- syntax)
+	assert "-- id: the main id field" in result
+	assert "-- email: The user email" in result
 
 	# Verify indexes
 	assert 'CREATE UNIQUE INDEX idx_users_email ON User(email)' in result

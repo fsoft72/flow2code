@@ -171,8 +171,7 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 	primary_key_field = None
 
 	# Process each field
-	field_defs = []
-	for field in fields:
+	for i, field in enumerate(fields):
 		field_name = field.get('name', '')
 		field_type = field.get('type', 'str')
 		is_required = field.get('is_required', False)
@@ -187,6 +186,10 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 				size = int(size)
 			except ValueError:
 				size = 0
+
+		# Add field comment above the field definition
+		if field_desc:
+			lines.append(f"    -- {field_name}: {field_desc}")
 
 		# Get SQL type
 		sql_type = _get_sql_type(field_type, size, is_array, dialect)
@@ -212,16 +215,11 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 				if field_name == 'updated':
 					field_def += " ON UPDATE CURRENT_TIMESTAMP"
 
-		# Add field comment
-		if field_desc:
-			if dialect in ['mysql', 'mariadb']:
-				# MySQL/MariaDB support inline COMMENT syntax
-				field_def += f" COMMENT '{field_desc}'"
-			else:
-				# SQLite: add comment at the end of the line
-				field_def += f"  -- {field_desc}"
+		# Add comma for all fields except the last one
+		if i < len(fields) - 1:
+			field_def += ","
 
-		field_defs.append(field_def)
+		lines.append(field_def)
 
 		# Track indexed fields (skip id field as it's already primary key)
 		if index and index.strip() and not (field_name == 'id' and index == 'u'):
@@ -230,10 +228,6 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 				'index_type': index,
 				'description': field_desc
 			})
-
-	# Add all field definitions
-	lines.extend([fd + "," for fd in field_defs[:-1]])
-	lines.append(field_defs[-1])  # Last field without comma
 
 	# Close table definition
 	lines.append(");")
