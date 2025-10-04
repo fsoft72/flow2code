@@ -212,9 +212,14 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 				if field_name == 'updated':
 					field_def += " ON UPDATE CURRENT_TIMESTAMP"
 
-		# Add field comment if available (MySQL/MariaDB support inline comments)
-		if field_desc and dialect in ['mysql', 'mariadb']:
-			field_def += f" COMMENT '{field_desc}'"
+		# Add field comment
+		if field_desc:
+			if dialect in ['mysql', 'mariadb']:
+				# MySQL/MariaDB support inline COMMENT syntax
+				field_def += f" COMMENT '{field_desc}'"
+			else:
+				# SQLite: add comment at the end of the line
+				field_def += f"  -- {field_desc}"
 
 		field_defs.append(field_def)
 
@@ -233,16 +238,6 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 	# Close table definition
 	lines.append(");")
 	lines.append("")
-
-	# Add SQLite field comments as separate comments (since SQLite doesn't support inline comments)
-	if dialect == 'sqlite':
-		for field in fields:
-			field_desc = field.get('description', '')
-			if field_desc:
-				field_name = field.get('name', '')
-				lines.append(f"-- {field_name}: {field_desc}")
-		if any(field.get('description', '') for field in fields):
-			lines.append("")
 
 	# Add indexes
 	if indexed_fields:
