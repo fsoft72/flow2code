@@ -59,12 +59,21 @@ def generate_file_index(self, mod: Module, output: str):
 	# Sort methods
 	methods.sort()
 
+	# Format methods import with newlines every 4 methods
+	formatted_methods = []
+	for i, method in enumerate(methods):
+		if i > 0 and i % 4 == 0:
+			formatted_methods.append("\n\t")
+		formatted_methods.append(method)
+		if i < len(methods) - 1:
+			formatted_methods.append(", ")
+
 	# Determine permissions constant name
 	permissions_const = f"{mod_name.upper()}_PERMISSIONS"
 
 	# Prepare snippets
 	snippets = {
-		"__methods": ", ".join(methods),
+		"__methods": "".join(formatted_methods),
 		"__mod_name": mod_name,
 		"__permissions_const": permissions_const,
 	}
