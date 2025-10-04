@@ -118,6 +118,25 @@ def _pascal_case(text: str) -> str:
 	return "".join(word.capitalize() for word in text.replace("-", "_").split("_"))
 
 
+def _format_jsdoc_description(description: str) -> str:
+	"""Format multiline description for JSDoc comments by prefixing each line with ' * '"""
+	if not description:
+		return ""
+
+	lines = description.split("\n")
+	formatted_lines = []
+
+	for i, line in enumerate(lines):
+		if i == 0:
+			# First line doesn't need prefix (it's already on the same line as /**)
+			formatted_lines.append(line)
+		else:
+			# Subsequent lines need ' * ' prefix
+			formatted_lines.append(f" * {line}")
+
+	return "\n".join(formatted_lines)
+
+
 def _format_param_docs(ep: Endpoint) -> str:
 	"""Format parameter documentation for JSDoc"""
 	if not ep.parameters:
@@ -214,7 +233,8 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
 
 	# File start
 	description = ep.description if ep.description else ep.short_descr if ep.short_descr else f"{func_name} endpoint"
-	out.write(TEMPL["METHOD_FILE_START"] % {"__endpoint_description": description})
+	formatted_description = _format_jsdoc_description(description)
+	out.write(TEMPL["METHOD_FILE_START"] % {"__endpoint_description": formatted_description})
 
 	# Generate schema if there are parameters
 	if ep.parameters:
@@ -235,7 +255,7 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
 	params_arg = f", params: {params_type}" if ep.parameters else ""
 
 	out.write(TEMPL["METHOD_FUNCTION_START"] % {
-		"__function_description": description,
+		"__function_description": formatted_description,
 		"__param_docs": param_docs,
 		"__function_name": func_name,
 		"__params_arg": params_arg,
