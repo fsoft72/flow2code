@@ -21,7 +21,7 @@ export const module_init = ( app: LiWEApp ) => {
 """,
 	"ENDPOINT_GET": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const query = c.req.query();
-		const res = await %(__method_name)s( app, query );
+		const res = await %(__method_name)s( app, query as any );
 		return c.json( res, res.status );
 	} );
 
