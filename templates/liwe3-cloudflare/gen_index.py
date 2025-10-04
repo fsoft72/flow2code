@@ -9,6 +9,21 @@ from texts import texts as TEMPL
 # INTERNAL FUNCTIONS
 # ==================================================================================================
 
+def _create_function_name(ep: Endpoint) -> str:
+	"""Create function name from endpoint, e.g., POST /tags/add -> tag_add"""
+	# Remove leading /api if present
+	path = ep.path.replace("/api/", "/").replace("/api", "")
+	# Remove leading slash
+	path = path.lstrip("/")
+	# Replace slashes with underscores and remove path params
+	parts = []
+	for part in path.split("/"):
+		if not part.startswith(":"):
+			parts.append(part)
+
+	return "_".join(parts)
+
+
 def _get_method_template(method: str) -> str:
 	"""Get the appropriate template based on HTTP method"""
 	method_upper = method.upper()
@@ -37,7 +52,7 @@ def generate_file_index(self, mod: Module, output: str):
 	# Prepare methods list for import
 	methods = []
 	for ep in mod.endpoints.values():
-		method_name = self.endpoint_mk_function(ep)
+		method_name = _create_function_name(ep)
 		methods.append(method_name)
 
 	# Sort methods
@@ -70,7 +85,7 @@ def generate_file_index(self, mod: Module, output: str):
 
 def _write_endpoint(self, ep: Endpoint, out, mod: Module):
 	"""Write a single endpoint to the index.ts file"""
-	method_name = self.endpoint_mk_function(ep)
+	method_name = _create_function_name(ep)
 	method_upper = ep.method.upper()
 
 	# Determine parameter handling based on method
