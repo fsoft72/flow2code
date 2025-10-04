@@ -48,8 +48,8 @@ def test_basic_sqlite():
 
 	result = json_to_sql(type_def, 'sqlite')
 
-	# Verify table creation
-	assert 'CREATE TABLE User' in result
+	# Verify table creation (lowercase plural name)
+	assert 'CREATE TABLE users' in result
 	assert 'id VARCHAR(64) PRIMARY KEY' in result
 	assert 'email VARCHAR(50) NOT NULL' in result
 	assert 'enabled INTEGER NOT NULL' in result
@@ -59,7 +59,7 @@ def test_basic_sqlite():
 	assert 'updated DATETIME DEFAULT CURRENT_TIMESTAMP' in result
 
 	# Verify indexes
-	assert 'CREATE UNIQUE INDEX idx_users_email ON User(email)' in result
+	assert 'CREATE UNIQUE INDEX idx_users_email ON users(email)' in result
 
 	print("✓ Basic SQLite test passed")
 
@@ -98,8 +98,8 @@ def test_basic_mysql():
 
 	result = json_to_sql(type_def, 'mysql')
 
-	# Verify table creation
-	assert 'CREATE TABLE User' in result
+	# Verify table creation (lowercase plural name)
+	assert 'CREATE TABLE users' in result
 	assert 'id VARCHAR(64) PRIMARY KEY' in result
 	assert 'email VARCHAR(50) NOT NULL' in result
 	assert 'enabled BOOLEAN NOT NULL' in result
@@ -113,7 +113,7 @@ def test_basic_mysql():
 	assert "-- email: The user email" in result
 
 	# Verify indexes
-	assert 'CREATE UNIQUE INDEX idx_users_email ON User(email)' in result
+	assert 'CREATE UNIQUE INDEX idx_users_email ON users(email)' in result
 
 	print("✓ Basic MySQL test passed")
 
@@ -129,7 +129,7 @@ def test_full_user_type_sqlite():
 	result = json_to_sql(type_def, 'sqlite')
 
 	# Verify key elements
-	assert 'CREATE TABLE User' in result
+	assert 'CREATE TABLE users' in result
 	assert 'id VARCHAR(64) PRIMARY KEY' in result
 	assert 'email VARCHAR(50) NOT NULL' in result
 	assert 'username VARCHAR(50) NOT NULL' in result
@@ -143,10 +143,10 @@ def test_full_user_type_sqlite():
 	assert 'updated DATETIME DEFAULT CURRENT_TIMESTAMP' in result
 
 	# Verify indexes
-	assert 'CREATE UNIQUE INDEX idx_users_email ON User(email)' in result
-	assert 'CREATE UNIQUE INDEX idx_users_username ON User(username)' in result
-	assert 'CREATE INDEX idx_users_group ON User(group)' in result
-	assert 'CREATE UNIQUE INDEX idx_users_refresh_token ON User(refresh_token)' in result
+	assert 'CREATE UNIQUE INDEX idx_users_email ON users(email)' in result
+	assert 'CREATE UNIQUE INDEX idx_users_username ON users(username)' in result
+	assert 'CREATE INDEX idx_users_group ON users(group)' in result
+	assert 'CREATE UNIQUE INDEX idx_users_refresh_token ON users(refresh_token)' in result
 
 	print("✓ Full user type SQLite test passed")
 
@@ -162,7 +162,7 @@ def test_full_user_type_mysql():
 	result = json_to_sql(type_def, 'mysql')
 
 	# Verify key elements
-	assert 'CREATE TABLE User' in result
+	assert 'CREATE TABLE users' in result
 	assert 'id VARCHAR(64) PRIMARY KEY' in result
 	assert 'email VARCHAR(50) NOT NULL' in result
 	assert 'username VARCHAR(50) NOT NULL' in result
@@ -176,9 +176,9 @@ def test_full_user_type_mysql():
 	assert 'updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP' in result
 
 	# Verify indexes
-	assert 'CREATE UNIQUE INDEX idx_users_email ON User(email)' in result
-	assert 'CREATE UNIQUE INDEX idx_users_username ON User(username)' in result
-	assert 'CREATE INDEX idx_users_group ON User(group)' in result
+	assert 'CREATE UNIQUE INDEX idx_users_email ON users(email)' in result
+	assert 'CREATE UNIQUE INDEX idx_users_username ON users(username)' in result
+	assert 'CREATE INDEX idx_users_group ON users(group)' in result
 
 	print("✓ Full user type MySQL test passed")
 

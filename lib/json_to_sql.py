@@ -129,6 +129,9 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 	if not table_name:
 		table_name = _pluralize_table_name(name)
 
+	# Ensure table name is lowercase
+	table_name = table_name.lower()
+
 	fields = type_def.get('fields', [])
 
 	# Add automatic created/updated timestamp fields (hidden LiWE framework fields)
@@ -164,7 +167,7 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 		lines.append(f"-- {name} table schema")
 
 	# Table creation statement
-	lines.append(f"CREATE TABLE {name} (")
+	lines.append(f"CREATE TABLE {table_name} (")
 
 	# Track fields with indexes for later
 	indexed_fields = []
@@ -252,10 +255,10 @@ def json_to_sql(type_def: dict, dialect: str = 'sqlite') -> str:
 			# Add index definition
 			if index_type == 'u':
 				# Unique index
-				lines.append(f"CREATE UNIQUE INDEX {index_name} ON {name}({field_name});")
+				lines.append(f"CREATE UNIQUE INDEX {index_name} ON {table_name}({field_name});")
 			else:
 				# Regular index
-				lines.append(f"CREATE INDEX {index_name} ON {name}({field_name});")
+				lines.append(f"CREATE INDEX {index_name} ON {table_name}({field_name});")
 
 			lines.append("")
 
