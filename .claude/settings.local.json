@@ -4,7 +4,10 @@
       "Bash(python3:*)",
       "Bash(chmod:*)",
       "Bash(mkdir:*)",
-      "Bash(./flow2code.py:*)"
+      "Bash(./flow2code.py:*)",
+      "Bash(/usr/bin/python3:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
