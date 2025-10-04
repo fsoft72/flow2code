@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+# Add parent directory to path to import json_to_sql
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+
+from lib.types import Module
+from lib.json_to_sql import json_to_sql
+from texts import texts as TEMPL
+
+
+# ==================================================================================================
+# MAIN GENERATION FUNCTION
+# ==================================================================================================
+
+def generate_file_sql(self, mod: Module, output: str):
+	"""Generate the SQL schema file for types with db_table defined"""
+	mod_name = self.mod_name(mod)
+
+	# Filter types that have a coll_table (db_table) defined
+	types_with_db = []
+	for type_obj in mod.types.values():
+		# Check if type has coll_table attribute and it's not empty
+		if hasattr(type_obj, 'coll_table') and type_obj.coll_table:
+			types_with_db.append(type_obj)
+
+	# If no types have coll_table, don't generate SQL file
+	if not types_with_db:
+		print(f"Skipping SQL generation - no types with coll_table found")
+		return
+
+	# Create the sql directory if it doesn't exist
+	sql_dir = os.path.join(output, "sql")
+	os.makedirs(sql_dir, exist_ok=True)
+
+	# Create the output file
+	outfile = os.path.join(sql_dir, f"{mod_name}.sql")
+	out = self.create_file(outfile, mod)
+
+	# Write file header
+	header = TEMPL["SQL_FILE_HEADER"] % {
+		'__mod_name': mod_name
+	}
+	out.write(header)
+
+	# Generate SQL for each type
+	for type_obj in types_with_db:
+		# Convert Type object to dict format expected by json_to_sql
+		type_dict = {
+			'name': type_obj.name,
+			'description': '',  # Type class doesn't have description attribute
+			'db_table': type_obj.coll_table,  # Use coll_table instead of db_table
+			'fields': []
+		}
+
+		# Convert fields to dict format
+		for field in type_obj.fields:
+			# Convert index flags back to string format
+			index_str = ''
+			if hasattr(field, 'idx_unique') and field.idx_unique:
+				index_str = 'u'
+			elif hasattr(field, 'idx_multi') and field.idx_multi:
+				index_str = 'y'
+			elif hasattr(field, 'idx_array') and field.idx_array:
+				index_str = '*'
+			elif hasattr(field, 'idx_fulltext') and field.idx_fulltext:
+				index_str = 'f'
+
+			field_dict = {
+				'name': field.name,
+				'type': field.type[1] if field.type[0].value == 'custom' else field.type[0].value,
+				'is_required': field.required,
+				'is_array': field.is_array,
+				'description': field.description,
+				'size': field.size if hasattr(field, 'size') else 0,
+				'index': index_str
+			}
+			type_dict['fields'].append(field_dict)
+
+		# Generate SQL using the library (SQLite dialect)
+		sql_code = json_to_sql(type_dict, dialect='sqlite')
+		out.write(sql_code)
+		out.write("\n\n")
+
+	# Close the output file
+	out.close()
+	print(f"Generated {outfile}")
