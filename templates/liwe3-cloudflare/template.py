@@ -19,6 +19,12 @@ class Template(TemplateBase):
 
 	def code(self, mod: Module, flow: any, output: str):
 		super().code(mod, flow, output)
+
+		# Append module name to output path
+		import os
+		mod_name = self.mod_name(mod)
+		output = os.path.join(output, mod_name)
+
 		self.generate_config_files(mod, output)
 		self.generate_file_schema(mod, output)
 		self.generate_file_sql(mod, output)
