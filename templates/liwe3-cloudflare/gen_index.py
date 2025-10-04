@@ -24,17 +24,18 @@ def _create_function_name(ep: Endpoint) -> str:
 	return "_".join(parts)
 
 
-def _get_method_template(method: str) -> str:
-	"""Get the appropriate template based on HTTP method"""
+def _get_method_template(method: str, has_params: bool) -> str:
+	"""Get the appropriate template based on HTTP method and parameter presence"""
 	method_upper = method.upper()
+	suffix = "" if has_params else "_NO_PARAMS"
 	template_map = {
-		"GET": "ENDPOINT_GET",
-		"POST": "ENDPOINT_POST",
-		"PUT": "ENDPOINT_PUT",
-		"PATCH": "ENDPOINT_PATCH",
-		"DELETE": "ENDPOINT_DELETE",
+		"GET": f"ENDPOINT_GET{suffix}",
+		"POST": f"ENDPOINT_POST{suffix}",
+		"PUT": f"ENDPOINT_PUT{suffix}",
+		"PATCH": f"ENDPOINT_PATCH{suffix}",
+		"DELETE": f"ENDPOINT_DELETE{suffix}",
 	}
-	return template_map.get(method_upper, "ENDPOINT_POST")
+	return template_map.get(method_upper, f"ENDPOINT_POST{suffix}")
 
 
 # ==================================================================================================
@@ -88,6 +89,9 @@ def _write_endpoint(self, ep: Endpoint, out, mod: Module):
 	method_name = _create_function_name(ep)
 	method_upper = ep.method.upper()
 
+	# Check if endpoint has parameters
+	has_params = len(ep.parameters) > 0
+
 	# Determine parameter handling based on method
 	if method_upper == "GET":
 		param_source = "query"
@@ -106,7 +110,7 @@ def _write_endpoint(self, ep: Endpoint, out, mod: Module):
 	}
 
 	# Get the appropriate template
-	template_key = _get_method_template(ep.method)
+	template_key = _get_method_template(ep.method, has_params)
 
 	# Write the endpoint code
 	out.write(TEMPL[template_key] % dct)
