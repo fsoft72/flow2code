@@ -38,8 +38,9 @@ def generate_file_types(self, mod: Module, output: str):
 	# Generate Zod schema for each type
 	for type_obj in mod.types.values():
 		# Convert Type object to dict format expected by json_to_zod
+		# Note: json_to_zod will add "Schema" suffix, so we just use the original name
 		type_dict = {
-			'name': f"Z{type_obj.name}",  # Prefix with Z
+			'name': type_obj.name,
 			'description': type_obj.description if hasattr(type_obj, 'description') else '',
 			'fields': []
 		}
@@ -61,16 +62,23 @@ def generate_file_types(self, mod: Module, output: str):
 			}
 			type_dict['fields'].append(field_dict)
 
-		# Generate Zod schema
+		# Generate Zod schema using json_to_zod
 		zod_schema = json_to_zod(type_dict)
+
+		# Replace the schema name to use Z prefix instead of Schema suffix
+		# json_to_zod generates: "const {Name}Schema = z.object..."
+		# We want: "const Z{Name} = z.object..."
+		original_schema_name = f"{type_obj.name}Schema"
+		new_schema_name = f"Z{type_obj.name}"
+		zod_schema = zod_schema.replace(f"const {original_schema_name}", f"const {new_schema_name}")
+
 		out.write(zod_schema)
 		out.write("\n")
 
 		# Generate TypeScript type from Zod schema
-		schema_name = f"Z{type_obj.name}Schema"
 		type_name = type_obj.name
-		out.write(f"export type {type_name} = z.infer<typeof {schema_name}>;\n")
-		out.write(f"export {{ {schema_name} }};\n\n")
+		out.write(f"export type {type_name} = z.infer<typeof {new_schema_name}>;\n")
+		out.write(f"export {{ {new_schema_name} }};\n\n")
 
 	# Close the output file
 	out.close()
