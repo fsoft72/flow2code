@@ -46,14 +46,18 @@ def generate_file_types(self, mod: Module, output: str):
 
 		# Convert fields to dict format
 		for field in type_obj.fields:
+			# Get size and min_length, ensuring they're integers
+			size = field.size if hasattr(field, 'size') and field.size is not None else 0
+			min_length = field.min_length if hasattr(field, 'min_length') and field.min_length is not None else 0
+
 			field_dict = {
 				'name': field.name,
 				'type': field.type[1] if field.type[0].value == 'custom' else field.type[0].value,
 				'is_required': field.required,
 				'is_array': field.is_array,
 				'description': field.description,
-				'size': field.size if hasattr(field, 'size') else 0,
-				'min_length': field.min_length if hasattr(field, 'min_length') else 0
+				'size': size,
+				'min_length': min_length
 			}
 			type_dict['fields'].append(field_dict)
 
