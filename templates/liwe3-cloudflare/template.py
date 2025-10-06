@@ -10,6 +10,7 @@ from gen_methods import generate_file_methods
 from gen_schema import generate_file_schema
 from gen_sql import generate_file_sql
 from gen_config import generate_config_files
+from gen_types import generate_file_types
 
 
 class Template(TemplateBase):
@@ -26,6 +27,7 @@ class Template(TemplateBase):
 		output = os.path.join(output, mod_name)
 
 		self.generate_config_files(mod, output)
+		self.generate_file_types(mod, output)
 		self.generate_file_schema(mod, output)
 		self.generate_file_sql(mod, output)
 		self.generate_file_perms(mod, output)
@@ -41,6 +43,9 @@ Template.generate_file_perms = generate_file_perms
 
 # Methods file generation
 Template.generate_file_methods = generate_file_methods
+
+# Types file generation
+Template.generate_file_types = generate_file_types
 
 # Schema.ts file generation
 Template.generate_file_schema = generate_file_schema
