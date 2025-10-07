@@ -122,6 +122,7 @@ def _pascal_case(text: str) -> str:
 def _get_typescript_return_type(ep: Endpoint, mod: Module = None) -> str:
 	"""
 	Maps Endpoint return_type to TypeScript type string.
+	Uses inferred TypeScript types (not Zod schemas) for custom types.
 	"""
 	if not ep.return_type:
 		return "any"
@@ -147,16 +148,17 @@ def _get_typescript_return_type(ep: Endpoint, mod: Module = None) -> str:
 		base = "any"
 	else:
 		# Custom type - lookup in module types/enums
+		# Use the actual type name, not the Zod schema name
 		if mod:
 			if ep.return_type in mod.flow.types:
 				type_obj = mod.flow.types[ep.return_type]
-				base = f"Z{type_obj.name}"
+				base = type_obj.name
 			elif ep.return_type in mod.flow.enums:
 				enum_obj = mod.flow.enums[ep.return_type]
-				base = f"Z{enum_obj.name}"
+				base = enum_obj.name
 			else:
 				# Fallback to custom type ID
-				base = f"Z{ep.return_type}"
+				base = ep.return_type
 		else:
 			base = "any"
 
