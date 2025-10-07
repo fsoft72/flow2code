@@ -180,8 +180,11 @@ def _format_jsdoc_description(description: str) -> str:
 			# First line doesn't need prefix (it's already on the same line as /**)
 			formatted_lines.append(line)
 		else:
-			# Subsequent lines need ' * ' prefix
-			formatted_lines.append(f" * {line}")
+			# Subsequent lines need ' * ' prefix, but no trailing space for empty lines
+			if line.strip():
+				formatted_lines.append(f" * {line}")
+			else:
+				formatted_lines.append(" *")
 
 	return "\n".join(formatted_lines)
 
