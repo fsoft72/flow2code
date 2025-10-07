@@ -31,11 +31,15 @@ def _get_drizzle_type(field_type: str, size: int, is_array: bool) -> tuple[str, 
     elif field_type in ["float", "double", "real"]:
         drizzle_type = "real"
     elif field_type in ["bool", "boolean"]:
-        drizzle_type = "boolean"
+        # SQLite stores boolean as integer
+        drizzle_type = "integer"
+        options["mode"] = "boolean"
     elif field_type == "date":
         drizzle_type = "date"
     elif field_type == "datetime":
-        drizzle_type = "timestamp"
+        # SQLite stores timestamp as integer
+        drizzle_type = "integer"
+        options["mode"] = "timestamp"
     elif field_type in ["json", "obj", "object"]:
         drizzle_type = "text"
         options["mode"] = "json"
