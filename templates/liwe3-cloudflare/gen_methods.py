@@ -119,6 +119,54 @@ def _pascal_case(text: str) -> str:
 	return "".join(word.capitalize() for word in text.replace("-", "_").split("_"))
 
 
+def _get_typescript_return_type(ep: Endpoint, mod: Module = None) -> str:
+	"""
+	Maps Endpoint return_type to TypeScript type string.
+	"""
+	if not ep.return_type:
+		return "any"
+
+	return_type = ep.return_type.lower()
+
+	# Base type mapping
+	if return_type in ["str", "string", "text"]:
+		base = "string"
+	elif return_type in ["int", "num", "number"]:
+		base = "number"
+	elif return_type in ["float", "double"]:
+		base = "number"
+	elif return_type in ["bool", "boolean", "check", "checkbox"]:
+		base = "boolean"
+	elif return_type in ["date"]:
+		base = "string"
+	elif return_type in ["datetime"]:
+		base = "Date"
+	elif return_type in ["file", "upload"]:
+		base = "File"
+	elif return_type in ["json", "obj", "object"]:
+		base = "any"
+	else:
+		# Custom type - lookup in module types/enums
+		if mod:
+			if ep.return_type in mod.flow.types:
+				type_obj = mod.flow.types[ep.return_type]
+				base = f"Z{type_obj.name}"
+			elif ep.return_type in mod.flow.enums:
+				enum_obj = mod.flow.enums[ep.return_type]
+				base = f"Z{enum_obj.name}"
+			else:
+				# Fallback to custom type ID
+				base = f"Z{ep.return_type}"
+		else:
+			base = "any"
+
+	# Handle arrays
+	if ep.is_array:
+		base += "[]"
+
+	return base
+
+
 def _format_jsdoc_description(description: str) -> str:
 	"""Format multiline description for JSDoc comments by prefixing each line with ' * '"""
 	if not description:
@@ -344,14 +392,13 @@ def _write_params_type(out, params_type: str, schema_name: str, func_name: str):
 
 def _write_result_type(out, ep: Endpoint, result_type: str, func_name: str):
 	"""Write the TypeScript result type"""
-	# For now, create a simple result type
-	# TODO: Properly parse return type from endpoint
-	result_fields = "data: any"
+	# Get the proper TypeScript return type from endpoint definition
+	ts_type = _get_typescript_return_type(ep, ep.mod if hasattr(ep, 'mod') else None)
 
 	out.write(TEMPL["METHOD_RESULT_TYPE"] % {
 		"__function_description": func_name,
 		"__result_type": result_type,
-		"__result_fields": result_fields
+		"__result_fields": ts_type
 	})
 
 

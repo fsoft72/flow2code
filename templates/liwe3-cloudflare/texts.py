@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 texts = {
-	"INDEX_FILE_START": """import { responseError, type LiWEApp, permissions_register } from '@backend/liwe3/core';
+    "INDEX_FILE_START": """import { responseError, type LiWEApp, permissions_register } from '@backend/liwe3/core';
 import { type Context } from 'hono';
 import { %(__methods)s } from './methods';
 import { %(__permissions_const)s } from './perms';
@@ -11,7 +11,7 @@ export const module_init = ( app: LiWEApp ) => {
 	console.log( "=== Module: %(__mod_name)s" );
 
 """,
-	"INDEX_FILE_END": """
+    "INDEX_FILE_END": """
 	// Register %(__mod_name)s module permissions
 	permissions_register( {
 		module: '%(__mod_name)s',
@@ -19,20 +19,20 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 };
 """,
-	"ENDPOINT_GET": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_GET": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const query = c.req.query();
 		const res = await %(__method_name)s( app, query as any );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_GET_NO_PARAMS": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_GET_NO_PARAMS": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_POST": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_POST": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s );
@@ -44,13 +44,13 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 
 """,
-	"ENDPOINT_POST_NO_PARAMS": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_POST_NO_PARAMS": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_PUT": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_PUT": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s );
@@ -62,13 +62,13 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 
 """,
-	"ENDPOINT_PUT_NO_PARAMS": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_PUT_NO_PARAMS": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_PATCH": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_PATCH": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s );
@@ -80,26 +80,26 @@ export const module_init = ( app: LiWEApp ) => {
 	} );
 
 """,
-	"ENDPOINT_PATCH_NO_PARAMS": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_PATCH_NO_PARAMS": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_DELETE": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_DELETE": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
 		const %(__param_source)s = await c.req.json();
 		const res = await %(__method_name)s( app, %(__param_name)s );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"ENDPOINT_DELETE_NO_PARAMS": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
+    "ENDPOINT_DELETE_NO_PARAMS": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app );
 		return c.json( res, res.status );
 	} );
 
 """,
-	"PERMS_FILE_START": """/**
+    "PERMS_FILE_START": """/**
  * @fileoverview %(__mod_name_camel)s Module Permissions
  *
  * Defines all permissions available in the %(__mod_name)s module.
@@ -114,46 +114,46 @@ import { SystemPermission } from '@backend/liwe3/core';
  */
 export const %(__permissions_const)s: SystemPermission[] = [
 """,
-	"PERMS_FILE_END": """];
+    "PERMS_FILE_END": """];
 """,
-	"PERMS_ROW": """	{
+    "PERMS_ROW": """	{
 		name: '%(name)s',
 		description: '%(description)s'
 	},
 """,
-	"METHOD_FILE_START": """/**
+    "METHOD_FILE_START": """/**
  * @fileoverview %(__endpoint_description)s
  */
 
-import { z, LiWEApp, LiWEResponse, responseError, responseSuccess } from './utils';
+import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or, limit } from './utils';
 
 """,
-	"METHOD_SCHEMA_START": """/**
+    "METHOD_SCHEMA_START": """/**
  * Schema for %(__schema_description)s
  *
 %(__schema_properties)s
  */
 const %(__schema_name)s = z.object( {
 """,
-	"METHOD_SCHEMA_FIELD": """	%(name)s: %(zod_type)s,
+    "METHOD_SCHEMA_FIELD": """	%(name)s: %(zod_type)s,
 """,
-	"METHOD_SCHEMA_END": """} );
+    "METHOD_SCHEMA_END": """} );
 
 """,
-	"METHOD_PARAMS_TYPE": """/** Parameters for %(__function_description)s */
+    "METHOD_PARAMS_TYPE": """/** Parameters for %(__function_description)s */
 export type %(__params_type)s = z.infer<typeof %(__schema_name)s>;
 
 """,
-	"METHOD_RESULT_TYPE": """/** Return type for %(__function_description)s */
-export type %(__result_type)s = { %(__result_fields)s };
+    "METHOD_RESULT_TYPE": """/** Return type for %(__function_description)s */
+export type %(__result_type)s = %(__result_fields)s;
 
 """,
-	"METHOD_HEADERS_BLOCK": """/*=== f2c_start %(__block_name)s ===*/
+    "METHOD_HEADERS_BLOCK": """/*=== f2c_start %(__block_name)s ===*/
 %(__snippet)s
 /*=== f2c_end %(__block_name)s ===*/
 
 """,
-	"METHOD_FUNCTION_START": """/**
+    "METHOD_FUNCTION_START": """/**
  * %(__function_description)s
  *
 %(__param_docs)s *
@@ -161,22 +161,22 @@ export type %(__result_type)s = { %(__result_fields)s };
  */
 export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s ): Promise<LiWEResponse<%(__result_type)s>> => {
 """,
-	"METHOD_VALIDATION": """	const validation = %(__schema_name)s.safeParse( params );
+    "METHOD_VALIDATION": """	const validation = %(__schema_name)s.safeParse( params );
 	if ( !validation.success ) {
 		return responseError( validation.error.message, 400, 'VALIDATION_ERROR' );
 	}
 
 """,
-	"METHOD_PARAMS_EXTRACT": """	const { %(__param_names)s } = validation.data;
+    "METHOD_PARAMS_EXTRACT": """	const { %(__param_names)s } = validation.data;
 
 """,
-	"METHOD_BODY_BLOCK": """	/*=== f2c_start %(__block_name)s ===*/
+    "METHOD_BODY_BLOCK": """	/*=== f2c_start %(__block_name)s ===*/
 %(__snippet)s
 	/*=== f2c_end %(__block_name)s ===*/
 """,
-	"METHOD_FUNCTION_END": """};
+    "METHOD_FUNCTION_END": """};
 """,
-	"METHOD_UTILS_FILE": """/**
+    "METHOD_UTILS_FILE": """/**
  * @fileoverview Common utilities for %(__mod_name)s module methods
  */
 
@@ -192,14 +192,14 @@ export { eq, and, ne, desc, asc, count, avg, sql, inArray, or, like, isNull } fr
 // Zod for validation
 export { z } from 'zod';
 """,
-	"METHODS_INDEX_START": """/**
+    "METHODS_INDEX_START": """/**
  * @fileoverview Re-exports all %(__mod_name)s methods and types
  */
 
 """,
-	"METHODS_INDEX_EXPORT": """export { %(__function_name)s, type %(__params_type)s, type %(__result_type)s } from './%(__file_name)s';
+    "METHODS_INDEX_EXPORT": """export { %(__function_name)s, type %(__params_type)s, type %(__result_type)s } from './%(__file_name)s';
 """,
-	"METHODS_WRAPPER_FILE": """/**
+    "METHODS_WRAPPER_FILE": """/**
  * @fileoverview %(__mod_name_camel)s Module Methods - Re-exports from individual method files
  *
  * This file maintains backward compatibility by re-exporting all methods
@@ -209,17 +209,17 @@ export { z } from 'zod';
 // Re-export all methods and types from the methods directory
 export * from './methods/index';
 """,
-	"SCHEMA_FILE_START": """import { relations, sql } from 'drizzle-orm';
+    "SCHEMA_FILE_START": """import { relations, sql } from 'drizzle-orm';
 import { text, integer, sqliteTable, index, real, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
 """,
-	"SCHEMA_FILE_END": "",
-	"SQL_FILE_HEADER": """-- SQL Schema for %(__mod_name)s module
+    "SCHEMA_FILE_END": "",
+    "SQL_FILE_HEADER": """-- SQL Schema for %(__mod_name)s module
 -- Generated by flow2code
 -- Database: SQLite
 
 """,
-	"PACKAGE_JSON": """{
+    "PACKAGE_JSON": """{
   "name": "@backend/modules/%(__mod_name)s",
   "version": "1.0.0",
   "description": "%(__mod_name_camel)s module",
@@ -255,7 +255,7 @@ import { text, integer, sqliteTable, index, real, uniqueIndex } from 'drizzle-or
   }
 }
 """,
-	"TSCONFIG_JSON": """{
+    "TSCONFIG_JSON": """{
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
@@ -279,7 +279,7 @@ import { text, integer, sqliteTable, index, real, uniqueIndex } from 'drizzle-or
   ]
 }
 """,
-	"VITEST_CONFIG": """import { defineConfig } from 'vitest/config';
+    "VITEST_CONFIG": """import { defineConfig } from 'vitest/config';
 import path from 'path';
 
 export default defineConfig({
