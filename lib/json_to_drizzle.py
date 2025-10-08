@@ -7,7 +7,7 @@ This module converts LiWE Flow JSON type definitions to Drizzle ORM SQLite table
 """
 
 
-def _get_drizzle_type(field_type: str, size: int, is_array: bool) -> tuple[str, dict]:
+def _get_drizzle_type(field_type: str, size: int, is_array: bool) -> tuple[str, dict, bool]:
     """
     Maps JSON field type to Drizzle ORM column type.
 
@@ -17,12 +17,18 @@ def _get_drizzle_type(field_type: str, size: int, is_array: bool) -> tuple[str, 
         is_array: Whether the field is an array type
 
     Returns:
-        Tuple of (drizzle_type, options_dict)
+        Tuple of (drizzle_type, options_dict, needs_type_annotation)
     """
     field_type = field_type.lower()
     options = {}
+    needs_type_annotation = False
 
-    if field_type in ["str", "string", "text"]:
+    # Arrays always need JSON serialization
+    if is_array:
+        drizzle_type = "text"
+        options["mode"] = "json"
+        needs_type_annotation = True
+    elif field_type in ["str", "string", "text"]:
         drizzle_type = "text"
         if size and size > 0:
             options["length"] = size
@@ -43,11 +49,14 @@ def _get_drizzle_type(field_type: str, size: int, is_array: bool) -> tuple[str, 
     elif field_type in ["json", "obj", "object"]:
         drizzle_type = "text"
         options["mode"] = "json"
+        needs_type_annotation = True
     else:
-        # Custom types default to text
+        # Custom types default to text with JSON mode (need serialization)
         drizzle_type = "text"
+        options["mode"] = "json"
+        needs_type_annotation = True
 
-    return drizzle_type, options
+    return drizzle_type, options, needs_type_annotation
 
 
 def _format_drizzle_options(options: dict) -> str:
@@ -229,7 +238,7 @@ def json_to_drizzle(type_def: dict) -> str:
         lines.append("\t */")
 
         # Get Drizzle type
-        drizzle_type, options = _get_drizzle_type(field_type, size, is_array)
+        drizzle_type, options, needs_type_annotation = _get_drizzle_type(field_type, size, is_array)
 
         # Build field definition
         field_def_parts = [f"\t{field_name}: {drizzle_type}( '{field_name}'"]
@@ -252,11 +261,34 @@ def json_to_drizzle(type_def: dict) -> str:
         if is_required:
             modifiers.append(".notNull()")
 
-        # Add TypeScript type annotation for JSON arrays
-        if field_type == 'json' and is_array:
-            modifiers.append(".$type<string[] | null>()")
-        elif field_type == 'json':
-            modifiers.append(".$type<any>()")
+        # Add TypeScript type annotation for complex types
+        if needs_type_annotation:
+            if is_array:
+                # Map field type to TypeScript type for arrays
+                if field_type in ["str", "string", "text"]:
+                    modifiers.append(".$type<string[]>()")
+                elif field_type in ["int", "num", "number"]:
+                    modifiers.append(".$type<number[]>()")
+                elif field_type in ["float", "double", "real"]:
+                    modifiers.append(".$type<number[]>()")
+                elif field_type in ["bool", "boolean"]:
+                    modifiers.append(".$type<boolean[]>()")
+                elif field_type == "date":
+                    modifiers.append(".$type<Date[]>()")
+                elif field_type == "datetime":
+                    modifiers.append(".$type<Date[]>()")
+                elif field_type in ["json", "obj", "object", "none", ""]:
+                    modifiers.append(".$type<any[]>()")
+                else:
+                    # Custom type array
+                    modifiers.append(f".$type<{field_type}[]>()")
+            else:
+                # Single complex type
+                if field_type in ["json", "obj", "object", "none", ""]:
+                    modifiers.append(".$type<any>()")
+                else:
+                    # Custom type
+                    modifiers.append(f".$type<{field_type}>()")
 
         # Default timestamps
         if field_name in ('created', 'updated'):
