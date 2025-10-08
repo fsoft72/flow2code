@@ -31,12 +31,27 @@ def generate_file_schema(self, mod: Module, output: str):
 		print(f"Skipping schema.ts generation - no types with coll_table found")
 		return
 
+	# Collect all custom types used in fields that need JSON serialization
+	custom_types_needed = set()
+	for type_obj in types_with_db:
+		for field in type_obj.fields:
+			# Check if field uses a custom type
+			if field.type[0].value == 'custom':
+				custom_type_name = field.type[1]
+				# Custom types will be serialized as JSON and need type annotation
+				custom_types_needed.add(custom_type_name)
+
 	# Create the output file
 	outfile = os.path.join(output, "src", "schema.ts")
 	out = self.create_file(outfile, mod)
 
 	# Write file header with imports
 	out.write(TEMPL["SCHEMA_FILE_START"])
+
+	# Add custom type imports if needed
+	if custom_types_needed:
+		type_imports = ", ".join(sorted(custom_types_needed))
+		out.write(f"import type {{ {type_imports} }} from './types';\n\n")
 
 	# Generate table definitions for each type
 	for type_obj in types_with_db:
