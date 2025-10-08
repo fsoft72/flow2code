@@ -125,7 +125,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
  * @fileoverview %(__endpoint_description)s
  */
 
-import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or, limit } from './utils';
+import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or } from './utils';
 
 """,
     "METHOD_SCHEMA_START": """/**
