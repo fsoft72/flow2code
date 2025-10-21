@@ -230,12 +230,16 @@ def json_to_drizzle(type_def: dict) -> str:
                 size = 0
 
         # Add field comment
-        lines.append("\t/**")
-        if field_desc:
-            lines.append(f"\t * {field_desc}")
+        comment_text = field_desc if field_desc else f"{field_name} field"
+        # Use single-line comment for one-line descriptions
+        if '\n' not in comment_text:
+            lines.append(f"\t// {comment_text}")
         else:
-            lines.append(f"\t * {field_name} field")
-        lines.append("\t */")
+            # Use multi-line comment for multi-line descriptions
+            lines.append("\t/**")
+            for comment_line in comment_text.split('\n'):
+                lines.append(f"\t * {comment_line}")
+            lines.append("\t */")
 
         # Get Drizzle type
         drizzle_type, options, needs_type_annotation = _get_drizzle_type(field_type, size, is_array)
@@ -325,10 +329,8 @@ def json_to_drizzle(type_def: dict) -> str:
             index_name = f"idx_{table_name}_{field_name}"
 
             # Add index comment
-            lines.append("\t/**")
             desc = _get_index_description(field_name, index_type)
-            lines.append(f"\t * Index on {field_name} field for {desc}")
-            lines.append("\t */")
+            lines.append(f"\t// Index on {field_name} field for {desc}")
 
             # Add index definition
             if index_type == 'u':
