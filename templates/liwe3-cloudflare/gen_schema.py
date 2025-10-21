@@ -32,14 +32,21 @@ def generate_file_schema(self, mod: Module, output: str):
 		return
 
 	# Collect all custom types used in fields that need JSON serialization
+	# Only include types that:
+	# 1. Are actually defined in the module's types
+	# 2. Don't have a db_table (those are defined in schema.ts itself)
 	custom_types_needed = set()
 	for type_obj in types_with_db:
 		for field in type_obj.fields:
 			# Check if field uses a custom type
 			if field.type[0].value == 'custom':
 				custom_type_name = field.type[1]
-				# Custom types will be serialized as JSON and need type annotation
-				custom_types_needed.add(custom_type_name)
+				# Check if this type exists in the module
+				if custom_type_name in mod.types:
+					referenced_type = mod.types[custom_type_name]
+					# Only import if it doesn't have a db_table (not in schema.ts)
+					if not (hasattr(referenced_type, 'coll_table') and referenced_type.coll_table):
+						custom_types_needed.add(custom_type_name)
 
 	# Create the output file
 	outfile = os.path.join(output, "src", "schema.ts")
