@@ -65,6 +65,11 @@ def generate_file_schema(self, mod: Module, output: str):
 
 		# Convert fields to dict format
 		for field in type_obj.fields:
+			# Skip fields without a name
+			if not field.name or field.name.strip() == '':
+				sys.stderr.write(f"WARNING: Skipping field without name in type '{type_obj.name}' (table: {type_obj.coll_table})\n")
+				continue
+
 			# Convert index flags back to string format
 			index_str = ''
 			if hasattr(field, 'idx_unique') and field.idx_unique:
