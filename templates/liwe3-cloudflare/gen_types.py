@@ -60,6 +60,11 @@ def generate_file_types(self, mod: Module, output: str):
 
 		# Convert fields to dict format
 		for field in type_obj.fields:
+			# Skip fields without a name
+			if not field.name or field.name.strip() == '':
+				sys.stderr.write(f"WARNING: Skipping field without name in type '{type_obj.name}'\n")
+				continue
+
 			# Get size and min_length, ensuring they're integers
 			size = field.size if hasattr(field, 'size') and field.size is not None else 0
 			min_length = field.min_length if hasattr(field, 'min_length') and field.min_length is not None else 0
