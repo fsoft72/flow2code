@@ -347,10 +347,7 @@ def json_to_drizzle(type_def: dict) -> str:
     lines.append(");")
     lines.append("")
 
-    # Add type inference
-    lines.append("/**")
-    lines.append(f" * Type inference for {name} table select operations")
-    lines.append(" */")
-    lines.append(f"export type {name} = typeof {var_name}.$inferSelect;")
+    # Type inference is not exported here
+    # The TypeScript type is exported from types.ts instead to avoid duplicates
 
     return "\n".join(lines)
