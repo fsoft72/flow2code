@@ -80,7 +80,7 @@ def generate_file_types(self, mod: Module, output: str):
 		out.write(zod_schema)
 		out.write("\n")
 
-		# Generate TypeScript type from Zod schema
+		# Always export both TypeScript type and Zod schema
 		type_name = type_obj.name
 		out.write(f"export type {type_name} = z.infer<typeof {new_schema_name}>;\n")
 		out.write(f"export {{ {new_schema_name} }};\n\n")

@@ -38,8 +38,10 @@ def generate_file_schema(self, mod: Module, output: str):
 			# Check if field uses a custom type
 			if field.type[0].value == 'custom':
 				custom_type_name = field.type[1]
-				# Custom types will be serialized as JSON and need type annotation
-				custom_types_needed.add(custom_type_name)
+				# Skip built-in TypeScript types like 'any'
+				if custom_type_name.lower() not in ['any']:
+					# Custom types will be serialized as JSON and need type annotation
+					custom_types_needed.add(custom_type_name)
 
 	# Create the output file
 	outfile = os.path.join(output, "src", "schema.ts")
