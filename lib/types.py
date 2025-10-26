@@ -84,6 +84,21 @@ class Enum:
         return "Enum: %(name)s [%(consts)s]" % dct
 
 
+class Event:
+    id: str = ""
+    name: str = ""
+    description: str = ""
+
+    def __init__(self, json_data, mod: Module):
+        self.id = json_data["id"]
+        self.name = json_data["name"].strip()
+        self.description = json_data.get("description", "")
+
+    def __str__(self):
+        dct = {"name": self.name, "description": self.description}
+        return "Event: %(name)s - %(description)s" % dct
+
+
 class Field:  # noqa
     """
     id: str = ""
@@ -307,6 +322,7 @@ class Module:
     enums: dict[str, Enum] = {}
     menus: dict[str, any] = {}
     functions: dict[str, Function] = {}
+    events: dict[str, Event] = {}
 
     def __init__(self, json_mod: any, flow: any):
         self.flow = flow
@@ -318,6 +334,7 @@ class Module:
         self.permissions = {}
         self.enums = {}
         self.functions = {}
+        self.events = {}
 
         # Permissions
         for perm in json_mod.get("permissions", {}).values():
@@ -330,6 +347,12 @@ class Module:
             new_enum = Enum(enum, self)
             self.enums[new_enum.id] = new_enum
             self.flow.enums[new_enum.id] = new_enum
+
+        # Events
+        for event in json_mod.get("events", {}).values():
+            new_event = Event(event, self)
+            self.events[new_event.id] = new_event
+            self.flow.events[new_event.id] = new_event
 
         # Functions
         for func in json_mod.get("functions", {}).values():

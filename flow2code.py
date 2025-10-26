@@ -22,7 +22,7 @@ import importlib.util
 # append the path of this file in the python path
 APP_PATH = os.path.dirname(os.path.realpath(__file__))
 
-from lib.types import Module, Permission, Endpoint, Type, Enum, Function
+from lib.types import Module, Permission, Endpoint, Type, Enum, Function, Event
 
 VERSION = "0.3.1"
 
@@ -37,6 +37,7 @@ class Flow2Code:
     types: dict[str, Type] = {}
     enums: dict[str, Enum] = {}
     functions: dict[str, Function] = {}
+    events: dict[str, Event] = {}
 
     # The template module instance
     template = None
