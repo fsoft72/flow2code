@@ -128,7 +128,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
 		description: '%(description)s'
 	},
 """,
-    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or } from './utils';
+    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or, like } from './utils';
 
 """,
     "METHOD_SCHEMA_START": """/**
