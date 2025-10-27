@@ -191,6 +191,10 @@ export { eq, and, ne, desc, asc, count, avg, sql, inArray, or, like, isNull } fr
 
 // Zod for validation
 export { z } from 'zod';
+
+/*=== f2c_start utils ===*/
+%(__utils_snippet)s
+/*=== f2c_end utils ===*/
 """,
     "METHODS_INDEX_START": """/**
  * @fileoverview Re-exports all %(__mod_name)s methods and types
