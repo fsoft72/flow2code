@@ -124,7 +124,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
     "PERMS_FILE_END": """];
 """,
     "PERMS_ROW": """	{
-		name: '%(name)s',
+		name: %(name)s,
 		description: '%(description)s'
 	},
 """,
