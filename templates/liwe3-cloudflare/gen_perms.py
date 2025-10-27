@@ -31,6 +31,31 @@ def generate_file_perms(self, mod: Module, output: str):
 	# Write the file header
 	out.write(TEMPL["PERMS_FILE_START"] % snippets)
 
+	# Generate permission constants
+	out.write(TEMPL["PERMS_CONSTANTS_START"])
+	for perm in mod.permissions.values():
+		# Extract the suffix by removing the module name prefix
+		# e.g., 'system.admin' -> 'admin'
+		if '.' in perm.name:
+			suffix = perm.name.split('.', 1)[1]
+		else:
+			suffix = perm.name
+
+		# Normalize suffix: replace '-' with '_' and convert to uppercase
+		const_suffix = suffix.replace('-', '_').upper()
+		const_name = f"{mod_name.upper()}_PERM_{const_suffix}"
+
+		out.write(
+			TEMPL["PERMS_CONST_ROW"] % {
+				"const_name": const_name,
+				"perm_name": perm.name
+			}
+		)
+	out.write(TEMPL["PERMS_CONSTANTS_END"])
+
+	# Start the permissions array
+	out.write(TEMPL["PERMS_ARRAY_START"] % snippets)
+
 	# Write each permission
 	for perm in mod.permissions.values():
 		# Escape single quotes in the description

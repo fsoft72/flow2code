@@ -109,7 +109,14 @@ export const module_init = ( app: LiWEApp ) => {
 
 import { SystemPermission } from '@backend/liwe3/core';
 
-/**
+""",
+    "PERMS_CONSTANTS_START": """// Permission constants
+""",
+    "PERMS_CONST_ROW": """export const %(const_name)s = '%(perm_name)s';
+""",
+    "PERMS_CONSTANTS_END": """
+""",
+    "PERMS_ARRAY_START": """/**
  * All permissions available in the %(__mod_name)s module
  */
 export const %(__permissions_const)s: SystemPermission[] = [
