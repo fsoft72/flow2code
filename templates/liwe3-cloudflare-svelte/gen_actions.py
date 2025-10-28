@@ -267,7 +267,7 @@ def _write_action(out, ep: Endpoint, mod: Module):
 			out.write(f"\tconst res = await apiClient.{method}( '{path}' );\n")
 	elif method == "delete":
 		if has_params:
-			out.write(f"\tconst res = await apiClient.delete( '{path}', {{ data: params }} );\n")
+			out.write(f"\tconst res = await apiClient.delete( '{path}', params );\n")
 		else:
 			out.write(f"\tconst res = await apiClient.delete( '{path}' );\n")
 	else:
