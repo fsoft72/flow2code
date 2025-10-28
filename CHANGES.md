@@ -1,5 +1,20 @@
 # CHANGES.md
 
+## 2025-10-28
+
+### Enhanced - Added LiWESysParams to Generated Methods
+
+- Added optional `sys` parameter of type `LiWESysParams` to all generated method functions in `liwe3-cloudflare` template
+  - Updated `templates/liwe3-cloudflare/texts.py` to import `LiWESysParams` from `@backend/liwe3/core` in both `METHOD_UTILS_FILE` and `METHOD_FILE_START`
+  - Modified `METHOD_FUNCTION_START` to include `sys?: LiWESysParams` as the third optional parameter
+  - This parameter allows passing system-level configuration and context to all generated methods
+  - Example signature: `export const pet = async ( app: LiWEApp, params: PetParams, sys?: LiWESysParams ): Promise<LiWEResponse<PetResult>>`
+
+- Updated `templates/liwe3-nodejs-ng/texts.py` to import `LiWESysParams` in methods file
+  - Added `LiWESysParams` to the imports in `METHODS_FILE_START`
+  - Modified both `EP_START` and `FUNCTION_START` templates to include `sys?: LiWESysParams` parameter
+  - Maintains consistency across all backend templates
+
 ## 2025-10-27
 
 ### Enhanced - Cloudflare Template Utils File

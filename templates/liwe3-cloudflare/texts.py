@@ -128,7 +128,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
 		description: '%(description)s'
 	},
 """,
-    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or, like } from './utils';
+    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like } from './utils';
 
 """,
     "METHOD_SCHEMA_START": """/**
@@ -162,7 +162,7 @@ export type %(__result_type)s = %(__result_fields)s;
 %(__param_docs)s *
  * @returns {Promise<LiWEResponse<%(__result_type)s>>} Result object with success status and data or error details
  */
-export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s ): Promise<LiWEResponse<%(__result_type)s>> => {
+export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s, sys?: LiWESysParams ): Promise<LiWEResponse<%(__result_type)s>> => {
 """,
     "METHOD_VALIDATION": """	const validation = %(__schema_name)s.safeParse( params );
 	if ( !validation.success ) {
@@ -184,7 +184,7 @@ export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s ): Promi
  */
 
 // Core imports
-export { LiWEApp, LiWEResponse, responseError, responseSuccess } from '@backend/liwe3/core';
+export { LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess } from '@backend/liwe3/core';
 
 // Database operation imports
 export { eq, and, ne, desc, asc, count, avg, sql, inArray, or, like, isNull } from 'drizzle-orm';
