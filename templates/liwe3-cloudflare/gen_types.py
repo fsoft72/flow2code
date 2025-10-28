@@ -24,6 +24,19 @@ def generate_file_types(self, mod: Module, output: str):
 		print(f"Skipping types generation - no types found")
 		return
 
+	# Filter out types that have coll_table (they're already defined in schema.ts)
+	types_without_db = []
+	for type_obj in mod.types.values():
+		# Skip types that have coll_table - they're exported from schema.ts as Drizzle types
+		if hasattr(type_obj, 'coll_table') and type_obj.coll_table:
+			continue
+		types_without_db.append(type_obj)
+
+	# If no types remain after filtering, don't generate types file
+	if not types_without_db:
+		print(f"Skipping types.ts generation - all types are defined in schema.ts")
+		return
+
 	# Create the src directory if it doesn't exist
 	src_dir = os.path.join(output, "src")
 	os.makedirs(src_dir, exist_ok=True)
@@ -35,8 +48,8 @@ def generate_file_types(self, mod: Module, output: str):
 	# Write file header with Zod import
 	out.write("import { z } from 'zod';\n\n")
 
-	# Generate Zod schema for each type
-	for type_obj in mod.types.values():
+	# Generate Zod schema for each type (excluding those in schema.ts)
+	for type_obj in types_without_db:
 		# Convert Type object to dict format expected by json_to_zod
 		# Note: json_to_zod will add "Schema" suffix, so we just use the original name
 		type_dict = {
