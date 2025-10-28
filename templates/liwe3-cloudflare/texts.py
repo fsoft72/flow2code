@@ -109,7 +109,14 @@ export const module_init = ( app: LiWEApp ) => {
 
 import { SystemPermission } from '@backend/liwe3/core';
 
-/**
+""",
+    "PERMS_CONSTANTS_START": """// Permission constants
+""",
+    "PERMS_CONST_ROW": """export const %(const_name)s = '%(perm_name)s';
+""",
+    "PERMS_CONSTANTS_END": """
+""",
+    "PERMS_ARRAY_START": """/**
  * All permissions available in the %(__mod_name)s module
  */
 export const %(__permissions_const)s: SystemPermission[] = [
@@ -117,15 +124,11 @@ export const %(__permissions_const)s: SystemPermission[] = [
     "PERMS_FILE_END": """];
 """,
     "PERMS_ROW": """	{
-		name: '%(name)s',
+		name: %(name)s,
 		description: '%(description)s'
 	},
 """,
-    "METHOD_FILE_START": """/**
- * @fileoverview %(__endpoint_description)s
- */
-
-import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or } from './utils';
+    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, responseError, responseSuccess, eq, and, or, like } from './utils';
 
 """,
     "METHOD_SCHEMA_START": """/**
@@ -191,6 +194,10 @@ export { eq, and, ne, desc, asc, count, avg, sql, inArray, or, like, isNull } fr
 
 // Zod for validation
 export { z } from 'zod';
+
+/*=== f2c_start utils ===*/
+%(__utils_snippet)s
+/*=== f2c_end utils ===*/
 """,
     "METHODS_INDEX_START": """/**
  * @fileoverview Re-exports all %(__mod_name)s methods and types

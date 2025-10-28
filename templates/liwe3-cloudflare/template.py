@@ -11,6 +11,7 @@ from gen_schema import generate_file_schema
 from gen_sql import generate_file_sql
 from gen_config import generate_config_files
 from gen_types import generate_file_types
+from gen_events import generate_file_events
 
 
 class Template(TemplateBase):
@@ -32,6 +33,7 @@ class Template(TemplateBase):
 		self.generate_file_sql(mod, output)
 		self.generate_file_perms(mod, output)
 		self.generate_file_methods(mod, output)
+		self.generate_file_events(mod, output)
 		self.generate_file_index(mod, output)
 
 
@@ -52,6 +54,9 @@ Template.generate_file_schema = generate_file_schema
 
 # SQL file generation
 Template.generate_file_sql = generate_file_sql
+
+# Events file generation
+Template.generate_file_events = generate_file_events
 
 # Config files generation
 Template.generate_config_files = generate_config_files

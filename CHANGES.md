@@ -1,5 +1,16 @@
 # CHANGES.md
 
+## 2025-10-27
+
+### Enhanced - Cloudflare Template Utils File
+
+- Added f2c code preservation markers to `utils.ts` file generation in the `liwe3-cloudflare` template
+  - Users can now add custom imports, utilities, and helper functions that will be preserved between regenerations
+  - Follows the same pattern as method files with `/* f2c_start utils */` and `/* f2c_end utils */` markers
+  - Updated `templates/liwe3-cloudflare/texts.py` to include the snippet placeholder
+  - Updated `templates/liwe3-cloudflare/gen_methods.py` to use snippet extraction mechanism
+  - Default placeholder comment: "Add custom imports or utilities here"
+
 ## 2025-10-04
 
 ### Added - Cloudflare Workers Template

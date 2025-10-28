@@ -253,9 +253,18 @@ def _generate_utils_file(self, mod: Module, methods_dir: str):
 	mod_name = self.mod_name(mod)
 	outfile = os.path.join(methods_dir, "utils.ts")
 
-	with open(outfile, "w") as out:
-		out.write(TEMPL["METHOD_UTILS_FILE"] % {"__mod_name": mod_name})
+	# Extract snippets from existing file if it exists
+	out = self.create_file(outfile, mod)
 
+	# Get snippet for utils block (custom code area)
+	utils_snippet = self.snippets.get("utils", "\n// Add custom imports or utilities here\n")
+
+	out.write(TEMPL["METHOD_UTILS_FILE"] % {
+		"__mod_name": mod_name,
+		"__utils_snippet": utils_snippet
+	})
+
+	out.close()
 	print(f"Generated {outfile}")
 
 

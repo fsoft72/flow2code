@@ -349,10 +349,10 @@ def json_to_drizzle(type_def: dict) -> str:
     lines.append(");")
     lines.append("")
 
-    # Add type inference
+    # Add type inference with DB suffix
     lines.append("/**")
     lines.append(f" * Type inference for {name} table select operations")
     lines.append(" */")
-    lines.append(f"export type {name} = typeof {var_name}.$inferSelect;")
+    lines.append(f"export type {name}DB = typeof {var_name}.$inferSelect;")
 
     return "\n".join(lines)
