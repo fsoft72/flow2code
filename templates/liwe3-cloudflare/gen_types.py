@@ -32,8 +32,11 @@ def generate_file_types(self, mod: Module, output: str):
 	outfile = os.path.join(src_dir, "types.ts")
 	out = self.create_file(outfile, mod)
 
-	# Write file header with Zod import
-	out.write("import { z } from 'zod';\n\n")
+	# Get snippet for __types block (custom imports/types area)
+	types_snippet = self.snippets.get("__types", "\n// Add custom imports or types here\n")
+
+	# Write file header with Zod import and f2c block
+	out.write(TEMPL["TYPES_FILE_START"] % {"__types_snippet": types_snippet})
 
 	# Generate Zod schema for each type
 	for type_obj in mod.types.values():

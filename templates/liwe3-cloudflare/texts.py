@@ -216,6 +216,13 @@ export { z } from 'zod';
 // Re-export all methods and types from the methods directory
 export * from './methods/index';
 """,
+    "TYPES_FILE_START": """import { z } from 'zod';
+
+/*=== f2c_start __types ===*/
+%(__types_snippet)s
+/*=== f2c_end __types ===*/
+
+""",
     "SCHEMA_FILE_START": """import { relations, sql } from 'drizzle-orm';
 import { text, integer, sqliteTable, index, real, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
