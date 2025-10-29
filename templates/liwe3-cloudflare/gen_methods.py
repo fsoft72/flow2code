@@ -208,6 +208,43 @@ def _should_create_result_type(ep: Endpoint, mod: Module = None) -> bool:
 	return True
 
 
+def _generate_dummy_value(return_type: str) -> str:
+	"""
+	Generates a dummy value for the given TypeScript return type.
+	Used to create valid stub implementations.
+	"""
+	# Handle array types
+	if return_type.endswith("[]"):
+		return "[]"
+
+	# Handle simple types
+	if return_type in ["string"]:
+		return '""'
+	elif return_type in ["number"]:
+		return "0"
+	elif return_type in ["boolean"]:
+		return "false"
+	elif return_type in ["Date"]:
+		return "new Date()"
+	elif return_type in ["any"]:
+		return "null"
+	else:
+		# For custom types (User, GoogleTag, etc.), create an empty object with type assertion
+		return f"{{}} as {return_type}"
+
+
+def _is_empty_or_default_snippet(snippet: str) -> bool:
+	"""
+	Check if the snippet is empty or contains only the default comment.
+	"""
+	if not snippet:
+		return True
+
+	# Strip whitespace and check if it's empty or only contains the default comment
+	cleaned = snippet.strip()
+	return cleaned == "" or cleaned == "// Your code here"
+
+
 def _format_jsdoc_description(description: str) -> str:
 	"""Format multiline description for JSDoc comments by prefixing each line with ' * '"""
 	if not description:
@@ -387,6 +424,16 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
 		# Extract param names
 		param_names = ", ".join([p.name for p in ep.parameters])
 		out.write(TEMPL["METHOD_PARAMS_EXTRACT"] % {"__param_names": param_names})
+
+	# Check if we need to generate a dummy implementation
+	if _is_empty_or_default_snippet(body_snippet):
+		# Generate dummy implementation
+		dummy_value = _generate_dummy_value(actual_return_type)
+		body_snippet = f"""
+	// TODO: REMOVE THIS DUMMY IMPLEMENTATION - Replace with actual logic
+	const dummy: {actual_return_type} = {dummy_value};
+	return responseSuccess(dummy);
+"""
 
 	# Write function body block
 	out.write(TEMPL["METHOD_BODY_BLOCK"] % {
