@@ -147,18 +147,22 @@ def _get_typescript_return_type(ep: Endpoint, mod: Module = None) -> str:
 	elif return_type in ["json", "obj", "object"]:
 		base = "any"
 	else:
-		# Custom type - lookup in module types/enums
-		# Use the actual type name, not the Zod schema name
+		# Custom type - lookup in module types/enums by name
 		if mod:
-			if ep.return_type in mod.flow.types:
-				type_obj = mod.flow.types[ep.return_type]
-				base = type_obj.name
-			elif ep.return_type in mod.flow.enums:
-				enum_obj = mod.flow.enums[ep.return_type]
-				base = enum_obj.name
+			# Search for type by name (not ID)
+			for type_obj in mod.flow.types.values():
+				if type_obj.name == ep.return_type:
+					base = type_obj.name
+					break
 			else:
-				# Fallback to custom type ID
-				base = ep.return_type
+				# Check enums if not found in types
+				for enum_obj in mod.flow.enums.values():
+					if enum_obj.name == ep.return_type:
+						base = enum_obj.name
+						break
+				else:
+					# Fallback to return type as-is
+					base = ep.return_type
 		else:
 			base = "any"
 
@@ -167,6 +171,41 @@ def _get_typescript_return_type(ep: Endpoint, mod: Module = None) -> str:
 		base += "[]"
 
 	return base
+
+
+def _should_create_result_type(ep: Endpoint, mod: Module = None) -> bool:
+	"""
+	Determines if we should create a separate Result type or use the type directly.
+	Returns False for simple types and defined custom types (skip Result type creation).
+	Returns True only for complex types that need a Result type wrapper.
+	"""
+	if not ep.return_type:
+		return True  # Create result type for 'any'
+
+	return_type = ep.return_type.lower()
+
+	# Simple/primitive types - use directly
+	simple_types = ["str", "string", "text", "int", "num", "number",
+	                "float", "double", "bool", "boolean", "check", "checkbox",
+	                "date", "datetime", "file", "upload", "json", "obj", "object"]
+
+	if return_type in simple_types:
+		return False  # Skip Result type, use simple type directly
+
+	# Check if it's a custom type (Type or Enum)
+	if mod:
+		# Search for type by name
+		for type_obj in mod.flow.types.values():
+			if type_obj.name == ep.return_type:
+				return False  # Skip Result type, use custom type directly
+
+		# Check enums
+		for enum_obj in mod.flow.enums.values():
+			if enum_obj.name == ep.return_type:
+				return False  # Skip Result type, use enum directly
+
+	# For unknown types, create a Result type
+	return True
 
 
 def _format_jsdoc_description(description: str) -> str:
@@ -284,7 +323,7 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
 	# Determine names
 	schema_name = _pascal_case(func_name) + "Schema"
 	params_type = _pascal_case(func_name) + "Params"
-	result_type = _pascal_case(func_name) + "Result"
+	result_type_name = _pascal_case(func_name) + "Result"
 
 	# Get snippet for headers block
 	headers_block_name = func_name + "_headers"
@@ -311,8 +350,17 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
 		_write_schema(out, ep, schema_name, func_name)
 		_write_params_type(out, params_type, schema_name, func_name)
 
-	# Generate result type
-	_write_result_type(out, ep, result_type, func_name)
+	# Determine if we should create a Result type or use the type directly
+	should_create_result = _should_create_result_type(ep, mod)
+	actual_return_type = _get_typescript_return_type(ep, mod)
+
+	# Generate result type only if needed
+	if should_create_result:
+		_write_result_type(out, ep, result_type_name, func_name)
+		result_type_for_signature = result_type_name
+	else:
+		# Use the actual type directly
+		result_type_for_signature = actual_return_type
 
 	# Write headers block
 	out.write(TEMPL["METHOD_HEADERS_BLOCK"] % {
@@ -329,7 +377,7 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
 		"__param_docs": param_docs,
 		"__function_name": func_name,
 		"__params_arg": params_arg,
-		"__result_type": result_type
+		"__result_type": result_type_for_signature
 	})
 
 	# Write validation if params exist
@@ -477,17 +525,22 @@ def _generate_methods_index(self, mod: Module, methods_dir: str):
 			params_type = _pascal_case(func_name) + "Params"
 			result_type = _pascal_case(func_name) + "Result"
 
-			# Only export params type if there are parameters
+			# Check if Result type should be created
+			should_create_result = _should_create_result_type(ep, mod)
+
+			# Build export statement
+			exports = [func_name]
+
+			# Add params type if there are parameters
 			if ep.parameters:
-				out.write(TEMPL["METHODS_INDEX_EXPORT"] % {
-					"__function_name": func_name,
-					"__params_type": params_type,
-					"__result_type": result_type,
-					"__file_name": file_name
-				})
-			else:
-				# For endpoints without params, only export function and result type
-				out.write(f"export {{ {func_name}, type {result_type} }} from './{file_name}';\n")
+				exports.append(f"type {params_type}")
+
+			# Add result type only if it was created
+			if should_create_result:
+				exports.append(f"type {result_type}")
+
+			export_str = ", ".join(exports)
+			out.write(f"export {{ {export_str} }} from './{file_name}';\n")
 
 	print(f"Generated {outfile}")
 
