@@ -299,6 +299,13 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
 	formatted_description = _format_jsdoc_description(description)
 	out.write(TEMPL["METHOD_FILE_START"] % {"__endpoint_description": formatted_description})
 
+	# Collect and write imports for referenced types
+	referenced_types = _collect_referenced_types(ep, mod)
+	if referenced_types:
+		# Import from types.ts (assuming types are in types.ts, adjust if needed)
+		types_list = ", ".join(sorted(referenced_types))
+		out.write(f"import {{ {types_list} }} from '../types';\n\n")
+
 	# Generate schema if there are parameters
 	if ep.parameters:
 		_write_schema(out, ep, schema_name, func_name)
@@ -414,6 +421,46 @@ def _write_result_type(out, ep: Endpoint, result_type: str, func_name: str):
 		"__result_type": result_type,
 		"__result_fields": ts_type
 	})
+
+
+def _collect_referenced_types(ep: Endpoint, mod: Module) -> set[str]:
+	"""
+	Collect all custom types referenced by the endpoint's return type and parameters.
+	Returns a set of type names that need to be imported.
+	"""
+	referenced_types = set()
+
+	# Check return type
+	if ep.return_type:
+		return_type_name = ep.return_type
+
+		# Search for type by name (not ID)
+		for type_obj in mod.flow.types.values():
+			if type_obj.name == return_type_name:
+				referenced_types.add(type_obj.name)
+				break
+		else:
+			# Check enums if not found in types
+			for enum_obj in mod.flow.enums.values():
+				if enum_obj.name == return_type_name:
+					referenced_types.add(enum_obj.name)
+					break
+
+	# Check parameters for custom types
+	if ep.parameters:
+		for param in ep.parameters:
+			if param.type[0] == FieldType.CUSTOM and len(param.type) > 1:
+				custom_type_id = param.type[1]
+
+				# Check if it's a custom type or enum (by ID)
+				if custom_type_id in mod.flow.types:
+					type_obj = mod.flow.types[custom_type_id]
+					referenced_types.add(type_obj.name)
+				elif custom_type_id in mod.flow.enums:
+					enum_obj = mod.flow.enums[custom_type_id]
+					referenced_types.add(enum_obj.name)
+
+	return referenced_types
 
 
 def _generate_methods_index(self, mod: Module, methods_dir: str):
