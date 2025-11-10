@@ -11,7 +11,7 @@ from texts import texts as TEMPL
 # ==================================================================================================
 
 def _create_action_name(ep: Endpoint, mod: Module) -> str:
-	"""Create action function name from endpoint, e.g., GET /system/admin/users -> act_system_admin_users"""
+	"""Create action function name from endpoint, e.g., GET /system/admin/users -> system_admin_users"""
 	# Remove leading /api if present
 	path = ep.path.replace("/api/", "/").replace("/api", "")
 	# Remove leading slash
@@ -23,7 +23,7 @@ def _create_action_name(ep: Endpoint, mod: Module) -> str:
 			# Replace hyphens with underscores for valid function names
 			parts.append(part.replace("-", "_").lower())
 
-	return "act_" + "_".join(parts)
+	return "_".join(parts)
 
 
 def _get_typescript_return_type(ep: Endpoint, mod: Module = None) -> str:
