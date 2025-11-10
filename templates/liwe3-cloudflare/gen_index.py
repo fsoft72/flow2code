@@ -77,8 +77,8 @@ def generate_file_index(self, mod: Module, output: str):
 		"__methods": "".join(formatted_methods),
 		"__mod_name": mod_name,
 		"__permissions_const": permissions_const,
-		"__module_snippet": out.snippets.get("_module", ""),
-		"__module_init_snippet": out.snippets.get("module_init", ""),
+		"__module_snippet": self.snippets.get("_module", ""),
+		"__module_init_snippet": self.snippets.get("module_init", ""),
 	}
 
 	# Write the file header
