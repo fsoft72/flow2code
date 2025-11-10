@@ -33,8 +33,21 @@ def generate_file_events(self, mod: Module, output: str):
 	# Generate constant for each event
 	for event_obj in mod.events.values():
 		# Convert event name to constant name
-		# e.g., "system.call.domain.create" -> "SYSTEM_CALL_DOMAIN_CREATE"
-		const_name = event_obj.name.upper().replace('.', '_').replace('-', '_')
+		# If event contains 'call': "system.call.user.create" -> "SYSTEM_CALL_USER_CREATE"
+		# Otherwise add 'EVENT': "system.user_create" -> "SYSTEM_EVENT_USER_CREATE"
+
+		if 'call' in event_obj.name.lower():
+			# Event contains 'call', just convert to uppercase and replace dots/hyphens
+			const_name = event_obj.name.upper().replace('.', '_').replace('-', '_')
+		else:
+			# Event doesn't contain 'call', add 'EVENT' after first part
+			parts = event_obj.name.split('.')
+			if len(parts) > 1:
+				# e.g., "system.user_create" -> ["system", "user_create"] -> "SYSTEM_EVENT_USER_CREATE"
+				const_name = f"{parts[0].upper()}_EVENT_{'_'.join(parts[1:]).upper().replace('-', '_')}"
+			else:
+				# Single part name, add EVENT prefix
+				const_name = f"EVENT_{event_obj.name.upper().replace('-', '_')}"
 
 		# Write comment if description exists
 		if event_obj.description and event_obj.description.strip():
