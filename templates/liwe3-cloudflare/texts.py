@@ -6,9 +6,17 @@ import { type Context } from 'hono';
 import { %(__methods)s } from './methods';
 import { %(__permissions_const)s } from './perms';
 
+/*=== f2c_start _module ===*/
+%(__module_snippet)s
+/*=== f2c_end _module ===*/
+
 // Module initialization function
 export const module_init = ( app: LiWEApp ) => {
 	console.log( "=== Module: %(__mod_name)s" );
+
+	/*=== f2c_start module_init ===*/
+%(__module_init_snippet)s
+	/*=== f2c_end module_init ===*/
 
 """,
     "INDEX_FILE_END": """
