@@ -220,7 +220,7 @@ def generate_file_actions(self, mod: Module, output: str):
 
 	# Generate action for each endpoint
 	for ep in mod.endpoints.values():
-		_write_action(out, ep, mod)
+		_write_action(self, out, ep, mod)
 
 	# Get snippet for custom actions block
 	custom_actions_snippet = self.snippets.get("__actions", "\n// Add custom actions here\n")
@@ -235,7 +235,7 @@ def generate_file_actions(self, mod: Module, output: str):
 	print(f"Generated {outfile}")
 
 
-def _write_action(out, ep: Endpoint, mod: Module):
+def _write_action(self, out, ep: Endpoint, mod: Module):
 	"""Write a single action function"""
 	action_name = _create_action_name(ep, mod)
 	method = ep.method.lower()
@@ -276,6 +276,14 @@ def _write_action(out, ep: Endpoint, mod: Module):
 			out.write(f"\tconst res = await apiClient.post( '{path}', params );\n")
 		else:
 			out.write(f"\tconst res = await apiClient.post( '{path}' );\n")
+
+	# Get snippet for this action's custom code block
+	action_snippet = self.snippets.get(action_name, "\n\t// Add custom code here\n")
+
+	# Write custom code preservation block before return
+	out.write("\n\t/*=== f2c_start " + action_name + " ===*/")
+	out.write(action_snippet)
+	out.write("\t/*=== f2c_end " + action_name + " ===*/\n")
 
 	out.write("\n\treturn res;\n")
 	out.write("};\n\n")
