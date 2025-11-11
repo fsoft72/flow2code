@@ -7,7 +7,9 @@
       "Bash(./flow2code.py:*)",
       "Bash(/usr/bin/python3:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Read(//tmp/test-cloudflare-output/user/src/methods/**)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
