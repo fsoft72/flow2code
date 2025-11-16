@@ -77,6 +77,50 @@ export default defineConfig( {
     "ACTIONS_FILE_START": """import { apiClient, type LiWEResponse } from '@frontend/liwe3';
 
 """,
+    "INTERNAL_CALL_HELPER": """/**
+ * Internal helper function to handle API calls with optional hooks
+ * @param method - The API client method to call (e.g., apiClient.get, apiClient.post)
+ * @param url - The API endpoint URL
+ * @param params - Optional parameters to send with the request
+ * @param options - Optional hooks (beforeSend, afterSend, errorHandling)
+ * @returns Promise resolving to LiWEResponse
+ */
+const _internalCall = async <P, R>(
+	method: ( url: string, data?: any ) => Promise<any>,
+	url: string,
+	params?: P,
+	options?: LiWEActionOptions
+): Promise<LiWEResponse<R>> => {
+	// Call beforeSend if defined
+	let processedParams = params;
+
+	if ( options?.beforeSend && params !== undefined ) {
+		processedParams = await options.beforeSend( params );
+	}
+
+	// Make API call
+	let res: LiWEResponse<R> = await method( url, processedParams );
+
+	// Check for errors
+	if ( !res.ok && options?.errorHandling ) {
+		options.errorHandling( res );
+		return res;
+	}
+
+	// Call afterSend if defined
+	if ( options?.afterSend ) {
+		res = await options.afterSend( res );
+		// Check for errors after afterSend
+		if ( !res.ok && options?.errorHandling ) {
+			options.errorHandling( res );
+			return res;
+		}
+	}
+
+	return res;
+};
+
+""",
 }
 
 

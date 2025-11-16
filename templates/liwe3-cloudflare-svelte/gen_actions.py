@@ -223,6 +223,9 @@ def generate_file_actions(self, mod: Module, output: str):
     # Write file header with imports
     out.write(TEMPL["ACTIONS_FILE_START"])
 
+    # Add LiWEActionOptions import
+    out.write("import type { LiWEActionOptions } from '@frontend/liwe3';\n")
+
     # Add custom type imports if needed
     if custom_types_needed:
         type_imports = ", ".join(sorted(custom_types_needed))
@@ -239,6 +242,9 @@ def generate_file_actions(self, mod: Module, output: str):
     out.write("/*=== f2c_start actions ===*/\n")
     out.write(custom_actions_header_snippet)
     out.write("/*=== f2c_end actions ===*/\n\n")
+
+    # Generate the _internalCall helper function
+    out.write(TEMPL["INTERNAL_CALL_HELPER"])
 
     # Generate action for each endpoint
     for ep in mod.endpoints.values():
@@ -270,39 +276,28 @@ def _write_action(self, out, ep: Endpoint, mod: Module):
     has_params = len(ep.parameters) > 0
     params_type = _get_params_type(ep, mod) if has_params else None
 
-    # Build function signature with LiWEResponse wrapper
+    # Build function signature with LiWEResponse wrapper and options parameter
     if has_params:
-        func_sig = f"export const {action_name} = async ( params: {params_type} ): Promise<LiWEResponse<{return_type}>> => {{"
+        func_sig = f"export const {action_name} = async ( params: {params_type}, options?: LiWEActionOptions ): Promise<LiWEResponse<{return_type}>> => {{"
     else:
-        func_sig = f"export const {action_name} = async (): Promise<LiWEResponse<{return_type}>> => {{"
+        func_sig = f"export const {action_name} = async ( options?: LiWEActionOptions ): Promise<LiWEResponse<{return_type}>> => {{"
 
     out.write(func_sig + "\n")
 
-    # Build API call based on method
-    if method == "get":
-        if has_params:
-            out.write(f"\tconst res = await apiClient.get( '{path}', params );\n")
-        else:
-            out.write(f"\tconst res = await apiClient.get( '{path}' );\n")
-    elif method in ["post", "put", "patch"]:
-        if has_params:
-            out.write(f"\tconst res = await apiClient.{method}( '{path}', params );\n")
-        else:
-            out.write(f"\tconst res = await apiClient.{method}( '{path}' );\n")
-    elif method == "delete":
-        if has_params:
-            out.write(f"\tconst res = await apiClient.delete( '{path}', params );\n")
-        else:
-            out.write(f"\tconst res = await apiClient.delete( '{path}' );\n")
+    # Build the _internalCall invocation with explicit type parameters
+    api_method = f"apiClient.{method}"
+
+    if has_params:
+        out.write(
+            f"\tconst res = await _internalCall<typeof params, {return_type}>( {api_method}, '{path}', params, options );\n"
+        )
     else:
-        # Fallback to post
-        if has_params:
-            out.write(f"\tconst res = await apiClient.post( '{path}', params );\n")
-        else:
-            out.write(f"\tconst res = await apiClient.post( '{path}' );\n")
+        out.write(
+            f"\tconst res = await _internalCall<undefined, {return_type}>( {api_method}, '{path}', undefined, options );\n"
+        )
 
     # Get snippet for this action's custom code block
-    action_snippet = self.snippets.get(action_name, "\n\t// Add custom code here\n")
+    action_snippet = self.snippets.get(action_name, "\n\n\t// Add custom code here\n")
 
     # Write custom code preservation block before return
     out.write("\n\t/*=== f2c_start " + action_name + " ===*/")
