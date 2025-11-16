@@ -297,10 +297,10 @@ def _write_action(self, out, ep: Endpoint, mod: Module):
         )
 
     # Get snippet for this action's custom code block
-    action_snippet = self.snippets.get(action_name, "\n\n\t// Add custom code here\n")
+    action_snippet = self.snippets.get(action_name, "\n\t// Add custom code here\n")
 
     # Write custom code preservation block before return
-    out.write("\n\t/*=== f2c_start " + action_name + " ===*/")
+    out.write("\n\t/*=== f2c_start " + action_name + " ===*/\n")
     out.write(action_snippet)
     out.write("\t/*=== f2c_end " + action_name + " ===*/\n")
 
