@@ -11,7 +11,7 @@ import { %(__permissions_const)s } from './perms';
 /*=== f2c_end _module ===*/
 
 // Module initialization function
-export const module_init = ( app: LiWEApp ) => {
+export const module_init = async ( app: LiWEApp ) => {
 	console.log( "=== Module: %(__mod_name)s" );
 
 	/*=== f2c_start module_init ===*/
