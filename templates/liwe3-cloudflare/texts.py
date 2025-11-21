@@ -29,13 +29,13 @@ export const module_init = async ( app: LiWEApp ) => {
 """,
     "ENDPOINT_GET": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const query = c.req.query();
-		const res = await %(__method_name)s( app, query as any );
+		const res = await %(__method_name)s( app, query as any, c );
 		return c.json( res, res.status );
 	} );
 
 """,
     "ENDPOINT_GET_NO_PARAMS": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
-		const res = await %(__method_name)s( app );
+		const res = await %(__method_name)s( app, c );
 		return c.json( res, res.status );
 	} );
 
@@ -43,7 +43,7 @@ export const module_init = async ( app: LiWEApp ) => {
     "ENDPOINT_POST": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
-			const res = await %(__method_name)s( app, %(__param_name)s );
+			const res = await %(__method_name)s( app, %(__param_name)s, c );
 			return c.json( res, res.status );
 		} catch ( error ) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -53,7 +53,7 @@ export const module_init = async ( app: LiWEApp ) => {
 
 """,
     "ENDPOINT_POST_NO_PARAMS": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
-		const res = await %(__method_name)s( app );
+		const res = await %(__method_name)s( app, c );
 		return c.json( res, res.status );
 	} );
 
@@ -61,7 +61,7 @@ export const module_init = async ( app: LiWEApp ) => {
     "ENDPOINT_PUT": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
-			const res = await %(__method_name)s( app, %(__param_name)s );
+			const res = await %(__method_name)s( app, %(__param_name)s, c );
 			return c.json( res, res.status );
 		} catch ( error ) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -71,7 +71,7 @@ export const module_init = async ( app: LiWEApp ) => {
 
 """,
     "ENDPOINT_PUT_NO_PARAMS": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
-		const res = await %(__method_name)s( app );
+		const res = await %(__method_name)s( app, c );
 		return c.json( res, res.status );
 	} );
 
@@ -79,7 +79,7 @@ export const module_init = async ( app: LiWEApp ) => {
     "ENDPOINT_PATCH": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
-			const res = await %(__method_name)s( app, %(__param_name)s );
+			const res = await %(__method_name)s( app, %(__param_name)s, c );
 			return c.json( res, res.status );
 		} catch ( error ) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -89,20 +89,20 @@ export const module_init = async ( app: LiWEApp ) => {
 
 """,
     "ENDPOINT_PATCH_NO_PARAMS": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
-		const res = await %(__method_name)s( app );
+		const res = await %(__method_name)s( app, c );
 		return c.json( res, res.status );
 	} );
 
 """,
     "ENDPOINT_DELETE": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
 		const %(__param_source)s = await c.req.json();
-		const res = await %(__method_name)s( app, %(__param_name)s );
+		const res = await %(__method_name)s( app, %(__param_name)s, c );
 		return c.json( res, res.status );
 	} );
 
 """,
     "ENDPOINT_DELETE_NO_PARAMS": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
-		const res = await %(__method_name)s( app );
+		const res = await %(__method_name)s( app, c );
 		return c.json( res, res.status );
 	} );
 
@@ -137,6 +137,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
 	},
 """,
     "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like } from './utils';
+import { type Context } from 'hono';
 
 """,
     "METHOD_SCHEMA_START": """/**
@@ -167,10 +168,12 @@ export type %(__result_type)s = %(__result_fields)s;
     "METHOD_FUNCTION_START": """/**
  * %(__function_description)s
  *
-%(__param_docs)s *
+%(__param_docs)s * @param {Context | null} [c] - Hono context object
+ * @param {LiWESysParams} [sys] - System parameters for tracking and metadata
+ *
  * @returns {Promise<LiWEResponse<%(__result_type)s>>} Result object with success status and data or error details
  */
-export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s, sys?: LiWESysParams ): Promise<LiWEResponse<%(__result_type)s>> => {
+export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s, c?: Context | null, sys?: LiWESysParams ): Promise<LiWEResponse<%(__result_type)s>> => {
 """,
     "METHOD_VALIDATION": """	const validation = %(__schema_name)s.safeParse( params );
 	if ( !validation.success ) {
