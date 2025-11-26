@@ -30,12 +30,14 @@ export const module_init = async ( app: LiWEApp ) => {
     "ENDPOINT_GET": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const query = c.req.query();
 		const res = await %(__method_name)s( app, query as any, c );
+		if ( res.response ) return res.response;
 		return c.json( res, res.status );
 	} );
 
 """,
     "ENDPOINT_GET_NO_PARAMS": """	app.hono.get( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app, c );
+		if ( res.response ) return res.response;
 		return c.json( res, res.status );
 	} );
 
@@ -44,6 +46,7 @@ export const module_init = async ( app: LiWEApp ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s, c );
+			if ( res.response ) return res.response;
 			return c.json( res, res.status );
 		} catch ( error ) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -54,6 +57,7 @@ export const module_init = async ( app: LiWEApp ) => {
 """,
     "ENDPOINT_POST_NO_PARAMS": """	app.hono.post( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app, c );
+		if ( res.response ) return res.response;
 		return c.json( res, res.status );
 	} );
 
@@ -62,6 +66,7 @@ export const module_init = async ( app: LiWEApp ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s, c );
+			if ( res.response ) return res.response;
 			return c.json( res, res.status );
 		} catch ( error ) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -72,6 +77,7 @@ export const module_init = async ( app: LiWEApp ) => {
 """,
     "ENDPOINT_PUT_NO_PARAMS": """	app.hono.put( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app, c );
+		if ( res.response ) return res.response;
 		return c.json( res, res.status );
 	} );
 
@@ -80,6 +86,7 @@ export const module_init = async ( app: LiWEApp ) => {
 		try {
 			const %(__param_source)s = await c.req.json();
 			const res = await %(__method_name)s( app, %(__param_name)s, c );
+			if ( res.response ) return res.response;
 			return c.json( res, res.status );
 		} catch ( error ) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -90,6 +97,7 @@ export const module_init = async ( app: LiWEApp ) => {
 """,
     "ENDPOINT_PATCH_NO_PARAMS": """	app.hono.patch( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app, c );
+		if ( res.response ) return res.response;
 		return c.json( res, res.status );
 	} );
 
@@ -97,12 +105,14 @@ export const module_init = async ( app: LiWEApp ) => {
     "ENDPOINT_DELETE": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
 		const %(__param_source)s = await c.req.json();
 		const res = await %(__method_name)s( app, %(__param_name)s, c );
+		if ( res.response ) return res.response;
 		return c.json( res, res.status );
 	} );
 
 """,
     "ENDPOINT_DELETE_NO_PARAMS": """	app.hono.delete( '%(__path)s', async ( c: Context ) => {
 		const res = await %(__method_name)s( app, c );
+		if ( res.response ) return res.response;
 		return c.json( res, res.status );
 	} );
 
