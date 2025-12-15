@@ -23,7 +23,6 @@ texts = {
     "@sveltejs/kit": "^2.37.0",
     "svelte": "^5.0.0",
     "svelte-hero-icons": "^5.2.0",
-    "svelte-select": "^5.8.3",
     "zod": "^4.1.11"
   },
   "devDependencies": {
@@ -32,7 +31,6 @@ texts = {
     "publint": "^0.3.12",
     "svelte": "^5.38.6",
     "svelte-hero-icons": "^5.2.0",
-    "svelte-select": "^5.8.3",
     "typescript": "^5.9.2",
     "vite": "^7.1.4",
     "vitest": "^3.2.4",
@@ -122,5 +120,3 @@ const _internalCall = async <P, R>(
 
 """,
 }
-
-
