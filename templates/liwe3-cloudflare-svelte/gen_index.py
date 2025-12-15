@@ -38,6 +38,14 @@ def generate_file_index(self, mod: Module, output: str):
     if has_endpoints:
         out.write("export * from './actions';\n")
 
+    # Get snippet for custom exports block
+    custom_index_snippet = self.snippets.get("index", "\n// Add custom exports here\n")
+
+    # Write custom index block for user code preservation
+    out.write("\n/*=== f2c_start index ===*/\n")
+    out.write(custom_index_snippet)
+    out.write("/*=== f2c_end index ===*/\n")
+
     # Close the output file
     out.close()
     print(f"Generated {outfile}")
