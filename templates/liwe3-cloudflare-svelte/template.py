@@ -7,6 +7,7 @@ from lib.types import Module
 from gen_config import generate_config_files
 from gen_types import generate_file_types
 from gen_actions import generate_file_actions
+from gen_index import generate_file_index
 
 
 class Template(TemplateBase):
@@ -25,6 +26,7 @@ class Template(TemplateBase):
 		self.generate_config_files(mod, output)
 		self.generate_file_types(mod, output)
 		self.generate_file_actions(mod, output)
+		self.generate_file_index(mod, output)
 
 
 # Config files generation
@@ -35,3 +37,6 @@ Template.generate_file_types = generate_file_types
 
 # Actions file generation
 Template.generate_file_actions = generate_file_actions
+
+# Index file generation
+Template.generate_file_index = generate_file_index
