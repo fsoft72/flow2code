@@ -269,10 +269,19 @@ def _format_jsdoc_description(description: str) -> str:
 
 def _format_param_docs(ep: Endpoint) -> str:
 	"""Format parameter documentation for JSDoc"""
-	if not ep.parameters:
-		return " * @param {LiWEApp} app - The LiWE application instance with database access\n"
+	lines = []
 
-	lines = [" * @param {LiWEApp} app - The LiWE application instance with database access"]
+	# Add permissions information if present
+	if ep.permissions:
+		perms_str = ", ".join(ep.permissions)
+		lines.append(f" * @permissions {perms_str}")
+		lines.append(" *")
+
+	if not ep.parameters:
+		lines.append(" * @param {LiWEApp} app - The LiWE application instance with database access")
+		return "\n".join(lines) + "\n"
+
+	lines.append(" * @param {LiWEApp} app - The LiWE application instance with database access")
 
 	# Get the params type name
 	func_name = _create_function_name(ep, None)
