@@ -278,15 +278,15 @@ import { text, integer, sqliteTable, index, real, uniqueIndex } from 'drizzle-or
   "license": "ISC",
   "dependencies": {
     "@backend/liwe3/core": "workspace:*",
-    "drizzle-orm": "^0.44.5",
-    "zod": "^4.1.3"
+    "drizzle-orm": "^0.45.1",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@types/node": "^22.10.5",
-    "@vitest/ui": "^3.2.4",
-    "hono": "^4.9.5",
-    "typescript": "^5.9.2",
-    "vitest": "^2.1.8"
+    "@types/node": "^25.0.3",
+    "@vitest/ui": "^4.0.16",
+    "hono": "^4.11.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
   }
 }
 """,
