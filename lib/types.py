@@ -230,14 +230,20 @@ class Endpoint:
         # Set endpoint permissions
         self.permissions = []
         perms = json_data.get("permissions", {})
-        if "public" in perms:
+        if perms.get("public", False):
             return
 
-        if "logged" in perms:
+        if perms.get("logged", False):
             self.permissions.append("logged")
             return
 
         for perm in perms:
+            # Skip special permission keys
+            if perm in ["public", "logged", "admins"]:
+                continue
+            # Only add permission if it's set to True
+            if not perms.get(perm, False):
+                continue
             p = mod.permissions.get(perm, None)
             if p and p.name not in self.permissions:
                 self.permissions.append(p.name)
