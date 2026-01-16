@@ -1,5 +1,15 @@
 # CHANGES.md
 
+## 2026-01-16
+
+### Fixed - liwe3-cloudflare-svelte index.ts f2c block formatting
+
+- Fixed truncated newlines in `f2c_start`/`f2c_end` blocks in generated `index.ts`
+  - The `f2c_end` marker was appearing on the same line as the last line of custom content
+  - Root cause: extracted snippets have trailing whitespace stripped by `template_base.py`
+  - Solution: ensure snippet content ends with a newline before writing the `f2c_end` marker
+  - Updated `templates/liwe3-cloudflare-svelte/gen_index.py` to handle this properly
+
 ## 2025-10-28
 
 ### Enhanced - Added LiWESysParams to Generated Methods
