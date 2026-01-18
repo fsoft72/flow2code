@@ -1,5 +1,18 @@
 # CHANGES.md
 
+## 2026-01-18
+
+### Enhanced - Made created/updated timestamp fields optional in DB schema generation
+
+- Modified `lib/json_to_drizzle.py` and `lib/json_to_sql.py` to make `created` and `updated` timestamp fields optional instead of automatically added
+  - Removed automatic addition of `created` and `updated` fields to all database types
+  - These fields are now only included when explicitly defined by the user in the flow JSON
+  - When user defines these fields, they still receive proper auto-update rules:
+    - Drizzle ORM: `.default( sql`CURRENT_TIMESTAMP` )`
+    - SQL: `DEFAULT CURRENT_TIMESTAMP` (and `ON UPDATE CURRENT_TIMESTAMP` for `updated` field in MySQL/MariaDB)
+  - This gives users more control over which tables have timestamp tracking
+  - Backward compatible: existing flow files with `created`/`updated` fields will continue to work with auto-update behavior
+
 ## 2026-01-16
 
 ### Fixed - liwe3-cloudflare-svelte index.ts f2c block formatting
