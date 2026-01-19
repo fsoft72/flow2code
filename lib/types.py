@@ -221,7 +221,7 @@ class Endpoint:
         self.is_valid = True
         self.is_array = json_data.get("is_array", False)
         self.return_type = json_data["returnType"]
-        self.return_name = json_data["returnName"]
+        self.return_name = json_data.get("returnName", self.return_type)
 
         for par in json_data["parameters"]:
             f = Field(par, mod)
@@ -369,6 +369,7 @@ class Module:
         # Endpoints
         endpoints = json_mod.get("endpoints", {})
         for ep in endpoints.values():
+            print("=== EP: ", ep)
             new_ep = Endpoint(ep, self)
             self.endpoints[new_ep.id] = new_ep
             self.flow.endpoints[new_ep.id] = new_ep
