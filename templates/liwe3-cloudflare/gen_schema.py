@@ -35,12 +35,27 @@ def generate_file_schema(self, mod: Module, output: str):
     # Collect all custom types and enums used in fields that need JSON serialization
     # These will be imported from ./types at the top of schema.ts
     # Exclude types that have a db_table (those are defined in schema.ts itself)
+    # Built-in types that should never be imported (they don't exist in SQLite/types.ts)
+    BUILTIN_TYPES = {
+        "str", "string", "text",
+        "int", "num", "number",
+        "float", "double", "real",
+        "bool", "boolean",
+        "date", "datetime",
+        "json", "obj", "object",
+        "file", "upload",
+    }
+
     custom_types_needed = set()
     for type_obj in types_with_db:
         for field in type_obj.fields:
             # Check if field uses a custom type
             if field.type[0].value == "custom":
                 custom_type_name = field.type[1]
+
+                # Skip built-in types that might be incorrectly marked as custom
+                if custom_type_name.lower() in BUILTIN_TYPES:
+                    continue
 
                 # Check if this is a type with db_table (will be in schema.ts)
                 if custom_type_name in mod.types:

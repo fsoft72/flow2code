@@ -1,5 +1,15 @@
 # CHANGES.md
 
+## 2026-01-19
+
+### Fixed - Prevent invalid datetime import in schema.ts generation
+
+- Fixed `templates/liwe3-cloudflare/gen_schema.py` to filter out built-in types from custom type imports
+  - Added `BUILTIN_TYPES` set containing all primitive types: `str`, `string`, `text`, `int`, `num`, `number`, `float`, `double`, `real`, `bool`, `boolean`, `date`, `datetime`, `json`, `obj`, `object`, `file`, `upload`
+  - When a field type is incorrectly marked as custom but is actually a built-in type, it is now skipped
+  - Prevents invalid imports like `import type { datetime } from './types'` which don't exist in SQLite
+  - The `datetime` type in SQLite is handled as `integer` with `.$type<Date>()` annotation, not as a separate import
+
 ## 2026-01-18
 
 ### Enhanced - Made created/updated timestamp fields optional in DB schema generation
