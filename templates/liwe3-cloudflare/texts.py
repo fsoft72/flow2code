@@ -147,6 +147,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
 	},
 """,
     "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like } from './utils';
+import { paramsValidation } from '@backend/liwe3/core';
 import { type Context } from 'hono';
 
 """,
@@ -185,10 +186,8 @@ export type %(__result_type)s = %(__result_fields)s;
  */
 export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s, c?: Context | null, sys?: LiWESysParams ): Promise<LiWEResponse<%(__result_type)s>> => {
 """,
-    "METHOD_VALIDATION": """	const validation = %(__schema_name)s.safeParse( params );
-	if ( !validation.success ) {
-		return responseError( validation.error.message, 400, 'VALIDATION_ERROR' );
-	}
+    "METHOD_VALIDATION": """ const validation = paramsValidation( %(__schema_name)s, params );
+	if ( !validation.success ) return validation.error;
 
 """,
     "METHOD_PARAMS_EXTRACT": """	const { %(__param_names)s } = validation.data;
