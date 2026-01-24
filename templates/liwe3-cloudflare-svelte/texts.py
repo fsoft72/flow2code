@@ -75,6 +75,28 @@ export default defineConfig( {
     "ACTIONS_FILE_START": """import { apiClient, type LiWEResponse } from '@frontend/liwe3';
 
 """,
+    "ACTIONS_HEADER_BLOCK": """/*=== f2c_start actions ===*/
+%(actions_snippet)s
+/*=== f2c_end actions ===*/
+
+""",
+    "ACTIONS_CUSTOM_BLOCK": """/*=== f2c_start __actions ===*/
+%(__actions_snippet)s
+/*=== f2c_end __actions ===*/
+""",
+    "ACTION_CODE_BLOCK": """
+	/*=== f2c_start %(action_name)s ===*/
+%(action_snippet)s
+	/*=== f2c_end %(action_name)s ===*/
+""",
+    "TYPES_CUSTOM_BLOCK": """/*=== f2c_start __types ===*/
+%(__types_snippet)s
+/*=== f2c_end __types ===*/
+""",
+    "INDEX_CUSTOM_BLOCK": """/*=== f2c_start index ===*/
+%(index_snippet)s
+/*=== f2c_end index ===*/
+""",
     "INTERNAL_CALL_HELPER": """/**
  * Internal helper function to handle API calls with optional hooks
  * @param method - The API client method to call (e.g., apiClient.get, apiClient.post)

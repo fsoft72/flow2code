@@ -26,7 +26,7 @@ The core data structures that represent the parsed flow file:
 
 ### Template System (`lib/template_base.py`)
 `TemplateBase` is the abstract base class all templates inherit from. Key features:
-- **Snippet Extraction**: Parses existing generated files for `f2c_start/f2c_end` or `d2r_start/d2r_end` blocks to preserve custom code between regenerations
+- **Snippet Extraction**: Parses existing generated files for `f2c_start/f2c_end` blocks to preserve custom code between regenerations
 - **File Management**: `create_file()` method handles directory creation and snippet extraction
 - **Field Preparation**: `prepare_field()` method converts Field objects to template-ready dictionaries with type conversion (supports TypeScript, Zod schema, and framework-specific formats)
 - **Helper Methods**: Module naming (`mod_name`), function naming (`valid_function_name`, `endpoint_mk_function`), documentation generation (`mk_documentation`, `params_and_doc`)
@@ -111,7 +111,6 @@ The `prepare_field()` method in `TemplateBase` handles conversion between flow t
 ### Code Preservation
 Generated files use special comment markers to preserve custom code:
 - `/* f2c_start block_name */` ... `/* f2c_end block_name */`
-- Or legacy: `/* d2r_start block_name */` ... `/* d2r_end block_name */`
 - Snippets are extracted before file regeneration and re-inserted via `%(block_name)s` placeholders
 
 ### Endpoint Processing

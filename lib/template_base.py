@@ -8,8 +8,8 @@ from .const import FieldType
 from .types import Module, Endpoint, Function, Field
 from .utils import type2typescript
 
-# RegExp that extracts the name from d2r_start block_name and d2r_end block_name
-re_block_name = re.compile(r".*(d2r|f2c)_(start|end)\s+(?P<name>[a-zA-Z0-9_]+)\s*")
+# RegExp that extracts the name from f2c_start block_name and f2c_end block_name
+re_block_name = re.compile(r".*f2c_(start|end)\s+(?P<name>[a-zA-Z0-9_]+)\s*")
 
 
 class TemplateBase:
@@ -50,14 +50,14 @@ class TemplateBase:
         # iterate over the lines
         for line in lines:
             # check if the line starts with dr_start
-            if (line.find("f2c_start") != -1) or (line.find("d2r_start") != -1):
+            if line.find("f2c_start") != -1:
                 g = re_block_name.match(line)
                 block_name = g.group("name")
                 # initialize the block lines
                 block_lines = []
 
             # check if the line starts with dr_end
-            elif (line.find("f2c_end") != -1) or (line.find("d2r_end") != -1):
+            elif line.find("f2c_end") != -1:
                 g = re_block_name.match(line)
                 block_name = g.group("name")
 

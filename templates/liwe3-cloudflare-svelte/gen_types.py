@@ -36,7 +36,9 @@ def generate_file_types(self, mod: Module, output: str):
 	out.write("import { z } from 'zod';\n\n")
 
 	# Get snippet for custom types block
-	custom_types_snippet = self.snippets.get("__types", "\n// Add custom types here\n")
+	__types_snippet = self.snippets["__types"]
+	if not __types_snippet:
+		__types_snippet = "\n// Add custom types here\n"
 
 	# Generate Zod schema for each type
 	for type_obj in mod.types.values():
@@ -89,9 +91,7 @@ def generate_file_types(self, mod: Module, output: str):
 		out.write(f"export {{ {new_schema_name} }};\n\n")
 
 	# Write custom types block for user code preservation
-	out.write("/*=== f2c_start __types ===*/\n")
-	out.write(custom_types_snippet)
-	out.write("/*=== f2c_end __types ===*/\n")
+	out.write(TEMPL["TYPES_CUSTOM_BLOCK"] % {"__types_snippet": __types_snippet})
 
 	# Close the output file
 	out.close()

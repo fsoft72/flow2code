@@ -234,14 +234,12 @@ def generate_file_actions(self, mod: Module, output: str):
     out.write("\n")
 
     # Get snippet for custom imports/code block at the beginning
-    custom_actions_header_snippet = self.snippets.get(
-        "actions", "\n// Add custom imports here\n"
-    )
+    actions_snippet = self.snippets["actions"]
+    if not actions_snippet:
+        actions_snippet = "\n// Add custom imports here\n"
 
     # Write custom actions header block for user code preservation
-    out.write("/*=== f2c_start actions ===*/\n")
-    out.write(custom_actions_header_snippet)
-    out.write("/*=== f2c_end actions ===*/\n\n")
+    out.write(TEMPL["ACTIONS_HEADER_BLOCK"] % {"actions_snippet": actions_snippet})
 
     # Generate the _internalCall helper function
     out.write(TEMPL["INTERNAL_CALL_HELPER"])
@@ -251,14 +249,12 @@ def generate_file_actions(self, mod: Module, output: str):
         _write_action(self, out, ep, mod)
 
     # Get snippet for custom actions block
-    custom_actions_snippet = self.snippets.get(
-        "__actions", "\n// Add custom actions here\n"
-    )
+    __actions_snippet = self.snippets["__actions"]
+    if not __actions_snippet:
+        __actions_snippet = "\n// Add custom actions here\n"
 
     # Write custom actions block for user code preservation
-    out.write("/*=== f2c_start __actions ===*/\n")
-    out.write(custom_actions_snippet)
-    out.write("/*=== f2c_end __actions ===*/\n")
+    out.write(TEMPL["ACTIONS_CUSTOM_BLOCK"] % {"__actions_snippet": __actions_snippet})
 
     # Close the output file
     out.close()
@@ -297,12 +293,12 @@ def _write_action(self, out, ep: Endpoint, mod: Module):
         )
 
     # Get snippet for this action's custom code block
-    action_snippet = self.snippets.get(action_name, "\n\t// Add custom code here\n")
+    action_snippet = self.snippets[action_name]
+    if not action_snippet:
+        action_snippet = "\n\t// Add custom code here\n"
 
     # Write custom code preservation block before return
-    out.write("\n\t/*=== f2c_start " + action_name + " ===*/\n")
-    out.write(action_snippet)
-    out.write("\t/*=== f2c_end " + action_name + " ===*/\n")
+    out.write(TEMPL["ACTION_CODE_BLOCK"] % {"action_name": action_name, "action_snippet": action_snippet})
 
     out.write("\n\treturn res;\n")
     out.write("};\n\n")
