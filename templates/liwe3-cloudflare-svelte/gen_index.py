@@ -39,14 +39,11 @@ def generate_file_index(self, mod: Module, output: str):
         out.write("export * from './actions';\n")
 
     # Get snippet for custom exports block
-    custom_index_snippet = self.snippets.get("index", "// Add custom exports here")
+    custom_index_snippet = self.snippets.get("index", "\n// Add custom exports here\n")
 
     # Write custom index block for user code preservation
-    out.write("\n/*=== f2c_start index ===*/\n")
-    if custom_index_snippet:
-        out.write(custom_index_snippet)
-        if not custom_index_snippet.endswith('\n'):
-            out.write('\n')
+    out.write("/*=== f2c_start index ===*/")
+    out.write(custom_index_snippet)
     out.write("/*=== f2c_end index ===*/\n")
 
     # Close the output file
