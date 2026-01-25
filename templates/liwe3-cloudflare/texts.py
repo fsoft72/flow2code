@@ -147,7 +147,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
 	},
 """,
     "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like } from './utils';
-import { paramsValidation } from '@backend/liwe3/core';
+import { ERR_UNAUTHORIZED, ERR_PERMISSION_DENIED, paramsValidation } from '@backend/liwe3/core';
 import { type Context } from 'hono';
 
 """,
