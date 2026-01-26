@@ -32,8 +32,8 @@ def _get_zod_type(field_type: str, is_array: bool, is_required: bool) -> str:
         return """z.preprocess( ( val : any ) => {
         if ( !val ) return val;
         val = val.toString().toLowerCase();
-        if ( val === 'true' ) return true;
-        if ( val === 'false' ) return false;
+        if ( val === 'true' || val === '1' ) return true;
+        if ( val === 'false' || val === '0' ) return false;
         return val;
     }, z.boolean() )"""
     elif field_type == "date":
@@ -64,9 +64,9 @@ def _add_validation_constraints(zod_chain: str, field: dict) -> str:
     Returns:
         Updated Zod schema chain with constraints
     """
-    field_type = field.get('type', 'str').lower()
-    size = field.get('size', 0)
-    min_length = field.get('min_length', 0)
+    field_type = field.get("type", "str").lower()
+    size = field.get("size", 0)
+    min_length = field.get("min_length", 0)
 
     # Convert size to int if it's a string
     if isinstance(size, str):
@@ -86,12 +86,14 @@ def _add_validation_constraints(zod_chain: str, field: dict) -> str:
     if field_type in ["str", "string", "text"]:
         # Min length validation
         if min_length > 0:
-            field_name = field.get('name', 'field')
-            zod_chain += f".min( {min_length}, '{field_name.capitalize()} is required' )"
+            field_name = field.get("name", "field")
+            zod_chain += (
+                f".min( {min_length}, '{field_name.capitalize()} is required' )"
+            )
 
         # Max length validation
         if size > 0:
-            field_name = field.get('name', 'field')
+            field_name = field.get("name", "field")
             zod_chain += f".max( {size}, '{field_name.capitalize()} must be at most {size} characters' )"
 
     # Number validations
@@ -115,13 +117,13 @@ def _format_field_comment(field: dict) -> list[str]:
     Returns:
         List of comment lines
     """
-    field_name = field.get('name', '')
-    field_type = field.get('type', 'str')
-    is_array = field.get('is_array', False)
-    is_required = field.get('is_required', False)
-    description = field.get('description', '')
-    size = field.get('size', 0)
-    min_length = field.get('min_length', 0)
+    field_name = field.get("name", "")
+    field_type = field.get("type", "str")
+    is_array = field.get("is_array", False)
+    is_required = field.get("is_required", False)
+    description = field.get("description", "")
+    size = field.get("size", 0)
+    min_length = field.get("min_length", 0)
 
     # Convert size to int if it's a string
     if isinstance(size, str):
@@ -164,9 +166,7 @@ def _format_field_comment(field: dict) -> list[str]:
     if constraints:
         parts.append(f"({', '.join(constraints)})")
 
-    return [
-        f" * @property {{{type_annotation}}} {field_name} - {' '.join(parts)}"
-    ]
+    return [f" * @property {{{type_annotation}}} {field_name} - {' '.join(parts)}"]
 
 
 def json_to_zod(type_def: dict) -> str:
@@ -182,9 +182,9 @@ def json_to_zod(type_def: dict) -> str:
     Returns:
         Formatted TypeScript/Zod string ready to be written to a file
     """
-    name = type_def.get('name', 'Unknown')
-    description = type_def.get('description', '')
-    fields = type_def.get('fields', [])
+    name = type_def.get("name", "Unknown")
+    description = type_def.get("description", "")
+    fields = type_def.get("fields", [])
 
     # Build the output
     lines = []
@@ -210,10 +210,10 @@ def json_to_zod(type_def: dict) -> str:
 
     # Process each field
     for i, field in enumerate(fields):
-        field_name = field.get('name', '')
-        field_type = field.get('type', 'str')
-        is_array = field.get('is_array', False)
-        is_required = field.get('is_required', False)
+        field_name = field.get("name", "")
+        field_type = field.get("type", "str")
+        is_array = field.get("is_array", False)
+        is_required = field.get("is_required", False)
 
         # Get base Zod type
         zod_type = _get_zod_type(field_type, is_array, is_required)
@@ -230,7 +230,14 @@ def json_to_zod(type_def: dict) -> str:
             zod_chain += ".optional()"
 
         # Add default for specific fields
-        if field_name == "weight" and field_type in ["int", "num", "number", "float", "double", "real"]:
+        if field_name == "weight" and field_type in [
+            "int",
+            "num",
+            "number",
+            "float",
+            "double",
+            "real",
+        ]:
             zod_chain += ".default( 1.0 )"
 
         # Format the field line
