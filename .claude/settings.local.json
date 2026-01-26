@@ -9,7 +9,11 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Read(//tmp/test-cloudflare-output/user/src/methods/**)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python -m unittest:*)",
+      "Bash(python tests/test_json_to_zod.py:*)",
+      "Bash(python tools/json2zod.py:*)"
     ],
     "deny": [],
     "ask": []

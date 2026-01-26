@@ -39,9 +39,12 @@ class TestJsonToZodHelpers(unittest.TestCase):
         self.assertEqual(zod_type, 'z.coerce.number()')
 
     def test_get_zod_type_boolean(self):
-        """Test boolean type mapping with coerce"""
+        """Test boolean type mapping with preprocess"""
         zod_type = _get_zod_type('boolean', False, True)
-        self.assertEqual(zod_type, 'z.coerce.boolean()')
+        # Should use preprocess to handle string 'true'/'false' conversion
+        self.assertIn('z.preprocess', zod_type)
+        self.assertIn('z.boolean()', zod_type)
+        self.assertIn("val === 'true'", zod_type)
 
     def test_get_zod_type_date(self):
         """Test date type mapping"""
@@ -245,11 +248,12 @@ class TestJsonToZodConverter(unittest.TestCase):
         self.assertIn('level: z.coerce.number()', result)
 
     def test_json_to_zod_boolean_fields(self):
-        """Test that boolean fields use coerce"""
+        """Test that boolean fields use preprocess for string conversion"""
         result = json_to_zod(self.user_type)
 
-        # enabled is a boolean field
-        self.assertIn('enabled: z.coerce.boolean()', result)
+        # enabled is a boolean field - should use preprocess
+        self.assertIn('enabled: z.preprocess', result)
+        self.assertIn('z.boolean()', result)
 
     def test_json_to_zod_array_fields(self):
         """Test that array fields have .array()"""
@@ -393,7 +397,9 @@ class TestJsonToZodEdgeCases(unittest.TestCase):
         self.assertIn('str_field: z.string().optional()', result)
         self.assertIn('num_field: z.coerce.number().optional()', result)
         self.assertIn('float_field: z.coerce.number().optional()', result)
-        self.assertIn('bool_field: z.coerce.boolean().optional()', result)
+        # Boolean fields use preprocess instead of coerce
+        self.assertIn('bool_field: z.preprocess', result)
+        self.assertIn('z.boolean() ).optional()', result)
         self.assertIn('date_field: z.string().optional()', result)
         self.assertIn('datetime_field: z.coerce.date().optional()', result)
         self.assertIn('json_field: z.any().optional()', result)

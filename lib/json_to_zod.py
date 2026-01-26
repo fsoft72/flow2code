@@ -28,8 +28,14 @@ def _get_zod_type(field_type: str, is_array: bool, is_required: bool) -> str:
         # Use coerce for numbers to handle string inputs
         return "z.coerce.number()"
     elif field_type in ["bool", "boolean"]:
-        # Use coerce for booleans to handle string inputs
-        return "z.coerce.boolean()"
+        # Use preprocess for booleans to handle string inputs explicitly
+        return """z.preprocess( ( val : any ) => {
+        if ( !val ) return val;
+        val = val.toString().toLowerCase();
+        if ( val === 'true' ) return true;
+        if ( val === 'false' ) return false;
+        return val;
+    }, z.boolean() )"""
     elif field_type == "date":
         # Date strings
         return "z.string()"
