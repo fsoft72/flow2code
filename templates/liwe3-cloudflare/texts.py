@@ -186,7 +186,7 @@ export type %(__result_type)s = %(__result_fields)s;
  */
 export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s, c?: Context | null, sys?: LiWESysParams ): Promise<LiWEResponse<%(__result_type)s>> => {
 """,
-    "METHOD_VALIDATION": """	const validation = paramsValidation( %(__schema_name)s, params );
+    "METHOD_VALIDATION": """	const validation = paramsValidation<%(__params_type)s>( %(__schema_name)s as any, params );
 	if ( !validation.success ) return validation.error;
 
 """,
