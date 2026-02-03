@@ -27,12 +27,16 @@ def _get_zod_type(field: Field, mod: Module = None) -> str:
         base = "z.coerce.number()"
     elif field_type == FieldType.BOOL:
         base = """z.preprocess( ( val : any ) => {
-		if ( !val ) return val;
-		val = val.toString().toLowerCase();
-		if ( val === 'true' || val === '1' ) return true;
-		if ( val === 'false' || val === '0' ) return false;
+        if ( typeof val === 'undefined' ) return undefined;
+        if ( val === null ) return null;
+
+        const s = String( val ).toLowerCase();
+
+        if ( s === 'true' || s === '1' ) return true;
+        if ( s === 'false' || s === '0' ) return false;
+
 		return val;
-	}, z.boolean() )"""
+	}, z.boolean().nullable() )"""
     elif field_type == FieldType.DATE:
         base = "z.string()"
     elif field_type == FieldType.DATETIME:
@@ -418,9 +422,7 @@ def _generate_method_file(self, ep: Endpoint, mod: Module, methods_dir: str):
     description = (
         ep.description
         if ep.description
-        else ep.short_descr
-        if ep.short_descr
-        else f"{func_name} endpoint"
+        else ep.short_descr if ep.short_descr else f"{func_name} endpoint"
     )
     formatted_description = _format_jsdoc_description(description)
     out.write(
