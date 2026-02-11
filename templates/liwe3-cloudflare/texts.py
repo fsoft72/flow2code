@@ -146,7 +146,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
 		description: '%(description)s'
 	},
 """,
-    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like } from './utils';
+    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like, isNull } from './utils';
 import { ERR_UNAUTHORIZED, ERR_PERMISSION_DENIED, paramsValidation } from '@backend/liwe3/core';
 import { type Context } from 'hono';
 
