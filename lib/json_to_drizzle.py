@@ -279,6 +279,10 @@ def json_to_drizzle(type_def: dict) -> str:
                     # Custom type
                     modifiers.append(f".$type<{field_type}>()")
 
+        # Default false for boolean fields
+        if field_type in ["bool", "boolean"] and not is_array:
+            modifiers.append(".default( false )")
+
         # Default timestamps (Unix timestamp in seconds)
         if field_name in ("created", "updated"):
             modifiers.append(".default( sql`CURRENT_TIMESTAMP` )")

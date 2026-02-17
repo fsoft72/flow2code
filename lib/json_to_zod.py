@@ -229,6 +229,10 @@ def json_to_zod(type_def: dict) -> str:
         if not is_required:
             zod_chain += ".optional()"
 
+        # Add default false for boolean fields
+        if field_type in ["bool", "boolean"] and not is_array:
+            zod_chain += ".default( false )"
+
         # Add default for specific fields
         if field_name == "weight" and field_type in [
             "int",
