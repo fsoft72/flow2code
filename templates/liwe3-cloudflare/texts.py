@@ -146,7 +146,7 @@ export const %(__permissions_const)s: SystemPermission[] = [
 		description: '%(description)s'
 	},
 """,
-    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like, isNull } from './utils';
+    "METHOD_FILE_START": """import { z, LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, eq, and, or, like, isNull, zodBoolean } from './utils';
 import { ERR_UNAUTHORIZED, ERR_PERMISSION_DENIED, paramsValidation } from '@backend/liwe3/core';
 import { type Context } from 'hono';
 
@@ -204,7 +204,7 @@ export const %(__function_name)s = async ( app: LiWEApp%(__params_arg)s, c?: Con
  */
 
 // Core imports
-export { LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess } from '@backend/liwe3/core';
+export { LiWEApp, LiWEResponse, LiWESysParams, responseError, responseSuccess, zodBoolean } from '@backend/liwe3/core';
 
 // Database operation imports
 export { eq, and, ne, desc, asc, count, avg, sql, inArray, or, like, isNull } from 'drizzle-orm';
@@ -237,6 +237,7 @@ export { z } from 'zod';
 export * from './methods/index';
 """,
     "TYPES_FILE_START": """import { z } from 'zod';
+import { zodBoolean } from '@backend/liwe3/core';
 
 /*=== f2c_start __types ===*/
 %(__types_snippet)s

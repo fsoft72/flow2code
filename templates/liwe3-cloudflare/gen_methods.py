@@ -26,17 +26,7 @@ def _get_zod_type(field: Field, mod: Module = None) -> str:
     elif field_type == FieldType.FLOAT:
         base = "z.coerce.number()"
     elif field_type == FieldType.BOOL:
-        base = """z.preprocess( ( val : any ) => {
-        if ( typeof val === 'undefined' ) return undefined;
-        if ( val === null ) return false;
-
-        const s = String( val ).toLowerCase();
-
-        if ( s === 'true' || s === '1' ) return true;
-        if ( s === 'false' || s === '0' ) return false;
-
-		return val;
-	}, z.boolean() )"""
+        base = """zodBoolean"""
     elif field_type == FieldType.DATE:
         base = "z.string()"
     elif field_type == FieldType.DATETIME:

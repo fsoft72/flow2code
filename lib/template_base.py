@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import re
 import os
+import re
 from collections import defaultdict
 
 from .const import FieldType
-from .types import Module, Endpoint, Function, Field
+from .types import Endpoint, Field, Function, Module
 from .utils import type2typescript
 
 # RegExp that extracts the name from f2c_start block_name and f2c_end block_name
@@ -52,17 +52,19 @@ class TemplateBase:
             # check if the line starts with dr_start
             if line.find("f2c_start") != -1:
                 g = re_block_name.match(line)
-                block_name = g.group("name")
-                # initialize the block lines
+                if g:
+                    block_name = g.group("name")
+                    # initialize the block lines
                 block_lines = []
 
             # check if the line starts with dr_end
             elif line.find("f2c_end") != -1:
                 g = re_block_name.match(line)
-                block_name = g.group("name")
+                if g:
+                    block_name = g.group("name")
 
-                # store the block lines in the snippets dictionary
-                self.snippets[block_name] = "".join(block_lines).rstrip()
+                    # store the block lines in the snippets dictionary
+                    self.snippets[block_name] = "".join(block_lines).rstrip()
 
                 # initialize the block lines
                 block_lines = []
