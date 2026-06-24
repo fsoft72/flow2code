@@ -1,2 +1,0 @@
-[console_scripts]
-flow2code = flow2code.flow2code:main
