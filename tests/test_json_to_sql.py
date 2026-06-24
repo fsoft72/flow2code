@@ -10,6 +10,7 @@ from pathlib import Path
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / 'flow2code'))
 
 from lib.json_to_sql import json_to_sql
 

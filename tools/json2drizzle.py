@@ -22,6 +22,7 @@ import sys
 
 # Add parent directory to path to import lib modules
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../flow2code')))
 
 from lib.json_to_drizzle import json_to_drizzle
 

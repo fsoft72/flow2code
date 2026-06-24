@@ -21,6 +21,8 @@ import importlib.util
 
 # append the path of this file in the python path
 APP_PATH = os.path.dirname(os.path.realpath(__file__))
+if APP_PATH not in sys.path:
+    sys.path.insert(0, APP_PATH)
 
 from lib.types import Module, Permission, Endpoint, Type, Enum, Function, Event
 
@@ -107,7 +109,7 @@ class Flow2Code:
             self.template.code(m, self, outdir)
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
         description="Convert a flow file to Code using a template"
     )
@@ -144,3 +146,7 @@ if __name__ == "__main__":
 
     f2c = Flow2Code(args.flow, args.template, args.strict, args.templates_dir)
     res = f2c.code(args.output)
+
+
+if __name__ == "__main__":
+    main()
