@@ -10,14 +10,25 @@ cd "$SCRIPT_DIR/.."
 echo "=== Cleaning old builds ==="
 rm -rf dist/ build/ *.egg-info/ flow2code.egg-info/
 
-echo "=== Installing/Updating build and twine ==="
-python3 -m pip install --upgrade build twine
+echo "=== Creating temporary virtual environment ==="
+VENV_DIR=".publish_venv"
+python3 -m venv "$VENV_DIR"
+
+# Ensure venv is cleaned up on exit (success, failure, or cancellation)
+cleanup() {
+    echo "=== Cleaning up virtual environment ==="
+    rm -rf "$VENV_DIR"
+}
+trap cleanup EXIT
+
+echo "=== Installing/Updating build and twine inside venv ==="
+"$VENV_DIR/bin/pip" install --upgrade build twine
 
 echo "=== Building package ==="
-python3 -m build
+"$VENV_DIR/bin/python3" -m build
 
 echo "=== Checking package ==="
-python3 -m twine check dist/*
+"$VENV_DIR/bin/twine" check dist/*
 
 echo ""
 echo "Choose where to publish:"
@@ -29,11 +40,11 @@ read -rp "Enter choice [1-3]: " choice
 case $choice in
     1)
         echo "=== Uploading to TestPyPI ==="
-        python3 -m twine upload --repository testpypi dist/*
+        "$VENV_DIR/bin/twine" upload --repository testpypi dist/*
         ;;
     2)
         echo "=== Uploading to PyPI ==="
-        python3 -m twine upload dist/*
+        "$VENV_DIR/bin/twine" upload dist/*
         ;;
     *)
         echo "Publish cancelled."
