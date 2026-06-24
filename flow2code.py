@@ -44,8 +44,9 @@ class Flow2Code:
 
     strict: bool = False
 
-    def __init__(self, flow, template, strict):
+    def __init__(self, flow, template, strict, templates_dirs=None):
         self.strict = strict
+        self.templates_dirs = templates_dirs or []
 
         self._open_flow(flow)
         self._open_template(template)
@@ -69,10 +70,16 @@ class Flow2Code:
         # instance the template file from template_fname
         # and assign it to self.template
 
-        fname = os.path.join(APP_PATH, "templates", template_name, "template.py")
+        search_dirs = [os.path.join(APP_PATH, "templates")] + self.templates_dirs
+        fname = None
+        for s_dir in search_dirs:
+            candidate = os.path.join(s_dir, template_name, "template.py")
+            if os.path.exists(candidate):
+                fname = candidate
+                break
 
-        if not os.path.exists(fname):
-            print("ERROR: could not find: ", fname)
+        if not fname:
+            print("ERROR: could not find: ", template_name)
             return None
 
         full_path = os.path.dirname(os.path.abspath(fname))
@@ -104,15 +111,36 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Convert a flow file to Code using a template"
     )
-    parser.add_argument("flow", help="Flow file to convert")
+    parser.add_argument("flow", nargs="?", help="Flow file to convert")
     parser.add_argument("-o", "--output", help="Output directory")
     parser.add_argument("-t", "--template", help="Template file")
     parser.add_argument("--strict", action="store_true", help="Strict mode")
+    parser.add_argument(
+        "--templates", action="store_true", help="List available template names"
+    )
+    parser.add_argument(
+        "--templates-dir", action="append", default=[], help="Additional directory to search for templates"
+    )
     parser.add_argument(
         "-v", "--version", action="version", version="%(prog)s " + VERSION
     )
 
     args = parser.parse_args()
 
-    f2c = Flow2Code(args.flow, args.template, args.strict)
+    if args.templates:
+        search_dirs = [os.path.join(APP_PATH, "templates")] + args.templates_dir
+        templates = set()
+        for s_dir in search_dirs:
+            if os.path.exists(s_dir):
+                for name in os.listdir(s_dir):
+                    if os.path.isdir(os.path.join(s_dir, name)) and os.path.exists(os.path.join(s_dir, name, "template.py")):
+                        templates.add(name)
+        for t in sorted(list(templates)):
+            print(t)
+        sys.exit(0)
+
+    if not args.flow:
+        parser.error("the following arguments are required: flow")
+
+    f2c = Flow2Code(args.flow, args.template, args.strict, args.templates_dir)
     res = f2c.code(args.output)
