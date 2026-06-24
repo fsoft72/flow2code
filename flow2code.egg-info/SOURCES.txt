@@ -8,6 +8,8 @@ flow2code.egg-info/SOURCES.txt
 flow2code.egg-info/dependency_links.txt
 flow2code.egg-info/entry_points.txt
 flow2code.egg-info/top_level.txt
+flow2code/__pycache__/__init__.cpython-313.pyc
+flow2code/__pycache__/flow2code.cpython-313.pyc
 flow2code/lib/const.py
 flow2code/lib/json_to_drizzle.py
 flow2code/lib/json_to_sql.py
