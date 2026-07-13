@@ -71,6 +71,8 @@ class Flow2Code:
     def _open_template(self, template_name):
         # instance the template file from template_fname
         # and assign it to self.template
+        if not template_name:
+            raise ValueError("Template name is required. Use -t/--template to specify one.")
 
         search_dirs = [os.path.join(APP_PATH, "templates")] + self.templates_dirs
         fname = None
@@ -81,8 +83,7 @@ class Flow2Code:
                 break
 
         if not fname:
-            print("ERROR: could not find: ", template_name)
-            return None
+            raise FileNotFoundError(f"Template '{template_name}' could not be found in search paths: {search_dirs}")
 
         full_path = os.path.dirname(os.path.abspath(fname))
 
