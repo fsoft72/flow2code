@@ -2,6 +2,7 @@
 
 import os
 import re
+import sys
 from collections import defaultdict
 
 from .const import FieldType
@@ -18,9 +19,26 @@ class TemplateBase:
 
     def __init__(self):
         self.name = "Base Template"
+        # Accumulated, human-readable generation errors. A template appends here
+        # (via report_errors) when the model is missing something it needs; the
+        # caller turns a non-empty list into a non-zero process exit.
+        self.errors = []
 
     def __str__(self):
         return self.name
+
+    def report_errors(self, lines):
+        """
+        Record one or more error lines and echo them to stderr.
+
+        This is the handled-error path: a missing piece in the model is a
+        foreseen condition, reported and returned, never raised.
+
+        @param lines: an iterable of error strings
+        """
+        for line in lines:
+            print("[f2c] %s" % line, file=sys.stderr)
+            self.errors.append(line)
 
     def extract_snippets(self, mod: Module, fname: str):
         # load the whole fname in memory

@@ -106,8 +106,18 @@ class Flow2Code:
         self.template = mod.Template()
 
     def code(self, outdir):
+        """
+        Generate every module. All modules are attempted so a single run
+        reports every problem instead of stopping at the first bad module.
+
+        @return: True when every module was generated, False when at least one
+                 was rejected (a template returning False)
+        """
+        ok = True
         for m in self.modules:
-            self.template.code(m, self, outdir)
+            if self.template.code(m, self, outdir) is False:
+                ok = False
+        return ok
 
 
 def main():
@@ -146,7 +156,13 @@ def main():
         parser.error("the following arguments are required: flow")
 
     f2c = Flow2Code(args.flow, args.template, args.strict, args.templates_dir)
-    res = f2c.code(args.output)
+    if not f2c.code(args.output):
+        print(
+            "\nGeneration aborted: fix the errors above and run again. "
+            "No code was generated for the rejected modules.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":
