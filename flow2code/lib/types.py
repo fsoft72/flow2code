@@ -227,9 +227,20 @@ class Endpoint:
             f = Field(par, mod)
             self.parameters.append(f)
 
-        # Set endpoint permissions
-        self.permissions = []
         perms = json_data.get("permissions", {})
+
+        # Permission gate: the minimal necessary condition to enter the method.
+        #   "public"    -> reachable without authentication (deliberate)
+        #   "logged"    -> any authenticated user
+        #   list[str]   -> at least one of these permission names
+        #   None        -> not configured (distinct from "public": lets a
+        #                  template refuse the module instead of emitting an
+        #                  open endpoint)
+        self.gate = self._compute_gate(perms, mod)
+
+        # Flat permission list, kept unchanged for the docstring generator and
+        # any other template that already consumes it.
+        self.permissions = []
         if perms.get("public", False):
             return
 
@@ -248,6 +259,39 @@ class Endpoint:
             if p and p.name not in self.permissions:
                 self.permissions.append(p.name)
                 self.mod.flow.permissions[p.id] = p
+
+    @staticmethod
+    def _compute_gate(perms, mod):
+        """
+        Derive the explicit gate from an endpoint's ``permissions`` flag map.
+
+        @param perms: the endpoint ``permissions`` dict from the module JSON
+        @param mod: the owning Module, for permission-id -> name resolution
+
+        @return: "public", "logged", a list of permission names, or None when
+                 no flag is set (gate not configured)
+        """
+        if perms.get("public", False):
+            return "public"
+
+        if perms.get("logged", False):
+            return "logged"
+
+        names = []
+        for perm in perms:
+            if perm in ("public", "logged"):
+                continue
+            if not perms.get(perm, False):
+                continue
+            if perm == "admins":
+                if "system.admin" not in names:
+                    names.append("system.admin")
+                continue
+            p = mod.permissions.get(perm, None)
+            if p and p.name not in names:
+                names.append(p.name)
+
+        return names or None
 
     def fields(self, skip_file_fields=False):
         if not skip_file_fields:
