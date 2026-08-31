@@ -1,5 +1,26 @@
 # CHANGES.md
 
+## 2026-08-31 - 0.3.2
+
+### Added - explicit endpoint permission gate
+
+- `lib/types.py`: `Endpoint.gate` holds the gate as declared in the module JSON:
+  `"public"`, `"logged"`, a list of permission names, or `None` when no flag is
+  set. Unlike `Endpoint.permissions` (kept unchanged) it does not conflate
+  "public by decision" with "not configured", and it stops silently dropping
+  the `admins` flag (now mapped to `system.admin`).
+
+### Added - handled template rejection with non-zero exit
+
+- `lib/template_base.py`: `TemplateBase.report_errors(lines)` records generation
+  errors to `self.errors` and echoes them to stderr with a `[f2c]` prefix. This
+  is the handled-error path: a missing piece in the model is reported and
+  returned, never raised.
+- `flow2code.py`: `Flow2Code.code()` returns `True` only when every module was
+  generated (all modules are still attempted). `main()` prints an abort notice
+  and `sys.exit(1)` when it returns `False`. A template opts in by returning
+  `False` from its `code()`.
+
 ## 2026-01-19
 
 ### Fixed - Prevent invalid datetime import in schema.ts generation

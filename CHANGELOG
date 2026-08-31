@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 0.3.2
+
+- `Endpoint.gate` exposes the endpoint permission gate explicitly
+  (`"public"` | `"logged"` | list of permission names | `None` when not
+  configured), without collapsing it the way `Endpoint.permissions` does.
+- Template rejection now propagates: `Flow2Code.code()` returns a bool, `main()`
+  exits non-zero when any module was rejected, and `TemplateBase.report_errors()`
+  is the handled-error channel (stderr + `self.errors`).
+
 ## 0.3.0
 
 - Added support for the new LiWE Flow 2 in SvelteJS

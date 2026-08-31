@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flow2code"
-version = "0.3.1"
+version = "0.3.2"
 description = "Convert a flow file to Code using a template"
 readme = "CHANGES.md"
 requires-python = ">=3.7"
