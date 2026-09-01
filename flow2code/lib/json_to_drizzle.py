@@ -283,9 +283,14 @@ def json_to_drizzle(type_def: dict) -> str:
         if field_type in ["bool", "boolean"] and not is_array:
             modifiers.append(".default( false )")
 
-        # Default timestamps (Unix timestamp in seconds)
+        # Default timestamps (Unix timestamp in seconds).
+        # The expression is wrapped in parentheses so it matches how SQLite
+        # stores and reports expression defaults: `drizzle-kit push` reads the
+        # live default back as "(CURRENT_TIMESTAMP)", so emitting the bare
+        # "CURRENT_TIMESTAMP" here makes push see a phantom diff and try to
+        # recreate every table that has a created/updated column.
         if field_name in ("created", "updated"):
-            modifiers.append(".default( sql`CURRENT_TIMESTAMP` )")
+            modifiers.append(".default( sql`(CURRENT_TIMESTAMP)` )")
 
         field_def = "".join(field_def_parts) + "".join(modifiers) + ","
         lines.append(field_def)
